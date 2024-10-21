@@ -1,11 +1,9 @@
-import { Button } from "@mui/material";
-
-export default function App() {
+import Login from './Pages/Login.jsx';
+ function App() {
   return (
     <>
-      <h1>App</h1>
-      <Button>Mi primer componente</Button>
-
+      <Login></Login>
     </>
   );
 }
+export default App;

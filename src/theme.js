@@ -19,6 +19,18 @@ const theme = createTheme({
             primary: '#212121',  // Texto principal en negro
             secondary: '#757575',  // Texto secundario en gris oscuro
         },
+        error: {
+            main: '#FF0000',  // Texto rojo para errores
+        },
+        warning: {
+            main: '#FFC107',  // Texto amarillo para advertencias
+        },
+        info: {
+            main: '#2196F3',  // Texto azul para informaciones
+        },
+        success: {
+            main: '#4CAF50',  // Texto verde verde para éxito
+        },
     },
     typography: {
         fontFamily: `'Roboto', 'Arial', sans-serif`,

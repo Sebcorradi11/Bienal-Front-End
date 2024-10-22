@@ -1,7 +1,7 @@
 import React from 'react';
 import { AppBar, Toolbar, Typography, Box } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import logo from '../assets/bienal.webp';
+import logo from '../assets/footer/bienal.webp';
 
 const HeaderLogin = () => {
     const navigate = useNavigate();

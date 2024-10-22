@@ -3,7 +3,7 @@ import { AppBar, Toolbar, Typography, IconButton, Box, Avatar } from '@mui/mater
 import { AccountCircle } from '@mui/icons-material';
 import { useSelector } from 'react-redux'; // Importamos useSelector para acceder al estado de Redux
 import { useNavigate } from 'react-router-dom';
-import logo from '../assets/bienal.webp';
+import logo from '../assets/footer/bienal.webp';
 
 const Header = () => {
     const navigate = useNavigate();

@@ -1,14 +1,5 @@
-// src/components/FormAddEvent.jsx
-
 import React, { useState } from 'react';
-import {
-    Box,
-    Button,
-    TextField,
-    Typography,
-    Container,
-    Grid,
-} from '@mui/material';
+import { Box, Button, TextField, Typography, Container, Grid } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
 const FormAddEvent = ({ onSubmit }) => {
@@ -19,7 +10,7 @@ const FormAddEvent = ({ onSubmit }) => {
         description: '',
     });
 
-    const navigate = useNavigate(); // Permite navegar entre páginas
+    const navigate = useNavigate();
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -28,17 +19,18 @@ const FormAddEvent = ({ onSubmit }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        onSubmit(formData); // Llamamos la función para enviar los datos
+        onSubmit(formData);
     };
 
     return (
-        <Container maxWidth="sm" sx={{ mt: 4 }}>
+        <Container maxWidth="sm" sx={{ mt: 6, mb: 6 }}>
             <Typography variant="h4" align="center" gutterBottom>
                 Agregar Evento
             </Typography>
 
-            <Box component="form" onSubmit={handleSubmit} sx={{ mt: 2 }}>
-                <Grid container spacing={2}>
+            <Box component="form" onSubmit={handleSubmit} sx={{ mt: 4 }}>
+                <Grid container spacing={3}>
+                    {/** Inputs */}
                     <Grid item xs={12}>
                         <TextField
                             label="Temática"
@@ -47,7 +39,6 @@ const FormAddEvent = ({ onSubmit }) => {
                             onChange={handleChange}
                             fullWidth
                             required
-                            placeholder="Temática del evento"
                         />
                     </Grid>
                     <Grid item xs={12}>
@@ -58,8 +49,8 @@ const FormAddEvent = ({ onSubmit }) => {
                             value={formData.date}
                             onChange={handleChange}
                             fullWidth
-                            required
                             InputLabelProps={{ shrink: true }}
+                            required
                         />
                     </Grid>
                     <Grid item xs={12}>
@@ -70,7 +61,6 @@ const FormAddEvent = ({ onSubmit }) => {
                             onChange={handleChange}
                             fullWidth
                             required
-                            placeholder="Ubicación"
                         />
                     </Grid>
                     <Grid item xs={12}>
@@ -83,24 +73,16 @@ const FormAddEvent = ({ onSubmit }) => {
                             multiline
                             rows={4}
                             required
-                            placeholder="Descripción del evento"
                         />
                     </Grid>
                 </Grid>
 
+                {/** Botones */}
                 <Box sx={{ display: 'flex', justifyContent: 'center', gap: 2, mt: 4 }}>
-                    <Button
-                        variant="contained"
-                        color="primary"
-                        type="submit"
-                    >
+                    <Button variant="contained" color="primary" type="submit">
                         Agregar Evento
                     </Button>
-                    <Button
-                        variant="outlined"
-                        color="secondary"
-                        onClick={() => navigate('/gestionar-eventos')}
-                    >
+                    <Button variant="outlined" color="secondary" onClick={() => navigate('/gestionar-eventos')}>
                         Atrás
                     </Button>
                 </Box>

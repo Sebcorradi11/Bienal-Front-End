@@ -1,10 +1,11 @@
 import React from 'react';
-import { Box, Typography, Grid, Paper, IconButton } from '@mui/material';
+import { Box, Typography, Grid, Paper, IconButton, AppBar, Toolbar } from '@mui/material';
 import { AccountCircle } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
+import Header from '../components/Header';
 
 const HomeAdmin = () => {
-    const userName = "nombreusuario"; // Este valor puede venir del backend
+    const userName = "nombreusuario"; // Este valor podría venir del backend o de un contexto global
     const navigate = useNavigate();
 
     const handleNavigation = (path) => {
@@ -12,96 +13,80 @@ const HomeAdmin = () => {
     };
 
     return (
-        <Box
-            sx={{
-                minHeight: '100vh',
-                display: 'flex',
-                flexDirection: 'column',
-            }}
-        >
-            {/* Barra superior con nombre de usuario e icono */}
-            <Box
-                sx={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                    padding: '16px 32px',
-                    backgroundColor: '#f5f5f5',
-                }}
-            >
+        <>
+            <Header />
+            <Box sx={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
 
-                <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                    <Typography sx={{ mr: 1 }}>{userName}</Typography>
-                    <IconButton>
-                        <AccountCircle fontSize="large" />
-                    </IconButton>
+
+                {/* Contenido principal: Tarjetas de gestión */}
+                <Box sx={{ flexGrow: 1, display: 'flex', justifyContent: 'center', alignItems: 'center', px: 4 }}>
+                    <Grid container spacing={4} justifyContent="center">
+                        <Grid item xs={12} sm={6} md={3}>
+                            <Paper
+                                elevation={6}
+                                sx={{
+                                    height: 150,
+                                    display: 'flex',
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    cursor: 'pointer',
+                                    borderRadius: 5,
+                                    transition: 'transform 0.2s',
+                                    '&:hover': {
+                                        transform: 'scale(1.05)',
+                                    },
+                                }}
+                                onClick={() => handleNavigation('/gestionar-eventos')}
+                            >
+                                <Typography variant="h6">GESTIONAR EVENTOS</Typography>
+                            </Paper>
+                        </Grid>
+
+                        <Grid item xs={12} sm={6} md={3}>
+                            <Paper
+                                elevation={6}
+                                sx={{
+                                    height: 150,
+                                    display: 'flex',
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    cursor: 'pointer',
+                                    borderRadius: 5,
+                                    transition: 'transform 0.2s',
+                                    '&:hover': {
+                                        transform: 'scale(1.05)',
+                                    },
+                                }}
+                                onClick={() => handleNavigation('/gestionar-esculturas')}
+                            >
+                                <Typography variant="h6">GESTIONAR ESCULTURAS</Typography>
+                            </Paper>
+                        </Grid>
+
+                        <Grid item xs={12} sm={6} md={3}>
+                            <Paper
+                                elevation={6}
+                                sx={{
+                                    height: 150,
+                                    display: 'flex',
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    cursor: 'pointer',
+                                    borderRadius: 5,
+                                    transition: 'transform 0.2s',
+                                    '&:hover': {
+                                        transform: 'scale(1.05)',
+                                    },
+                                }}
+                                onClick={() => handleNavigation('/gestionar-escultores')}
+                            >
+                                <Typography variant="h6">GESTIONAR ESCULTORES</Typography>
+                            </Paper>
+                        </Grid>
+                    </Grid>
                 </Box>
             </Box>
-
-            {/* Contenido principal: Tarjetas de gestión */}
-            <Box
-                sx={{
-                    flexGrow: 1,
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    padding: 4,
-                }}
-            >
-                <Grid container spacing={4} justifyContent="center">
-                    <Grid item xs={12} sm={6} md={3}>
-                        <Paper
-                            elevation={3}
-                            sx={{
-                                height: 150,
-                                display: 'flex',
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                                cursor: 'pointer',
-                                borderRadius: 5,
-                            }}
-                            onClick={() => handleNavigation('/gestionar-eventos')}
-                        >
-                            <Typography variant="h6">GESTIONAR EVENTOS</Typography>
-                        </Paper>
-                    </Grid>
-
-                    <Grid item xs={12} sm={6} md={3}>
-                        <Paper
-                            elevation={3}
-                            sx={{
-                                height: 150,
-                                display: 'flex',
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                                cursor: 'pointer',
-                                borderRadius: 5,
-                            }}
-                            onClick={() => handleNavigation('/gestionar-esculturas')}
-                        >
-                            <Typography variant="h6">GESTIONAR ESCULTURAS</Typography>
-                        </Paper>
-                    </Grid>
-
-                    <Grid item xs={12} sm={6} md={3}>
-                        <Paper
-                            elevation={3}
-                            sx={{
-                                height: 150,
-                                display: 'flex',
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                                cursor: 'pointer',
-                                borderRadius: 5,
-                            }}
-                            onClick={() => handleNavigation('/gestionar-escultores')}
-                        >
-                            <Typography variant="h6">GESTIONAR ESCULTORES</Typography>
-                        </Paper>
-                    </Grid>
-                </Grid>
-            </Box>
-        </Box>
+        </>
     );
 };
 

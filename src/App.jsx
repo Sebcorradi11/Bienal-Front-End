@@ -2,7 +2,7 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import GestionEventos from './pages/EventManagement';
 import HomeAdmin from './pages/HomeAdmin';
-import Login from './components/LoginAdmin';
+import Login from './pages/Login';
 import AddEventPage from './pages/AddEventPage';
 
 function App() {

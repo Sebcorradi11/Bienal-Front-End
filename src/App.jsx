@@ -1,11 +1,21 @@
-import { Button } from "@mui/material";
 
-export default function App() {
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import GestionEventos from './pages/EventManagement';
+import HomeAdmin from './pages/HomeAdmin';
+import Login from './pages/Login';
+import AddEventPage from './pages/AddEventPage';
+
+function App() {
   return (
-    <>
-      <h1>App</h1>
-      <Button>Mi primer componente</Button>
-
-    </>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Login />} />
+        <Route path="/HomeAdmin" element={<HomeAdmin />} />
+        <Route path="/gestionar-eventos" element={<GestionEventos />} />
+        <Route path="/add-event" element={<AddEventPage />} />
+      </Routes>
+    </Router>
   );
 }
+
+export default App;

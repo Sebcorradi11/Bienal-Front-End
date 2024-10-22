@@ -1,24 +1,26 @@
 // src/main.jsx
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
+import { Provider } from 'react-redux'; // Importa Redux Provider
+import { ThemeProvider, CssBaseline } from '@mui/material'; // MUI ThemeProvider y CssBaseline
 import App from './App.jsx';
+import theme from './theme'; // Importa el tema personalizado
+import store from './store'; // Importa el store de Redux
 
-// Importamos el ThemeProvider y CssBaseline
-import { ThemeProvider, CssBaseline } from '@mui/material';
-import theme from './theme';  // Importamos el theme personalizado
-
-// Fuentes Roboto para la tipografía
+// Fuentes Roboto para la tipografía de Material UI
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 
-// Creamos el root y aplicamos el theme global
+// Renderiza la aplicación con Redux, Theme y StrictMode
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <ThemeProvider theme={theme}>
-      <CssBaseline /> {/* Normaliza los estilos */}
-      <App />
-    </ThemeProvider>
+    <Provider store={store}> {/* Provee el store de Redux a toda la app */}
+      <ThemeProvider theme={theme}> {/* Aplica el tema global */}
+        <CssBaseline /> {/* Normaliza los estilos */}
+        <App /> {/* Renderiza la aplicación principal */}
+      </ThemeProvider>
+    </Provider>
   </StrictMode>
 );

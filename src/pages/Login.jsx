@@ -1,14 +1,16 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import {
     Box, Container, Paper, Tabs, Tab, Typography, TextField, Button,
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { login } from '../store/userSlice'; // Importa la acción de login
-import HeaderLogin from '../components/HeaderLogin';
+import { login } from '../store/userSlice.js'; // Importa la acción de login
+import HeaderLogin from '../components/HeaderLogin.jsx';
+import LinkButtons from '../components/LinkButtons.jsx';
+import { handleFacebookLogin, handleGoogleLogin, handleInstagramLogin } from '../auth/AuthHanddler.js';
 
 const Login = () => {
-    const [tabValue, setTabValue] = useState(0);
+    const [tabValue, setTabValue] = useState(0); // 0: Administrador, 1: Usuario
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
@@ -39,7 +41,7 @@ const Login = () => {
             <HeaderLogin />
             <Box
                 sx={{
-                    minHeight: '100vh',
+                    height: '75vh',
                     display: 'flex',
                     justifyContent: 'center',
                     alignItems: 'center',
@@ -60,35 +62,57 @@ const Login = () => {
                             <Tab label="Usuario" />
                         </Tabs>
 
-                        <Box component="form" onSubmit={handleSubmit} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                        <Box
+                            component="form"
+                            onSubmit={handleSubmit}
+                            sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
+                        >
                             <Typography variant="h6" gutterBottom>
                                 {tabValue === 0 ? 'Login Administrador' : 'Login Usuario'}
                             </Typography>
 
-                            <TextField
-                                label="Usuario"
-                                variant="outlined"
-                                margin="normal"
-                                fullWidth
-                                value={username}
-                                onChange={(e) => setUsername(e.target.value)}
-                            />
+                            {/* Mostrar campos de login solo para Administrador */}
+                            {tabValue === 0 ? (
+                                <>
+                                    <TextField
+                                        label="Usuario"
+                                        variant="outlined"
+                                        margin="normal"
+                                        fullWidth
+                                        value={username}
+                                        onChange={(e) => setUsername(e.target.value)}
+                                    />
 
-                            <TextField
-                                label="Contraseña"
-                                type="password"
-                                variant="outlined"
-                                margin="normal"
-                                fullWidth
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                            />
+                                    <TextField
+                                        label="Contraseña"
+                                        type="password"
+                                        variant="outlined"
+                                        margin="normal"
+                                        fullWidth
+                                        value={password}
+                                        onChange={(e) => setPassword(e.target.value)}
+                                    />
 
-                            {error && <Typography color="error" sx={{ mt: 1 }}>{error}</Typography>}
+                                    {error && <Typography color="error" sx={{ mt: 1 }}>{error}</Typography>}
+                                </>
+                            ) : (
+                                <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, mt: 2 }}>
+                                    <LinkButtons platform="google" onClick={handleGoogleLogin} />
+                                    <LinkButtons platform="instagram" onClick={handleInstagramLogin} />
+                                </Box>
+                            )}
 
-                            <Button type="submit" variant="contained" fullWidth sx={{ mt: 2 }}>
-                                Entrar
-                            </Button>
+
+                            {tabValue === 0 && (
+                                <Button
+                                    type="submit"
+                                    variant="contained"
+                                    color="primary"
+                                    sx={{ mt: 3, width: '100%' }}
+                                >
+                                    Entrar
+                                </Button>
+                            )}
                         </Box>
                     </Paper>
                 </Container>

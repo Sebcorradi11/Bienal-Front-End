@@ -16,6 +16,7 @@ const Header = () => {
     };
 
     return (
+
         <AppBar position="static" sx={{ backgroundColor: '#000', padding: '0 32px' }}>
             <Toolbar sx={{ justifyContent: 'space-between', alignItems: 'center' }}>
                 {/* Logo y nombre del sitio */}
@@ -44,6 +45,7 @@ const Header = () => {
                 </Box>
             </Toolbar>
         </AppBar>
+
     );
 };
 

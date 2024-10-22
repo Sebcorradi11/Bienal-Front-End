@@ -1,23 +1,31 @@
 import React from 'react';
-import { Box, Typography, Grid, Paper, IconButton, AppBar, Toolbar } from '@mui/material';
-import { AccountCircle } from '@mui/icons-material';
+import {
+    Box,
+    Typography,
+    Grid,
+    Paper,
+    Button,
+} from '@mui/material';
+import { ArrowBack } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
+import Footer from '../components/Footer'; // Asegúrate de importar el footer
 
 const HomeAdmin = () => {
-    const userName = "nombreusuario"; // Este valor podría venir del backend o de un contexto global
     const navigate = useNavigate();
 
     const handleNavigation = (path) => {
-        navigate(path); // Redirige a la ruta correspondiente
+        navigate(path); // Redirige a la ruta especificada
+    };
+
+    const handleBack = () => {
+        navigate(-1); // Navega a la página anterior
     };
 
     return (
         <>
             <Header />
             <Box sx={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
-
-
                 {/* Contenido principal: Tarjetas de gestión */}
                 <Box sx={{ flexGrow: 1, display: 'flex', justifyContent: 'center', alignItems: 'center', px: 4 }}>
                     <Grid container spacing={4} justifyContent="center">
@@ -32,9 +40,7 @@ const HomeAdmin = () => {
                                     cursor: 'pointer',
                                     borderRadius: 5,
                                     transition: 'transform 0.2s',
-                                    '&:hover': {
-                                        transform: 'scale(1.05)',
-                                    },
+                                    '&:hover': { transform: 'scale(1.05)' },
                                 }}
                                 onClick={() => handleNavigation('/gestionar-eventos')}
                             >
@@ -53,9 +59,7 @@ const HomeAdmin = () => {
                                     cursor: 'pointer',
                                     borderRadius: 5,
                                     transition: 'transform 0.2s',
-                                    '&:hover': {
-                                        transform: 'scale(1.05)',
-                                    },
+                                    '&:hover': { transform: 'scale(1.05)' },
                                 }}
                                 onClick={() => handleNavigation('/gestionar-esculturas')}
                             >
@@ -74,9 +78,7 @@ const HomeAdmin = () => {
                                     cursor: 'pointer',
                                     borderRadius: 5,
                                     transition: 'transform 0.2s',
-                                    '&:hover': {
-                                        transform: 'scale(1.05)',
-                                    },
+                                    '&:hover': { transform: 'scale(1.05)' },
                                 }}
                                 onClick={() => handleNavigation('/gestionar-escultores')}
                             >
@@ -84,6 +86,28 @@ const HomeAdmin = () => {
                             </Paper>
                         </Grid>
                     </Grid>
+                </Box>
+
+                {/* Footer */}
+                <Footer />
+
+                {/* Botón "Atrás" */}
+                <Box
+                    sx={{
+                        position: 'fixed',
+                        bottom: 220, // Ajusta para que no toque el footer
+                        right: 16,
+                        zIndex: 1000, // Asegura que esté por encima de todo
+                    }}
+                >
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        startIcon={<ArrowBack />}
+                        onClick={handleBack}
+                    >
+                        Atrás
+                    </Button>
                 </Box>
             </Box>
         </>

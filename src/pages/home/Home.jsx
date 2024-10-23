@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box, Typography } from '@mui/material';
-import HeaderLogin from '../../components/HeaderLogin';
+import Header from './components/Header';
 import Footer from '../../components/Footer';
 import Predio from './components/predio';
 import Formas from './components/formas';
@@ -11,7 +11,7 @@ const Home = () => {
     return (
         <Box>
             {/* Header */}
-            <HeaderLogin />
+            <Header />
 
             {/* Sección del Predio (banner) */}
             <Predio />
@@ -20,11 +20,11 @@ const Home = () => {
             <Formas />
 
             {/* Sección de informacion 1 */}
-            <Info1  />
+            <Info1 />
 
             {/* Sección de informacion 2 */}
-            <Info2  />
-            
+            <Info2 />
+
             {/* Footer */}
             <Footer />
         </Box>

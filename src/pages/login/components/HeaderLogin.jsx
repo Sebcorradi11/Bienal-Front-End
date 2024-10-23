@@ -88,13 +88,6 @@ const Header = () => {
                 >
                     {!isMobile ? (
                         <>
-                            <Typography
-                                variant="body1"
-                                sx={{ cursor: 'pointer', color: '#fff', fontSize: '16px' }}
-                                onClick={() => navigate('/')}
-                            >
-                                Inicio
-                            </Typography>
 
                             <IconButton
                                 onClick={() => navigate('/login')}

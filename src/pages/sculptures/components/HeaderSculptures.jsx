@@ -15,7 +15,7 @@ import {
     useTheme,
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
-import { useNavigate, useLocation } from 'react-router-dom'; // Importar useLocation
+import { NavLink, useNavigate } from 'react-router-dom';
 import Bienal from '../../../assets/footer/bienal.webp';
 
 const Header = () => {
@@ -28,10 +28,16 @@ const Header = () => {
         setDrawerOpen(!drawerOpen);
     };
 
-    const handleNavigation = (path) => {
-        navigate(path);
-        setDrawerOpen(false);
-    };
+    const linkStyles = ({ isActive }) => ({
+        textDecoration: 'none',
+        color: isActive ? 'black' : 'white',
+        backgroundColor: isActive ? 'white' : 'transparent',
+        padding: '8px 16px',
+        borderRadius: '20px',
+        fontSize: '16px',
+        fontWeight: isActive ? 'bold' : 'normal',
+        cursor: 'pointer',
+    });
 
     return (
         <AppBar
@@ -46,7 +52,7 @@ const Header = () => {
             }}
         >
             <Toolbar
-                disableGutters // Elimina los márgenes internos predeterminados del Toolbar
+                disableGutters
                 sx={{
                     width: '100%',
                     display: 'flex',
@@ -55,7 +61,6 @@ const Header = () => {
                     paddingX: '16px',
                 }}
             >
-                {/* Logo a la izquierda */}
                 <Box
                     sx={{
                         display: 'flex',
@@ -77,49 +82,19 @@ const Header = () => {
                     </Typography>
                 </Box>
 
-                {/* Enlaces y Avatar a la derecha */}
-                <Box
-                    sx={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        marginLeft: 'auto',
-                        gap: 2,
-                    }}
-                >
+                <Box sx={{ display: 'flex', alignItems: 'center', marginLeft: 'auto', gap: 2 }}>
                     {!isMobile ? (
                         <>
-                            <Typography
-                                variant="body1"
-                                sx={{ cursor: 'pointer', color: '#fff', fontSize: '16px' }}
-                                onClick={() => navigate('/escultores')}
-                            >
+                            <NavLink to="/escultores" style={linkStyles}>
                                 Escultores
-                            </Typography>
-                            <Typography
-                        variant="body1"
-                        sx={{
-                            cursor: 'pointer',
-                            color: location.pathname === '/esculturas' ? '#000' : '#fff',
-                            backgroundColor: location.pathname === '/esculturas' ? '#fff' : 'transparent', 
-                            padding: '3px 6px', 
-                            borderRadius: '15px', 
-                            fontSize: '16px',
-                        }}
-                        onClick={() => navigate('/esculturas')}
-                    >
-                        Esculturas
-                    </Typography>
-                            <Typography
-                                variant="body1"
-                                sx={{ cursor: 'pointer', color: '#fff', fontSize: '16px' }}
-                                onClick={() => navigate('/eventos')}
-                            >
+                            </NavLink>
+                            <NavLink to="/esculturas" style={linkStyles}>
+                                Esculturas
+                            </NavLink>
+                            <NavLink to="/eventos" style={linkStyles}>
                                 Eventos
-                            </Typography>
-                            <IconButton
-                                onClick={() => navigate('/login')}
-                                sx={{ padding: 0 }}
-                            >
+                            </NavLink>
+                            <IconButton onClick={() => navigate('/login')} sx={{ padding: 0 }}>
                                 <Avatar
                                     src="/assets/avatar-default.webp"
                                     sx={{ width: 32, height: 32 }}
@@ -133,30 +108,25 @@ const Header = () => {
                     )}
                 </Box>
 
-                {/* Drawer para pantallas pequeñas */}
-                <Drawer
-                    anchor="right"
-                    open={drawerOpen}
-                    onClose={handleDrawerToggle}
-                >
+                <Drawer anchor="right" open={drawerOpen} onClose={handleDrawerToggle}>
                     <List>
                         <ListItem disablePadding>
-                            <ListItemButton onClick={() => handleNavigation('/escultores')}>
+                            <ListItemButton onClick={() => navigate('/escultores')}>
                                 <ListItemText primary="Escultores" />
                             </ListItemButton>
                         </ListItem>
                         <ListItem disablePadding>
-                            <ListItemButton onClick={() => handleNavigation('/esculturas')}>
+                            <ListItemButton onClick={() => navigate('/esculturas')}>
                                 <ListItemText primary="Esculturas" />
                             </ListItemButton>
                         </ListItem>
                         <ListItem disablePadding>
-                            <ListItemButton onClick={() => handleNavigation('/eventos')}>
+                            <ListItemButton onClick={() => navigate('/eventos')}>
                                 <ListItemText primary="Eventos" />
                             </ListItemButton>
                         </ListItem>
                         <ListItem disablePadding>
-                            <ListItemButton onClick={() => handleNavigation('/login')}>
+                            <ListItemButton onClick={() => navigate('/login')}>
                                 <ListItemText primary="Login" />
                             </ListItemButton>
                         </ListItem>

@@ -4,14 +4,13 @@ import {
     Button,
     Container,
     Typography,
-    IconButton,
 } from '@mui/material';
 import { Add, Delete, History, AutoFixHigh, ArrowBack } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
-import Header from '../components/Header';
-import Footer from '../components/Footer'; // Asegúrate de importar tu Footer
+import Header from '../../../components/Header';
+import Footer from '../../../components/Footer';
 
-const GestionEventos = () => {
+const EventManagement = () => {
     const navigate = useNavigate();
 
     const handleBack = () => {
@@ -23,10 +22,10 @@ const GestionEventos = () => {
             sx={{
                 display: 'flex',
                 flexDirection: 'column',
-                minHeight: '100vh', // Mantiene la altura mínima de la pantalla
+                minHeight: '100vh',
             }}
         >
-            <Header /> {/* Header con navegación */}
+            <Header />
 
             <Container maxWidth="md" sx={{ flexGrow: 1, mt: 4 }}>
                 <Box sx={{ display: 'flex', justifyContent: 'space-around', mb: 4 }}>
@@ -44,12 +43,8 @@ const GestionEventos = () => {
                     <Button variant="contained" color="secondary" startIcon={<AutoFixHigh />}>
                         Modificar Eventos
                     </Button>
-                    <Button variant="contained" color="primary" startIcon={<History />}>
-                        Historial de Eventos
-                    </Button>
                 </Box>
 
-                {/* Botón "Atrás" en la esquina inferior derecha */}
                 <Box
                     sx={{
                         position: 'fixed',
@@ -69,9 +64,9 @@ const GestionEventos = () => {
                 </Box>
             </Container>
 
-            <Footer /> {/* Footer agregado aquí */}
+            <Footer />
         </Box>
     );
 };
 
-export default GestionEventos;
+export default EventManagement;

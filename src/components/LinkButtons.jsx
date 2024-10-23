@@ -4,7 +4,6 @@ import GoogleIcon from '@mui/icons-material/Google';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import PropTypes from 'prop-types';
 
-
 function LinkButtons({ platform, onClick }) {
     let icon, color, label;
 
@@ -31,16 +30,29 @@ function LinkButtons({ platform, onClick }) {
     }
 
     return (
-        <Button className="link-button"
+        <Button
             variant="contained"
             startIcon={icon}
             onClick={onClick}
-            style={{ backgroundColor: color, color: '#fff', padding: '10px', width: '400px' }}
+            sx={{
+                backgroundColor: color,
+                color: '#fff',
+                width: '100%',
+                maxWidth: '300px',
+                margin: '10px 0',
+                borderRadius: '8px',
+                textTransform: 'none',
+                fontSize: '16px',
+                '&:hover': {
+                    backgroundColor: `${color}CC`,
+                },
+            }}
         >
             {label}
         </Button>
     );
 }
+
 LinkButtons.propTypes = {
     platform: PropTypes.string.isRequired,
     onClick: PropTypes.func.isRequired,

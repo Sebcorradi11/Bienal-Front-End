@@ -11,11 +11,11 @@ const Formas = () => {
     return (
         <Box sx={{ padding: '40px 20px', textAlign: 'center' }}>
             {/* Grid para los 3 SVGs */}
-            <Grid 
-                container 
+            <Grid
+                container
                 justifyContent="center"
                 spacing={4} // Agrego un pequeño spacing por si ayuda en ciertos casos
-                sx={{ 
+                sx={{
                     '@media (min-width: 600px)': { gap: '5rem' }, // Ajuste de separación para pantallas más grandes
                     '@media (max-width: 600px)': { gap: '2rem' }, // Menor separación en pantallas pequeñas
                 }}
@@ -35,8 +35,8 @@ const Formas = () => {
                             alignItems: 'center',
                         }}
                     >
-                        <Typography 
-                            variant="h5" 
+                        <Typography
+                            variant="h5"
                             sx={{ color: 'white', fontWeight: 'bold', fontSize: { xs: '16px', sm: '20px' } }} // Ajuste del tamaño de texto
                         >
                             Conocé a los Escultores
@@ -59,8 +59,8 @@ const Formas = () => {
                             alignItems: 'center',
                         }}
                     >
-                        <Typography 
-                            variant="h5" 
+                        <Typography
+                            variant="h5"
                             sx={{ color: 'white', fontWeight: 'bold', fontSize: { xs: '16px', sm: '20px' } }}
                         >
                             Conocé las Esculturas
@@ -83,8 +83,8 @@ const Formas = () => {
                             alignItems: 'center',
                         }}
                     >
-                        <Typography 
-                            variant="h5" 
+                        <Typography
+                            variant="h5"
                             sx={{ color: 'white', fontWeight: 'bold', fontSize: { xs: '16px', sm: '20px' } }}
                         >
                             Conocé nuestros Eventos

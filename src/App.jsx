@@ -4,6 +4,7 @@ import AdminPanel from './pages/AdminControlPanel/AdminPanel';
 import Login from './pages/login/Login';
 import AddEventPage from './pages/AdminControlPanel/AddEventPage';
 import Home from './pages/home/Home';
+import SculpturesPage from './pages/sculptures/SculpturesPage';
 
 function App() {
   return (
@@ -23,6 +24,8 @@ function App() {
 
         {/* Ruta para agregar un evento */}
         <Route path="/add-event" element={<AddEventPage />} />
+
+        <Route path="/esculturas" element={<SculpturesPage />} />
       </Routes>
     </Router>
   );

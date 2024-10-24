@@ -98,15 +98,17 @@ const Info2 = () => {
                         <Typography
                             variant="h3"
                             sx={{
-                                backgroundColor: '#fff', // Fondo blanco
-                                color: '#000', // Texto en negro
-                                borderRadius: '50%', // Hacer el círculo perfectamente redondo
-                                width: '70px', // Más grande
-                                height: '70px',
+                                backgroundColor: '#fff', 
+                                color: '#000', 
+                                borderRadius: '50%',
+                                width: '50px', 
+                                height: '50px',
                                 display: 'flex',
                                 justifyContent: 'center',
                                 alignItems: 'center',
                                 fontWeight: 'bold',
+                                fontSize: '20px',
+                                flexShrink: 0, // Evita que el contenedor se redimensione
                             }}
                         >
                             1
@@ -128,15 +130,17 @@ const Info2 = () => {
                         <Typography
                             variant="h3"
                             sx={{
-                                backgroundColor: '#fff', // Fondo blanco
-                                color: '#000', // Texto en negro
-                                borderRadius: '50%', // Hacer el círculo perfectamente redondo
-                                width: '70px', // Más grande
-                                height: '70px',
+                                backgroundColor: '#fff', 
+                                color: '#000', 
+                                borderRadius: '50%',
+                                width: '50px', 
+                                height: '50px',
                                 display: 'flex',
                                 justifyContent: 'center',
                                 alignItems: 'center',
                                 fontWeight: 'bold',
+                                fontSize: '20px',
+                                flexShrink: 0, // Evita que el contenedor se redimensione
                             }}
                         >
                             2

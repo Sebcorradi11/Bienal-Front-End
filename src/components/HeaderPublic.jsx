@@ -16,7 +16,7 @@ import {
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import { NavLink, useNavigate } from 'react-router-dom';
-import Bienal from '../assets/footer/bienal.webp';
+import Bienal from '../assets/header/logo.svg';
 
 const HeaderPublic = () => {
     const navigate = useNavigate();
@@ -74,12 +74,6 @@ const HeaderPublic = () => {
                         alt="Bienal del Chaco"
                         style={{ height: '40px', marginRight: '8px' }}
                     />
-                    <Typography
-                        variant="h6"
-                        sx={{ fontWeight: 'bold', fontSize: '18px', color: '#fff' }}
-                    >
-                        Bienal del Chaco
-                    </Typography>
                 </Box>
 
                 <Box sx={{ display: 'flex', alignItems: 'center', marginLeft: 'auto', gap: 2 }}>

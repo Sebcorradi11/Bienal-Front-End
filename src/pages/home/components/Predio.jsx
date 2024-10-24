@@ -8,8 +8,8 @@ const Predio = () => {
             sx={{
                 backgroundImage: `url(${predioImage})`,
                 backgroundSize: 'cover',
-                backgroundPosition: 'center',
-                height: '60vh', // Ajustado a 60% del alto de la pantalla
+                backgroundPosition: '0% 25%',
+                height: '62vh', // Ajustado a 60% del alto de la pantalla
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'flex-start', // Alinea el contenido hacia el borde superior
@@ -20,12 +20,10 @@ const Predio = () => {
                 paddingTop: '40px', // Espacio del borde superior
             }}
         >
-            <Box sx={{ width: '50%', marginLeft: '15rem' }}>
-            <Typography variant="h2" sx={{ fontStyle: 'italic', fontWeight: 'bold', fontSize: '4rem' }}>
-                Bienal del Chaco 2024
-            </Typography>
-            <Typography variant="h4" sx={{ mt: 2 }}>
-                del 13 al 21 de Julio
+            <Box sx={{ width: '45%', marginLeft: '5rem' }}>
+            <Typography variant="h2" sx={{ fontSize: '64px' , fontWeight:'500'}}>
+                <span style={{ fontWeight:'400', fontFamily: 'Instrument Serif, serif', fontStyle: 'italic', fontSize: '69px' }}>Bienal</span>  del Chaco <span style={{ fontWeight:'400', fontFamily: 'Instrument Serif, serif', fontStyle: 'italic', fontSize: '69px' }}>2024 </span>
+                del 13 al 21 de <span style={{ fontWeight:'400', fontFamily: 'Instrument Serif, serif', fontStyle: 'italic', fontSize: '69px' }}>Julio</span>
             </Typography>
             </Box>
         </Box>

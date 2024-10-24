@@ -2,8 +2,8 @@ import React from 'react';
 import { Box, Typography } from '@mui/material';
 import HeaderPublic from '../../components/HeaderPublic';
 import Footer from '../../components/Footer';
-import Predio from './components/predio';
-import Formas from './components/formas';
+import Predio from './components/Predio';
+import Formas from './components/Formas';
 import Info1 from './components/Info1';
 import Info2 from './components/Info2';
 

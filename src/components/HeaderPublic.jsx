@@ -16,9 +16,9 @@ import {
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import { NavLink, useNavigate } from 'react-router-dom';
-import Bienal from '../../../assets/footer/bienal.webp';
+import Bienal from '../assets/footer/bienal.webp';
 
-const Header = () => {
+const HeaderPublic = () => {
     const navigate = useNavigate();
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('md'));
@@ -137,4 +137,4 @@ const Header = () => {
     );
 };
 
-export default Header;
+export default HeaderPublic;

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box, Typography } from '@mui/material';
-import Header from './components/Header';
+import HeaderPublic from '../../components/HeaderPublic';
 import Footer from '../../components/Footer';
 import Predio from './components/predio';
 import Formas from './components/formas';
@@ -11,7 +11,7 @@ const Home = () => {
     return (
         <Box>
             {/* Header */}
-            <Header />
+            <HeaderPublic />
 
             {/* Sección del Predio (banner) */}
             <Predio />

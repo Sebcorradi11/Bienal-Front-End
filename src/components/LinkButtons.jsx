@@ -1,32 +1,32 @@
 import { Button } from '@mui/material';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import GoogleIcon from '@mui/icons-material/Google';
-import InstagramIcon from '@mui/icons-material/Instagram';
 import PropTypes from 'prop-types';
 
 function LinkButtons({ platform, onClick }) {
-    let icon, color, label;
+    let icon, color, label, textColor, hoverColor;
 
     switch (platform) {
         case 'facebook':
             icon = <FacebookIcon />;
-            color = '#3b5998';
+            color = '#1877F2';
             label = 'Continuar con Facebook';
+            textColor = '#fff';
+            hoverColor = '#165DB0'; 
             break;
         case 'google':
             icon = <GoogleIcon />;
-            color = '#DB4437';
+            color = '#fff'; 
             label = 'Continuar con Google';
-            break;
-        case 'instagram':
-            icon = <InstagramIcon />;
-            color = '#E4405F';
-            label = 'Continuar con Instagram';
+            textColor = '#000'; 
+            hoverColor = '#f5f5f5'; 
             break;
         default:
             icon = null;
             color = '#000';
             label = 'Prefiero Continuar';
+            textColor = '#fff';
+            hoverColor = '#333';
     }
 
     return (
@@ -35,16 +35,18 @@ function LinkButtons({ platform, onClick }) {
             startIcon={icon}
             onClick={onClick}
             sx={{
+                
                 backgroundColor: color,
-                color: '#fff',
+                color: textColor,
                 width: '100%',
-                maxWidth: '300px',
+                maxWidth: '900px', 
                 margin: '10px 0',
                 borderRadius: '8px',
                 textTransform: 'none',
                 fontSize: '16px',
+                border: platform === 'google' ? '1px solid #ddd' : 'none', 
                 '&:hover': {
-                    backgroundColor: `${color}CC`,
+                    backgroundColor: hoverColor,
                 },
             }}
         >
@@ -59,3 +61,5 @@ LinkButtons.propTypes = {
 };
 
 export default LinkButtons;
+
+

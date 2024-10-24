@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box } from '@mui/material';
 import LoginForm from './components/LoginForm';
-import Header from './components/HeaderLogin';
+import HeaderPublic from '../../components/HeaderPublic';
 import Footer from '../../components/Footer';
 import useLoginLogic from './components/LoginLogic';
 
@@ -18,7 +18,7 @@ const Login = () => {
         >
             {/* Header */}
             <Box sx={{ flexShrink: 0 }}>
-                <Header />
+                <HeaderPublic />
             </Box>
 
             {/* Contenido principal centrado */}

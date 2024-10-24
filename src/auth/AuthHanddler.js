@@ -39,8 +39,3 @@ export const handleGoogleLogin = async() => {
     
  
 
-
-export const handleInstagramLogin = () => {
-
-  
-};

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { login } from '../../../store/userSlice.js';
-import { handleGoogleLogin, handleFacebookLogin, handleInstagramLogin } from '../../../auth/AuthHanddler.js';
+import { handleGoogleLogin, handleFacebookLogin} from '../../../auth/AuthHanddler.js';
 
 const useLoginLogic = () => {
     const navigate = useNavigate();
@@ -18,9 +18,6 @@ const useLoginLogic = () => {
                     break;
                 case 'facebook':
                     userData = await handleFacebookLogin();
-                    break;
-                case 'instagram':
-                    userData = await handleInstagramLogin();
                     break;
                 default:
                     throw new Error('Plataforma no soportada');

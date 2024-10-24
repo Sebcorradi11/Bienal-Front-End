@@ -29,7 +29,7 @@ const useLoginLogic = () => {
             if (userData) {
                 const { username, role } = userData;
                 dispatch(login({ username, role }));
-                navigate('/HomeUser');
+                navigate('/adminPanel');
             }
         } catch (error) {
             setError('Error al iniciar sesión. Inténtalo nuevamente.');

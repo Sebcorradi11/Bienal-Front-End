@@ -7,6 +7,7 @@ import App from './App.jsx';
 import theme from './theme'; // Importa el tema personalizado
 import store from './store'; // Importa el store de Redux
 
+
 // Fuentes Roboto para la tipografía de Material UI
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';

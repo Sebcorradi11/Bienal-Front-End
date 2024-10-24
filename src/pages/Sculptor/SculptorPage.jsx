@@ -2,14 +2,14 @@
 import React from 'react';
 import SculptorList from '../Sculptor/components/SculptorList';
 import Footer from '../../components/Footer'; // Si ya tienes el footer creado
-import Header from './components/Header';
+import HeaderPublic from '../../components/HeaderPublic';
 import Info from '../Sculptor/components/Info';
 import Info2 from '../Sculptor/components/Info2';
 
 const SculptorPage = () => {
     return (
         <>
-            <Header />
+            <HeaderPublic />
             <Info />
             <Info2 />
             <SculptorList />

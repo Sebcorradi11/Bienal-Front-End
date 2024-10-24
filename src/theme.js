@@ -33,7 +33,8 @@ const theme = createTheme({
         },
     },
     typography: {
-        fontFamily: `'Roboto', 'Arial', sans-serif`,
+        fontFamily: `'Work Sans', 'Roboto', sans-serif`,
+        fontWeight: '400',
         h1: {
             fontSize: '3rem',
             fontWeight: 700,
@@ -60,6 +61,14 @@ const theme = createTheme({
             textTransform: 'none',  // Sin texto en mayúsculas para los botones
             fontWeight: 600,
         },
+        workSans: {
+            fontFamily: 'Work Sans, sans-serif',
+            fontWeight: 400,
+          },
+          instrumentSerif: {
+            fontFamily: 'Instrument Serif, serif',
+            fontWeight: 400,
+          },
     },
     components: {
         MuiAppBar: {

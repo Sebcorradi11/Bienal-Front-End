@@ -17,6 +17,7 @@ import {
 import MenuIcon from '@mui/icons-material/Menu';
 import { useNavigate } from 'react-router-dom';
 import Bienal from '../../../assets/footer/bienal.webp';
+import Logo from '../../../assets/header/logo.svg'
 
 const Header = () => {
     const navigate = useNavigate();
@@ -38,7 +39,7 @@ const Header = () => {
             position="static"
             sx={{
                 backgroundColor: '#000',
-                height: '60px',
+                height: '80px',
                 display: 'flex',
                 justifyContent: 'center',
                 padding: 0,
@@ -65,16 +66,10 @@ const Header = () => {
                     onClick={() => navigate('/')}
                 >
                     <img
-                        src={Bienal}
+                        src={Logo}
                         alt="Bienal del Chaco"
                         style={{ height: '40px', marginRight: '8px' }}
                     />
-                    <Typography
-                        variant="h6"
-                        sx={{ fontWeight: 'bold', fontSize: '18px', color: '#fff' }}
-                    >
-                        Bienal del Chaco
-                    </Typography>
                 </Box>
 
                 {/* Enlaces y Avatar a la derecha */}

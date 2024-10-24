@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { QueryClient, QueryClientProvider } from 'react-query';  // Importar QueryClientProvider y QueryClient
 import GestionEventos from './pages/AdminControlPanel/components/EventManagement';
 import AdminPanel from './pages/AdminControlPanel/AdminPanel';
 import Login from './pages/login/Login';
@@ -8,32 +9,35 @@ import SculpturesPage from './pages/sculptures/SculpturesPage';
 import SculptorPage from './pages/Sculptor/SculptorPage';
 import EventosPage from './pages/Eventos/EventosPage';
 
+// Crea una instancia de QueryClient
+const queryClient = new QueryClient();
+
 function App() {
   return (
-    <Router>
-      <Routes>
-        {/* Ruta principal - Home */}
-        <Route path="/" element={<Home />} />
+    <QueryClientProvider client={queryClient}>
+      <Router>
+        <Routes>
+         
+          <Route path="/" element={<Home />} />
 
-        {/* Ruta para el login */}
-        <Route path="/login" element={<Login />} />
+         
+          <Route path="/login" element={<Login />} />
 
-        {/* Ruta para el panel de administración */}
-        <Route path="/AdminPanel" element={<AdminPanel />} />
+          
+          <Route path="/adminPanel" element={<AdminPanel />} />
 
-        {/* Ruta para gestionar eventos */}
-        <Route path="/gestionar-eventos" element={<GestionEventos />} />
+          
+          <Route path="/gestionar-eventos" element={<GestionEventos />} />
 
-        {/* Ruta para agregar un evento */}
-        <Route path="/add-event" element={<AddEventPage />} />
+         
+          <Route path="/add-event" element={<AddEventPage />} />
 
-        <Route path="/esculturas" element={<SculpturesPage />} />
-        
-        <Route path="/eventos" element={<EventosPage />} />
-
-        <Route path="/escultores" element={<SculptorPage />} />
-      </Routes>
-    </Router>
+          <Route path="/esculturas" element={<SculpturesPage />} />
+          <Route path="/eventos" element={<EventosPage />} />
+          <Route path="/escultores" element={<SculptorPage />} />
+        </Routes>
+      </Router>
+    </QueryClientProvider>
   );
 }
 

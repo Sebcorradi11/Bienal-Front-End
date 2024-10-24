@@ -17,8 +17,8 @@ const Forma = ({l1, l2, l3, imagen, src}) => {
     // Handler para actualizar la posicion del mouse cuando se mueve
     const handleMouseMove = (e) => {
       const { innerWidth, innerHeight } = window;
-      const xAxis = (innerWidth / 2 - e.clientX) / 60;
-      const yAxis = (innerHeight / 2 - e.clientY) / 20;
+      const xAxis = (innerWidth / 2 - e.clientX) / 80;
+      const yAxis = (innerHeight / 2 - e.clientY) / 40;
       setRotation({ x: yAxis, y: -xAxis });
     };
   

@@ -6,6 +6,7 @@ import AddEventPage from './pages/AdminControlPanel/AddEventPage';
 import Home from './pages/home/Home';
 import SculpturesPage from './pages/sculptures/SculpturesPage';
 import SculptorPage from './pages/Sculptor/SculptorPage';
+import EventosPage from './pages/Eventos/EventosPage';
 
 function App() {
   return (
@@ -27,6 +28,8 @@ function App() {
         <Route path="/add-event" element={<AddEventPage />} />
 
         <Route path="/esculturas" element={<SculpturesPage />} />
+        
+        <Route path="/eventos" element={<EventosPage />} />
 
         <Route path="/escultores" element={<SculptorPage />} />
       </Routes>

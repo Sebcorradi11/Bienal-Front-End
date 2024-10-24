@@ -7,7 +7,7 @@ import {
 } from '@mui/material';
 import { Add, Delete, History, AutoFixHigh, ArrowBack } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
-import Header from '../../../components/Header';
+import Header from './Header';
 import Footer from '../../../components/Footer';
 
 const EventManagement = () => {

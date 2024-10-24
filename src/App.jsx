@@ -7,6 +7,7 @@ import Home from './pages/home/Home';
 import SculpturesPage from './pages/sculptures/SculpturesPage';
 import SculptorPage from './pages/Sculptor/SculptorPage';
 import EventosPage from './pages/Eventos/EventosPage';
+import VotesPage from './pages/Votos/VotesPage';
 
 function App() {
   return (
@@ -32,6 +33,9 @@ function App() {
         <Route path="/eventos" element={<EventosPage />} />
 
         <Route path="/escultores" element={<SculptorPage />} />
+
+        <Route path="/vote" element={<VotesPage/>} />
+
       </Routes>
     </Router>
   );

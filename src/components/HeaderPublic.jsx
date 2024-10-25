@@ -13,19 +13,32 @@ import {
     ListItemText,
     useMediaQuery,
     useTheme,
+    Button,
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import { NavLink, useNavigate } from 'react-router-dom';
 import Bienal from '../assets/header/logo.svg';
+import { handleLogout } from '../auth/AuthHanddler';
+import { useDispatch, useSelector } from 'react-redux';
 
 const HeaderPublic = () => {
     const navigate = useNavigate();
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('md'));
     const [drawerOpen, setDrawerOpen] = useState(false);
+    const dispatch = useDispatch();
+    const { username } = useSelector((state) => state.user); // Verifica si `username` está en el estado
+    if(!username){
+        console.log("El usuario ha cerrado sesión correctamente.");
+    }
 
     const handleDrawerToggle = () => {
         setDrawerOpen(!drawerOpen);
+    };
+
+    const handleUserLogout = () => {
+        dispatch(handleLogout());
+        navigate('/');
     };
 
     const linkStyles = ({ isActive }) => ({
@@ -88,12 +101,28 @@ const HeaderPublic = () => {
                             <NavLink to="/eventos" style={linkStyles}>
                                 Eventos
                             </NavLink>
-                            <IconButton onClick={() => navigate('/login')} sx={{ padding: 0 }}>
-                                <Avatar
-                                    src="/assets/avatar-default.webp"
-                                    sx={{ width: 32, height: 32 }}
-                                />
-                            </IconButton>
+                            {username ? ( // Mostrar Logout si el usuario está autenticado
+                                <>
+                                    <Typography sx={{ color: 'white' }}>Hola, {username}</Typography>
+                                    <Button
+                                        onClick={handleUserLogout}
+                                        sx={{
+                                            color: 'white',
+                                            backgroundColor: '#f44336',
+                                            marginLeft: 1,
+                                        }}
+                                    >
+                                        Logout
+                                    </Button>
+                                </>
+                            ) : (
+                                <IconButton onClick={() => navigate('/login')} sx={{ padding: 0 }}>
+                                    <Avatar
+                                        src="/assets/avatar-default.webp"
+                                        sx={{ width: 32, height: 32 }}
+                                    />
+                                </IconButton>
+                            )}
                         </>
                     ) : (
                         <IconButton onClick={handleDrawerToggle} sx={{ color: '#fff' }}>
@@ -119,11 +148,19 @@ const HeaderPublic = () => {
                                 <ListItemText primary="Eventos" />
                             </ListItemButton>
                         </ListItem>
-                        <ListItem disablePadding>
-                            <ListItemButton onClick={() => navigate('/login')}>
-                                <ListItemText primary="Login" />
-                            </ListItemButton>
-                        </ListItem>
+                        {username ? (
+                            <ListItem disablePadding>
+                                <ListItemButton onClick={handleUserLogout}>
+                                    <ListItemText primary="Logout" />
+                                </ListItemButton>
+                            </ListItem>
+                        ) : (
+                            <ListItem disablePadding>
+                                <ListItemButton onClick={() => navigate('/login')}>
+                                    <ListItemText primary="Login" />
+                                </ListItemButton>
+                            </ListItem>
+                        )}
                     </List>
                 </Drawer>
             </Toolbar>
@@ -132,3 +169,4 @@ const HeaderPublic = () => {
 };
 
 export default HeaderPublic;
+

@@ -5,6 +5,7 @@ const LinkButtonList = ({ handleLogin }) => (
     <>
         <LinkButtons platform="google" onClick={() => handleLogin('google')} />
         <LinkButtons platform="facebook" onClick={() => handleLogin('facebook')} />
+        <LinkButtons platform="github" onClick={() => handleLogin('github')} />
        
     </>
 );

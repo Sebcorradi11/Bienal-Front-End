@@ -16,8 +16,7 @@ import '@fontsource/roboto/700.css';
 
 // Renderiza la aplicación con Redux, Theme y StrictMode
 createRoot(document.getElementById('root')).render(
-  <StrictMode>
-    <Provider store={store}> {/* Provee el store de Redux a toda la app */}
+  <StrictMode>zider store={store}> {/* Provee el store de Redux a toda la app */}
       <ThemeProvider theme={theme}> {/* Aplica el tema global */}
         <CssBaseline /> {/* Normaliza los estilos */}
         <App /> {/* Renderiza la aplicación principal */}

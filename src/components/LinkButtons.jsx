@@ -21,6 +21,13 @@ function LinkButtons({ platform, onClick }) {
             textColor = '#000'; 
             hoverColor = '#f5f5f5'; 
             break;
+        case 'github':
+            icon = null;
+            color = '#000';
+            label = 'Continuar con Github';
+            textColor = '#fff';
+            hoverColor = '#333';
+            break;
         default:
             icon = null;
             color = '#000';

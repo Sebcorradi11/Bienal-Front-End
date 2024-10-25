@@ -1,12 +1,15 @@
+// src/App.jsx
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import GestionEventos from './pages/AdminControlPanel/components/EventManagement';
 import AdminPanel from './pages/AdminControlPanel/AdminPanel';
+import GestionEventos from './pages/GestionEventos/GestionarEventos';
 import Login from './pages/login/Login';
-import AddEventPage from './pages/AdminControlPanel/AddEventPage';
 import Home from './pages/home/Home';
 import SculpturesPage from './pages/sculptures/SculpturesPage';
 import SculptorPage from './pages/Sculptor/SculptorPage';
 import EventosPage from './pages/Eventos/EventosPage';
+import CrearEvento from './pages/GestionEventos/components/CrearEvento';
+import ModificarEvento from './pages/GestionEventos/components/ModificarEvento';
+import VerEvento from './pages/GestionEventos/components/VerEvento';
 
 function App() {
   return (
@@ -23,14 +26,18 @@ function App() {
 
         {/* Ruta para gestionar eventos */}
         <Route path="/gestionar-eventos" element={<GestionEventos />} />
+        <Route path="/crear-evento" element={<CrearEvento />} />
+        <Route path="/modificar-evento/:id" element={<ModificarEvento />} />
+        <Route path="/ver-evento/:id" element={<VerEvento />} />
 
-        {/* Ruta para agregar un evento */}
-        <Route path="/add-event" element={<AddEventPage />} />
 
+        {/* Ruta para las esculturas */}
         <Route path="/esculturas" element={<SculpturesPage />} />
-        
+
+        {/* Ruta para los eventos */}
         <Route path="/eventos" element={<EventosPage />} />
 
+        {/* Ruta para los escultores */}
         <Route path="/escultores" element={<SculptorPage />} />
       </Routes>
     </Router>

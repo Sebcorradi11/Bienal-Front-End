@@ -10,6 +10,7 @@ import EventosPage from './pages/Eventos/EventosPage';
 import CrearEvento from './pages/GestionEventos/components/CrearEvento';
 import ModificarEvento from './pages/GestionEventos/components/ModificarEvento';
 import VerEvento from './pages/GestionEventos/components/VerEvento';
+import VotesPage from './pages/Votos/VotesPage';
 
 function App() {
   return (
@@ -39,6 +40,9 @@ function App() {
 
         {/* Ruta para los escultores */}
         <Route path="/escultores" element={<SculptorPage />} />
+
+        <Route path="/vote" element={<VotesPage />} />
+
       </Routes>
     </Router>
   );

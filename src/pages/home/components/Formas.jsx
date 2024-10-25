@@ -114,17 +114,17 @@ const Formas = () => {
             >
                 {/* Primer SVG */}
                 <Grid item>
-                    <Forma l1={'Conocé'} l2={'a los'} l3={'Escultores'} imagen={sculptorIcon} src={'./'}/>
+                    <Forma l1={'Conocé'} l2={'a los'} l3={'Escultores'} imagen={sculptorIcon} src={'./escultores'}/>
                 </Grid>
 
                 {/* Segundo SVG */}
                 <Grid item>
-                    <Forma l1={'Conocé'} l2={'las'} l3={'Esculturas'} imagen={sculpturesIcon} src={'./'}/>
+                    <Forma l1={'Conocé'} l2={'las'} l3={'Esculturas'} imagen={sculpturesIcon} src={'./esculturas'}/>
                 </Grid>
 
                 {/* Tercer SVG */}
                 <Grid item> 
-                    <Forma l1={'Conocé'} l2={'nuestros'} l3={'Eventos'} imagen={eventsIcon} src={'./'}/>
+                    <Forma l1={'Conocé'} l2={'nuestros'} l3={'Eventos'} imagen={eventsIcon} src={'./eventos'}/>
                 </Grid>
             </Grid>
 

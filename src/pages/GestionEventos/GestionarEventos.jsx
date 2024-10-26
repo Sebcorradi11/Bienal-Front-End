@@ -3,10 +3,10 @@ import HeaderPublic from '../../components/HeaderPublic';
 import Footer from '../../components/Footer';
 import { Box, Container, Button, useMediaQuery, useTheme, Typography } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'; // Icono de flecha
-import CrearEventoButton from './components/EventoButton';
-import FiltrosFecha from './components/FiltrosFecha';
-import BuscadorEvento from './components/BuscadorEvento';
-import ListaEventos from './components/ListaEventos';
+import CrearEventoButton from './components/Eventos/EventoButton';
+import FiltrosFecha from './components/Eventos/FiltrosFecha';
+import BuscadorEvento from './components/Eventos/BuscadorEvento';
+import ListaEventos from './components/Eventos/ListaEventos';
 import { useNavigate } from 'react-router-dom'; // Hook para navegación
 
 const GestionarEventos = () => {

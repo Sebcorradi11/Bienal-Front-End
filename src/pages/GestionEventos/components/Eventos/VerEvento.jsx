@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Box, Typography, Button, Grid } from '@mui/material';
 import { useParams, useNavigate } from 'react-router-dom'; // useNavigate para la navegación
-import { obtenerEscultor } from '../mockEventos';
-import HeaderPublic from '../../../components/HeaderPublic';
-import Footer from '../../../components/Footer';
-import fondoBoton from '../../../assets/gestioneventos/Rectangle 32.svg';
+import { obtenerEscultor } from '../../mockEventos';
+import HeaderPublic from '../../../../components/HeaderPublic';
+import Footer from '../../../../components/Footer';
+import fondoBoton from '../../../../assets/gestioneventos/Rectangle 32.svg';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 const VerEvento = () => {
@@ -27,6 +27,9 @@ const VerEvento = () => {
 
     const handleAtras = () => {
         navigate(-1); // Navega hacia la página anterior
+    };
+    const handleVerEscultores = () => {
+        navigate(`/ver-escultores/${id}`); // Navega a la vista de escultores para el evento con su ID
     };
 
     if (error) {
@@ -94,6 +97,7 @@ const VerEvento = () => {
 
                         <Button
                             fullWidth
+                            onClick={handleVerEscultores}
                             sx={{
                                 marginTop: 3,
                                 height: '60px',

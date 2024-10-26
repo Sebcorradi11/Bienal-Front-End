@@ -4,7 +4,7 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useNavigate } from 'react-router-dom';
-import { obtenerEventos, eliminarEvento } from '../mockEventos';
+import { obtenerEventos, eliminarEvento } from '../../mockEventos';
 
 const ListaEventos = () => {
     const [eventos, setEventos] = useState([]);

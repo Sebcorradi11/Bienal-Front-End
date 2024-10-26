@@ -3,12 +3,13 @@ import {
   Box, TextField, Typography, Button, Icon
 } from '@mui/material';
 import ImageIcon from '@mui/icons-material/Image';
-import HeaderPublic from '../../../components/HeaderPublic';
-import Footer from '../../../components/Footer';
-import fondoBoton from '../../../assets/gestioneventos/Rectangle 32.svg';
+import HeaderPublic from '../../../../components/HeaderPublic';
+import Footer from '../../../../components/Footer';
+import fondoBoton from '../../../../assets/gestioneventos/Rectangle 32.svg';
 import { useNavigate } from 'react-router-dom';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import axios from 'axios';
+
 
 const CrearEvento = () => {
   const [formData, setFormData] = useState({
@@ -26,6 +27,10 @@ const CrearEvento = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
+  };
+
+  const handleAgregarEscultor = () => {
+    navigate('/agregar-escultores'); // Navega a la vista de agregar escultores
   };
 
   // Maneja la carga de imágenes desde el input
@@ -68,7 +73,7 @@ const CrearEvento = () => {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
       console.log('Evento creado:', response.data);
-      
+
       // Mostrar mensaje de alerta
       alert('Evento creado exitosamente.');
 
@@ -213,6 +218,7 @@ const CrearEvento = () => {
 
           <Button
             fullWidth
+            onClick={handleAgregarEscultor}
             sx={{
               height: '60px',
               borderRadius: '30px',

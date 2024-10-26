@@ -7,10 +7,13 @@ import Home from './pages/home/Home';
 import SculpturesPage from './pages/sculptures/SculpturesPage';
 import SculptorPage from './pages/Sculptor/SculptorPage';
 import EventosPage from './pages/Eventos/EventosPage';
-import CrearEvento from './pages/GestionEventos/components/CrearEvento';
-import ModificarEvento from './pages/GestionEventos/components/ModificarEvento';
-import VerEvento from './pages/GestionEventos/components/VerEvento';
+import CrearEvento from './pages/GestionEventos/components/Eventos/CrearEvento';
+import ModificarEvento from './pages/GestionEventos/components/Eventos/ModificarEvento';
+import VerEvento from './pages/GestionEventos/components/Eventos/VerEvento';
 import VotesPage from './pages/Votos/VotesPage';
+import AgregarEscultores from './pages/GestionEventos/components/Escultores/AgregarEscultores';
+import VerEscultores from './pages/GestionEventos/components/Escultores/VerEscultores';
+import ModificarEscultores from './pages/GestionEventos/components/Escultores/ModificarEscultores';
 
 function App() {
   return (
@@ -30,6 +33,9 @@ function App() {
         <Route path="/crear-evento" element={<CrearEvento />} />
         <Route path="/modificar-evento/:id" element={<ModificarEvento />} />
         <Route path="/ver-evento/:id" element={<VerEvento />} />
+        <Route path="/agregar-escultores" element={<AgregarEscultores />} />
+        <Route path="/ver-escultores/:id" element={<VerEscultores />} />
+        <Route path="/modificar-escultores/:id" element={<ModificarEscultores />} />
 
 
         {/* Ruta para las esculturas */}

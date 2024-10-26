@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Box, TextField, Typography, Button, Grid } from '@mui/material';
 import { useParams, useNavigate } from 'react-router-dom';
-import { obtenerEscultor } from '../mockEventos';
-import HeaderPublic from '../../../components/HeaderPublic';
-import Footer from '../../../components/Footer';
-import fondoBoton from '../../../assets/gestioneventos/Rectangle 32.svg';
+import { obtenerEscultor } from '../../mockEventos';
+import HeaderPublic from '../../../../components/HeaderPublic';
+import Footer from '../../../../components/Footer';
+import fondoBoton from '../../../../assets/gestioneventos/Rectangle 32.svg';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+
 
 const ModificarEvento = () => {
     const { id } = useParams(); // Obtiene el ID de la URL
@@ -40,6 +41,10 @@ const ModificarEvento = () => {
     const handleAtras = () => {
         navigate(-1); // Navega a la página anterior
     };
+    const handleModificarEscultores = () => {
+        navigate(`/modificar-escultores/${id}`); // Navega correctamente a la vista de escultores
+    };
+
 
     return (
         <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
@@ -106,6 +111,7 @@ const ModificarEvento = () => {
 
                         <Button
                             fullWidth
+                            onClick={handleModificarEscultores}
                             sx={{
                                 height: '60px',
                                 borderRadius: '30px',
@@ -115,11 +121,12 @@ const ModificarEvento = () => {
                                 color: 'white',
                                 textTransform: 'none',
                                 '&:hover': { opacity: 0.9 },
-                                marginBottom: 3, // Espacio inferior para separar los botones
+                                marginBottom: 3,
                             }}
                         >
                             <Typography variant="h6">Escultores</Typography>
                         </Button>
+
 
                         {/* Botones de Modificar Evento y Atrás */}
                         <Box

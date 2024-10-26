@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Box } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
-import fondoBoton from '../../../assets/gestioneventos/Rectangle 32.svg';
+import fondoBoton from '../../../../assets/gestioneventos/Rectangle 32.svg';
 import { useNavigate } from 'react-router-dom';
 
 const EventoButton = () => {

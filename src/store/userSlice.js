@@ -1,10 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+// userSlice.js
 const userSlice = createSlice({
     name: 'user',
     initialState: {
         username: '',
         role: '',
+        isAuthenticated: false, // Estado de autenticación
         loading: false,
         error: null,
     },
@@ -17,6 +19,7 @@ const userSlice = createSlice({
             state.loading = false;
             state.username = action.payload.username;
             state.role = action.payload.role;
+            state.isAuthenticated = true; // Cambiar a true cuando se inicia sesión
             state.error = null;
         },
         loginFailure: (state, action) => {
@@ -26,6 +29,7 @@ const userSlice = createSlice({
         logout: (state) => {
             state.username = '';
             state.role = '';
+            state.isAuthenticated = false; // Cambiar a false al cerrar sesión
             state.loading = false;
             state.error = null;
         },

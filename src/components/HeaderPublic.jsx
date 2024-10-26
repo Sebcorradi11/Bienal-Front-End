@@ -169,4 +169,3 @@ const HeaderPublic = () => {
 };
 
 export default HeaderPublic;
-

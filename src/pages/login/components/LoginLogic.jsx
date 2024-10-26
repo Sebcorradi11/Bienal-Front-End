@@ -1,13 +1,13 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { login } from '../../../store/userSlice.js';
-import { handleGoogleLogin, handleFacebookLogin, handleGithubLogin} from '../../../auth/AuthHanddler.js';
+import { useDispatch, useSelector } from 'react-redux';
+import { handleGoogleLogin, handleFacebookLogin, handleGithubLogin } from '../../../auth/AuthHanddler.js';
 
 const useLoginLogic = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const [error, setError] = useState('');
+    const isAuthenticated = useSelector((state) => state.user.isAuthenticated); // Obtener el estado de autenticación
 
     const handleLogin = async (platform) => {
         try {
@@ -24,11 +24,18 @@ const useLoginLogic = () => {
                 default:
                     throw new Error('Plataforma no soportada');
             }
-            navigate('/adminPanel');
         } catch (error) {
+            console.log(error);
             setError('Error al iniciar sesión. Inténtalo nuevamente.');
         }
     };
+
+
+    useEffect(() => {
+        if (isAuthenticated) {
+            navigate('/adminPanel');
+        }
+    }, [isAuthenticated, navigate]);
 
     return { handleLogin, error };
 };

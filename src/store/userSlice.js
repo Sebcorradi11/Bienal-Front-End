@@ -3,20 +3,33 @@ import { createSlice } from '@reduxjs/toolkit';
 const userSlice = createSlice({
     name: 'user',
     initialState: {
+        isAuthenticated: false,
+        role: 'user',
         username: '',
-        role: '',
     },
     reducers: {
+        loginStart: (state) => {
+            state.isAuthenticated = false;
+        },
         login: (state, action) => {
+            state.isAuthenticated = true;
             state.username = action.payload.username;
             state.role = action.payload.role;
         },
-        logout: (state) => {
-            state.username = '';
-            state.role = '';
+        loginFailure: (state) => {
+            state.isAuthenticated = false;
         },
-    },
+        logout: (state) => {
+            state.isAuthenticated = false;
+            state.role = 'user';
+            state.username = '';
+        },
+        updateRole: (state, action) => {
+            state.role = action.payload; // Actualiza el rol en el estado de Redux
+        }
+    }
 });
 
-export const { login, logout } = userSlice.actions;
+export const { loginStart, login, loginFailure, logout, updateRole } = userSlice.actions;
 export default userSlice.reducer;
+

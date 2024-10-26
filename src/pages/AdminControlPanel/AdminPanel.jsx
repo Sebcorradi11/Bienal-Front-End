@@ -1,7 +1,10 @@
 import React from 'react';
 import { Box, Grid, Paper, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import Header from './components/Header';
+
+import Header from '../../components/HeaderPublic';
+
+
 import Footer from '../../components/Footer';
 
 const AdminControlPanel = () => {

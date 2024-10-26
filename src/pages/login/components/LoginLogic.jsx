@@ -7,7 +7,7 @@ const useLoginLogic = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const [error, setError] = useState('');
-    const isAuthenticated = useSelector((state) => state.user.isAuthenticated); // Obtener el estado de autenticación
+    const { isAuthenticated, role } = useSelector((state) => state.user); // Obtener estado de autenticación y rol
 
     const handleLogin = async (platform) => {
         try {
@@ -30,12 +30,16 @@ const useLoginLogic = () => {
         }
     };
 
-
+    // Usar useEffect para redirigir solo si el usuario está autenticado y basado en el rol
     useEffect(() => {
         if (isAuthenticated) {
-            navigate('/adminPanel');
+            if (role === 'admin') {
+                navigate('/adminPanel');
+            } else {
+                navigate('/esculturas');
+            }
         }
-    }, [isAuthenticated, navigate]);
+    }, [isAuthenticated, role, navigate]);
 
     return { handleLogin, error };
 };

@@ -4,7 +4,7 @@ import SculptorPage from '../../pages/Sculptor/SculptorPage';
 import EventosPage from '../../pages/Eventos/EventosPage';
 import VotesPage from '../../pages/Votos/VotesPage';
 import Home from '../../pages/home/Home';
-import Login from '../../pages/Login/Login';
+import LoginPage from '../../pages/login/Login';
 
 export const onlyPublicRoute = [
   {
@@ -29,6 +29,6 @@ export const onlyPublicRoute = [
   },
   {
     path: "/login",
-    component: Login,
+    component: LoginPage,
   },
 ];

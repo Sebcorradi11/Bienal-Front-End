@@ -3,7 +3,7 @@ import { FacebookAuthProvider, GoogleAuthProvider, GithubAuthProvider, signInWit
 import { auth } from './firebase';
 import { loginStart, login, loginFailure, logout } from '../store/userSlice';
 
-export const handleGoogleLogin = () => async (dispatch) => {
+export const handleGoogleLogin = (setError) => async (dispatch) => {
     dispatch(loginStart());
     const provider = new GoogleAuthProvider();
     try {
@@ -15,10 +15,11 @@ export const handleGoogleLogin = () => async (dispatch) => {
     } catch (error) {
         console.log("Error al iniciar sesión con Google:", error);
         dispatch(loginFailure(error.message));
+        setError(error.message);
     }
 };
 
-export const handleFacebookLogin = () => async (dispatch) => {
+export const handleFacebookLogin = (setError) => async (dispatch) => {
     dispatch(loginStart());
     const provider = new FacebookAuthProvider();
     try {
@@ -30,10 +31,11 @@ export const handleFacebookLogin = () => async (dispatch) => {
     } catch (error) {
         console.log("Error al iniciar sesión con Facebook:", error);
         dispatch(loginFailure(error.message));
+        setError(error.message);
     }
 };
 
-export const handleGithubLogin = () => async (dispatch) => {
+export const handleGithubLogin = (setError) => async (dispatch) => {
     dispatch(loginStart());
     const provider = new GithubAuthProvider();
     try {
@@ -45,6 +47,7 @@ export const handleGithubLogin = () => async (dispatch) => {
     } catch (error) {
         console.log("Error al iniciar sesión con Github:", error);
         dispatch(loginFailure(error.message));
+        setError(error.message);
     }
 };
 

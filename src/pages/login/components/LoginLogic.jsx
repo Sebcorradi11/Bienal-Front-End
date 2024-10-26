@@ -6,28 +6,22 @@ import { handleGoogleLogin, handleFacebookLogin, handleGithubLogin } from '../..
 const useLoginLogic = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const [error, setError] = useState('');
     const isAuthenticated = useSelector((state) => state.user.isAuthenticated); // Obtener el estado de autenticación
 
-    const handleLogin = async (platform) => {
-        try {
+    const handleLogin = async (platform, setError) => {
             switch (platform) {
                 case 'google':
-                    await dispatch(handleGoogleLogin());
+                    await dispatch(handleGoogleLogin(setError));
                     break;
                 case 'facebook':
-                    await dispatch(handleFacebookLogin());
+                    await dispatch(handleFacebookLogin(setError));
                     break;
                 case 'github':
-                    await dispatch(handleGithubLogin());
+                    await dispatch(handleGithubLogin(setError));
                     break;
                 default:
                     throw new Error('Plataforma no soportada');
             }
-        } catch (error) {
-            console.log(error);
-            setError('Error al iniciar sesión. Inténtalo nuevamente.');
-        }
     };
 
 
@@ -37,7 +31,7 @@ const useLoginLogic = () => {
         }
     }, [isAuthenticated, navigate]);
 
-    return { handleLogin, error };
+    return { handleLogin };
 };
 
 export default useLoginLogic;

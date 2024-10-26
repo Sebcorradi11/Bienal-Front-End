@@ -28,9 +28,13 @@ const HeaderPublic = () => {
     const [drawerOpen, setDrawerOpen] = useState(false);
     const dispatch = useDispatch();
     const { username } = useSelector((state) => state.user); // Verifica si `username` está en el estado
+    let name;
     if(!username){
         console.log("El usuario ha cerrado sesión correctamente.");
+    } else {
+        name = username.split(' ')[0];
     }
+
 
     const handleDrawerToggle = () => {
         setDrawerOpen(!drawerOpen);
@@ -103,7 +107,7 @@ const HeaderPublic = () => {
                             </NavLink>
                             {username ? ( // Mostrar Logout si el usuario está autenticado
                                 <>
-                                    <Typography sx={{ color: 'white' }}>Hola, {username}</Typography>
+                                    <Typography sx={{ color: 'white' }}>Hola, {name}</Typography>
                                     <Button
                                         onClick={handleUserLogout}
                                         sx={{

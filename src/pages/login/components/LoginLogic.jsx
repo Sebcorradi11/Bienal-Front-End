@@ -1,39 +1,38 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { login } from '../../../store/userSlice.js';
-import { handleGoogleLogin, handleFacebookLogin} from '../../../auth/AuthHanddler.js';
+import { useDispatch, useSelector } from 'react-redux';
+import { handleGoogleLogin, handleGithubLogin } from '../../../auth/AuthHanddler.js';
 
 const useLoginLogic = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const [error, setError] = useState('');
+    const {isAuthenticated, role} = useSelector((state) => state.user); // Obtener el estado de autenticación
 
-    const handleLogin = async (platform) => {
-        try {
-            let userData;
+    const handleLogin = async (platform, setError) => {
             switch (platform) {
                 case 'google':
-                    userData = await handleGoogleLogin();
+                    await dispatch(handleGoogleLogin(setError));
                     break;
-                case 'facebook':
-                    userData = await handleFacebookLogin();
+                case 'github':
+                    await dispatch(handleGithubLogin(setError));
                     break;
                 default:
                     throw new Error('Plataforma no soportada');
             }
-
-            if (userData) {
-                const { username, role } = userData;
-                dispatch(login({ username, role }));
-                navigate('/adminPanel');
-            }
-        } catch (error) {
-            setError('Error al iniciar sesión. Inténtalo nuevamente.');
-        }
     };
 
-    return { handleLogin, error };
+    // Usar useEffect para redirigir solo si el usuario está autenticado y basado en el rol
+    useEffect(() => {
+        if (isAuthenticated) {
+            if (role === 'admin') {
+                navigate('/adminPanel');
+            } else {
+                navigate('/esculturas');
+            }
+        }
+    }, [isAuthenticated, role, navigate]);
+
+    return { handleLogin };
 };
 
 export default useLoginLogic;

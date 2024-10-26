@@ -11,7 +11,6 @@ export const handleGoogleLogin = (setError) => async (dispatch) => {
         const credentials = await signInWithPopup(auth, provider);
         const email = credentials.user.email;
         const role = 'user';
-        // Intentar guardar el usuario en Firestore
         try {
             await setDoc(doc(db, "users", credentials.user.uid), {
                 username: credentials.user.displayName || "Usuario desconocido",

@@ -6,7 +6,7 @@ import { handleGoogleLogin, handleFacebookLogin, handleGithubLogin } from '../..
 const useLoginLogic = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const isAuthenticated = useSelector((state) => state.user.isAuthenticated); // Obtener el estado de autenticación
+    const {isAuthenticated, role} = useSelector((state) => state.user); // Obtener el estado de autenticación
 
     const handleLogin = async (platform, setError) => {
             switch (platform) {

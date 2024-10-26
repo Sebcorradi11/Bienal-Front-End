@@ -1,8 +1,8 @@
 import React from 'react';
 import { Box, Grid, Paper, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import Header from '../../components/Header.jsx';
-import Footer from '../../components/Footer.jsx';
+import Header from '../../components/HeaderPublic';
+import Footer from '../../components/Footer';
 
 const AdminControlPanel = () => {
     const navigate = useNavigate();

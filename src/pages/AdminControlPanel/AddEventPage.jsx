@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Snackbar, Alert, Container } from '@mui/material';
 import FormAddEvent from './components/FormAddEvent'; // Ajusta la ruta según tu estructura
-import Header from '../../components/Header'; // Asegúrate que Header está bien importado
+import Header from '../../components/HeaderPublic';
+
 
 const AddEventPage = () => {
     const [events, setEvents] = useState([]);

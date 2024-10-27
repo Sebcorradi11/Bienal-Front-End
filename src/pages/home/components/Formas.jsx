@@ -3,7 +3,7 @@ import { Box, Grid, Typography, TextField, InputAdornment } from '@mui/material'
 import SearchIcon from '@mui/icons-material/Search';
 import PropTypes from 'prop-types';
 import { useState, useEffect, Children, ReactComponentElement } from 'react';
-import { motion } from "framer-motion";
+
 // Importaciones correctas de los SVGs
 import sculptorIcon from '../../../assets/home/Rectangle.svg';
 import sculpturesIcon from '../../../assets/home/Ellipse.svg';
@@ -17,8 +17,8 @@ const Forma = ({l1, l2, l3, imagen, src}) => {
     // Handler para actualizar la posicion del mouse cuando se mueve
     const handleMouseMove = (e) => {
       const { innerWidth, innerHeight } = window;
-      const xAxis = (innerWidth / 2 - e.clientX) / 85;
-      const yAxis = (innerHeight / 2 - e.clientY) / 35;
+      const xAxis = (innerWidth / 2 - e.clientX) / 80;
+      const yAxis = (innerHeight / 2 - e.clientY) / 40;
       setRotation({ x: yAxis, y: -xAxis });
     };
   
@@ -32,61 +32,33 @@ const Forma = ({l1, l2, l3, imagen, src}) => {
       };
     }, []);
 
-    return(<a href={src} style={{ cursor: 'default', textDecoration: 'none', position: 'relative', display: 'inline-block' }}>
-        <motion.div
-            whileHover={{ scale: 1.2, rotate: 90 }}
-            whileTap={{ scale: 0.8, rotate: -90, borderRadius: "100%" }}
-            style={{
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-            }}
-        >
-            <Box
-                sx={{
-                    width: { xs: '150px', sm: '250px' },
-                    height: { xs: '150px', sm: '250px' },
-                    backgroundImage: `url(${imagen})`,
-                    backgroundSize: 'contain',
-                    backgroundPosition: 'center',
-                    backgroundRepeat: 'no-repeat',
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    '&:hover': {
-                        cursor: 'pointer',
-                    },
-                    transform: `rotateX(${rotation.x}deg) rotateY(${rotation.y}deg)`,
-                    transition: 'transform 0.1s',
-                    perspective: '1000px',
-                }}
-            />
-        </motion.div>
-        <Typography
-        variant="h5"
+    return(<a href={src} style={{textDecoration: 'none'}}><Box
         sx={{
-            position: 'absolute',
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
-            textAlign: 'center',
-            color: 'white',
-            fontWeight: '400',
-            lineHeight: { xs: '4vw', sm: '4vh' }, // Ajusta el interlineado para diferentes tamaños de pantalla
-            fontSize: { xs: '5vw', sm: '3vh', md: '2.5vh', lg: '2vw' }, // Ajusta el tamaño de fuente según el ancho de pantalla
-            pointerEvents: 'none',
+            width: { xs: '150px', sm: '250px' }, // Responsivo
+            height: { xs: '150px', sm: '250px' },
+            backgroundImage: `url(${imagen})`,
+            backgroundSize: 'contain',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            '&:hover': {
+                transform: 'scale(1.02)', 
+                cursor: 'pointer', 
+            },
+            transform: `rotateX(${rotation.x}deg) rotateY(${rotation.y}deg)`,
+            transition: 'transform 0.1s',
+            perspective: '1000px',
         }}
     >
-        {l1}
-        <br />
-        {l2}
-        <br />
-        <span style={{ lineHeight: '1.2', fontWeight: '400', fontFamily: 'Instrument Serif, serif', fontStyle: 'italic', fontSize: '1.5em' }}>
-            {l3}
-        </span>
-    </Typography>
-    </a>    
-    )
+        <Typography
+            variant="h5"
+            sx={{ lineHeight:'25px', color: 'white', fontWeight: '400', fontSize: { xs: '30px', sm: '30px' } }} // Ajuste del tamaño de texto
+        >
+            {l1}<br></br>{l2}<br></br><span style={{ lineHeight: '35px',fontWeight:'400', fontFamily: 'Instrument Serif, serif', fontStyle: 'italic', fontSize: '38px' }}>{l3}</span>
+        </Typography>
+    </Box></a>)
 }
 
 //Los tipos de props que necesita Forma
@@ -114,17 +86,17 @@ const Formas = () => {
             >
                 {/* Primer SVG */}
                 <Grid item>
-                    <Forma l1={'Conocé'} l2={'a los'} l3={'Escultores'} imagen={sculptorIcon} src={'./escultores'}/>
+                    <Forma l1={'Conocé'} l2={'a los'} l3={'Escultores'} imagen={sculptorIcon} src={'./'}/>
                 </Grid>
 
                 {/* Segundo SVG */}
                 <Grid item>
-                    <Forma l1={'Conocé'} l2={'las'} l3={'Esculturas'} imagen={sculpturesIcon} src={'./esculturas'}/>
+                    <Forma l1={'Conocé'} l2={'las'} l3={'Esculturas'} imagen={sculpturesIcon} src={'./'}/>
                 </Grid>
 
                 {/* Tercer SVG */}
                 <Grid item> 
-                    <Forma l1={'Conocé'} l2={'nuestros'} l3={'Eventos'} imagen={eventsIcon} src={'./eventos'}/>
+                    <Forma l1={'Conocé'} l2={'nuestros'} l3={'Eventos'} imagen={eventsIcon} src={'./'}/>
                 </Grid>
             </Grid>
 

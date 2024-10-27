@@ -1,10 +1,16 @@
 // src/apis/interceptor.js
+import Cookies from 'js-cookie';
 import { eventosApi, esculturasApi } from "./api-config";
+import axios from 'axios';
 
 // Interceptor para manejar requests y responses
 const requestHandler = (request) => {
   // Agregar cualquier encabezado o token aquí
-  request.headers["Authorization"] = `Bearer ${localStorage.getItem("token")}`;
+  const token = Cookies.get("authToken");
+  if (token) {
+      request.headers["Authorization"] = `Bearer ${token}`;
+      console.log("Token añadido a la solicitud:", token); // Agregar este log
+  }
   return request;
 };
 
@@ -21,6 +27,12 @@ const errorHandler = (error) => {
 const setUpInterceptors = () => {
   eventosApi.interceptors.request.use(requestHandler, errorHandler);
   esculturasApi.interceptors.request.use(requestHandler, errorHandler);
+};
+
+export const configureInterceptors = () => {
+  setUpInterceptors(axios);
+  setUpInterceptors(eventosApi);
+  setUpInterceptors(esculturasApi);
 };
 
 export default setUpInterceptors;

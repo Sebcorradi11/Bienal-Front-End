@@ -3,6 +3,8 @@ import { GoogleAuthProvider, GithubAuthProvider, signInWithPopup, signOut } from
 import { auth, db } from './firebase';
 import { setDoc, doc, getDocs, query, where, updateDoc, collection } from "firebase/firestore";
 import { loginStart, login, loginFailure, logout } from '../store/userSlice';
+import Cookies from 'js-cookie';
+import { verificarAutenticacion } from '../api/api-config';
 
 export const handleGoogleLogin = (setError) => async (dispatch) => {
     dispatch(loginStart());
@@ -11,14 +13,19 @@ export const handleGoogleLogin = (setError) => async (dispatch) => {
         const credentials = await signInWithPopup(auth, provider);
         const email = credentials.user.email;
         const role = 'user';
+        
+        // Obtener un nuevo token cada vez que el usuario inicie sesión
+        const token = await credentials.user.getIdToken();
+        // Reemplaza cualquier token existente en la cookie
+        Cookies.set("authToken", token, { secure: false, sameSite: 'Lax' });
+        verificarAutenticacion();
 
-        // Consulta a Firestore para verificar si el correo electrónico ya existe
+        // Lógica de Firestore (igual que antes)
         const usersRef = collection(db, "users");
         const q = query(usersRef, where("email", "==", email));
         const querySnapshot = await getDocs(q);
 
         if (!querySnapshot.empty) {
-            // Si el correo ya existe, actualiza el documento
             const userDoc = querySnapshot.docs[0];
             await updateDoc(userDoc.ref, {
                 username: credentials.user.displayName || "Usuario desconocido",
@@ -26,14 +33,12 @@ export const handleGoogleLogin = (setError) => async (dispatch) => {
                 lastLogin: new Date().toISOString()
             });
 
-            // Actualiza el estado en Redux
             dispatch(login({
                 username: credentials.user.displayName,
                 role: userDoc.data().role || role,
                 picture: credentials.user.photoURL,
             }));
         } else {
-            // Si el correo no existe, crea un nuevo documento
             const userRef = doc(usersRef, credentials.user.uid);
             await setDoc(userRef, {
                 username: credentials.user.displayName || "Usuario desconocido",
@@ -42,7 +47,6 @@ export const handleGoogleLogin = (setError) => async (dispatch) => {
                 createdAt: new Date().toISOString()
             });
 
-            // Actualiza el estado en Redux
             dispatch(login({
                 username: credentials.user.displayName,
                 role: role
@@ -66,6 +70,10 @@ export const handleGithubLogin = (setError) => async (dispatch) => {
         const credentials = await signInWithPopup(auth, provider);
         const email = credentials.user.email;
         const role = 'user';
+         // Guarda el token en una cookie
+        const token = await credentials.user.getIdToken();
+        Cookies.set("authToken", token, { secure: false, sameSite: 'Lax' });
+           
 
         // Consulta a Firestore para verificar si el correo electrónico ya existe
         const usersRef = collection(db, "users");
@@ -114,8 +122,9 @@ export const handleGithubLogin = (setError) => async (dispatch) => {
 
 export const handleLogout = () => async (dispatch) => {
     try {
-        await signOut(auth);//  finaliza la sesión en firebase
-        dispatch(logout());//limpia el estado de usuario en Redux
+        await signOut(auth); // Finaliza la sesión en Firebase
+        Cookies.remove("authToken"); // Eliminar la cookie con el token
+        dispatch(logout()); // Limpia el estado de usuario en Redux
     } catch (error) {
         console.error("Logout error:", error);
     }

@@ -5,6 +5,7 @@ import EventosPage from '../../pages/Eventos/EventosPage';
 import VotesPage from '../../pages/Votos/VotesPage';
 import Home from '../../pages/home/Home';
 import LoginPage from '../../pages/login/Login';
+import QrPage from '../../pages/Qr/Qrpage';
 
 export const onlyPublicRoute = [
   {
@@ -30,5 +31,9 @@ export const onlyPublicRoute = [
   {
     path: "/login",
     component: LoginPage,
+  },
+  {
+    path: "/qr",
+    component: QrPage,
   },
 ];

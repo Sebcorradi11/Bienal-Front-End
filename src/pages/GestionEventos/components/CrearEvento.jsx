@@ -1,14 +1,14 @@
-// src/pages/GestionEventos/CrearEvento.js
 import React, { useState } from 'react';
-import { Box, TextField, Typography, Button, Icon } from '@mui/material';
-import { useMutation } from 'react-query';
+import {
+  Box, TextField, Typography, Button, Icon
+} from '@mui/material';
 import ImageIcon from '@mui/icons-material/Image';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { useNavigate } from 'react-router-dom';
-import fondoBoton from '../../../assets/gestioneventos/Rectangle 32.svg';
 import HeaderPublic from '../../../components/HeaderPublic';
 import Footer from '../../../components/Footer';
-import { createEvento } from '../../../api/eventos.routes';
+import fondoBoton from '../../../assets/gestioneventos/Rectangle 32.svg';
+import { useNavigate } from 'react-router-dom';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import axios from 'axios';
 
 const CrearEvento = () => {
   const [formData, setFormData] = useState({
@@ -21,28 +21,6 @@ const CrearEvento = () => {
   });
   const [imagen, setImagen] = useState(null);
   const navigate = useNavigate();
-
-  // Mutación para crear el evento usando React Query
-  const { mutate: crearEvento, isLoading } = useMutation(createEvento, {
-    onSuccess: () => {
-      alert('Evento creado exitosamente.');
-      setFormData({
-        name: '',
-        description: '',
-        date: '',
-        location: '',
-        theme: '',
-        images: null,
-      });
-      setImagen(null);
-      // Desplazar la página hacia la parte superior
-      window.scrollTo(0, 0);
-    },
-    onError: (error) => {
-      console.error('Error al crear el evento:', error);
-      alert('Error al crear el evento. Inténtalo de nuevo.');
-    },
-  });
 
   // Maneja los cambios en los inputs del formulario
   const handleChange = (e) => {
@@ -74,7 +52,7 @@ const CrearEvento = () => {
   };
 
   // Enviar los datos al backend para crear el evento
-  const handleCrearEvento = () => {
+  const handleCrearEvento = async () => {
     const data = new FormData();
     data.append('name', formData.name);
     data.append('description', formData.description);
@@ -82,9 +60,35 @@ const CrearEvento = () => {
     data.append('location', formData.location);
     data.append('theme', formData.theme);
     if (formData.images) {
-      data.append('images', formData.images);
+      data.append('imagen', formData.images);
     }
-    crearEvento(data); // Usa la mutación en lugar de axios directamente
+
+    try {
+      const response = await axios.post('http://localhost:3000/api/eventos', data, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+      });
+      console.log('Evento creado:', response.data);
+      
+      // Mostrar mensaje de alerta
+      alert('Evento creado exitosamente.');
+
+      // Reiniciar el formulario después de la creación
+      setFormData({
+        name: '',
+        description: '',
+        date: '',
+        location: '',
+        theme: '',
+        images: null,
+      });
+      setImagen(null);
+
+      // Desplazar la página hacia la parte superior
+      window.scrollTo(0, 0);
+    } catch (error) {
+      console.error('Error al crear el evento:', error);
+      alert('Error al crear el evento. Inténtalo de nuevo.');
+    }
   };
 
   // Regresar a la página anterior
@@ -235,9 +239,8 @@ const CrearEvento = () => {
               color="primary"
               onClick={handleCrearEvento}
               sx={{ width: '48%' }}
-              disabled={isLoading}
             >
-              {isLoading ? 'Creando...' : 'Crear Evento'}
+              Crear Evento
             </Button>
             <Button
               startIcon={<ArrowBackIcon />}

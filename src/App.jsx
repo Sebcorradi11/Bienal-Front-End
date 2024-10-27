@@ -1,39 +1,30 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import GestionEventos from './pages/AdminControlPanel/components/EventManagement';
-import AdminPanel from './pages/AdminControlPanel/AdminPanel';
-import Login from './pages/login/Login';
-import AddEventPage from './pages/AdminControlPanel/AddEventPage';
-import Home from './pages/home/Home';
-import SculpturesPage from './pages/sculptures/SculpturesPage';
-import SculptorPage from './pages/Sculptor/SculptorPage';
-import EventosPage from './pages/Eventos/EventosPage';
+// src/App.jsx
+import { QueryClient, QueryClientProvider } from 'react-query';
+import { ThemeProvider } from '@mui/material/styles';
+import { RoutesNavigation } from './routes/routes'; // Importamos el nuevo archivo de rutas
+import themeCustom from './theme'; // Tema personalizado
+
+// Configurar react-query
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      cacheTime: Infinity,
+      keepPreviousData: true,
+      refetchOnWindowFocus: false,
+    },
+  },
+});
 
 function App() {
+  // Inicializamos el interceptor para todas las peticiones  (habilitar cuando esten las cookies)
+  //    setUpInterceptors(); 
+
   return (
-    <Router>
-      <Routes>
-        {/* Ruta principal - Home */}
-        <Route path="/" element={<Home />} />
-
-        {/* Ruta para el login */}
-        <Route path="/login" element={<Login />} />
-
-        {/* Ruta para el panel de administración */}
-        <Route path="/AdminPanel" element={<AdminPanel />} />
-
-        {/* Ruta para gestionar eventos */}
-        <Route path="/gestionar-eventos" element={<GestionEventos />} />
-
-        {/* Ruta para agregar un evento */}
-        <Route path="/add-event" element={<AddEventPage />} />
-
-        <Route path="/esculturas" element={<SculpturesPage />} />
-        
-        <Route path="/eventos" element={<EventosPage />} />
-
-        <Route path="/escultores" element={<SculptorPage />} />
-      </Routes>
-    </Router>
+    <QueryClientProvider client={queryClient}>
+      <ThemeProvider theme={themeCustom}>
+        <RoutesNavigation />
+      </ThemeProvider>
+    </QueryClientProvider>
   );
 }
 

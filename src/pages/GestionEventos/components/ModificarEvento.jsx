@@ -4,7 +4,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { obtenerEscultor } from '../mockEventos';
 import HeaderPublic from '../../../components/HeaderPublic';
 import Footer from '../../../components/Footer';
-import fondoBoton from '../assets/Rectangle 32.svg';
+import fondoBoton from '../../../assets/gestioneventos/Rectangle 32.svg';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 const ModificarEvento = () => {

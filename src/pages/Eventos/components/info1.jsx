@@ -1,18 +1,20 @@
 import React from 'react';
 import { Box, Typography } from '@mui/material';
 import titleRectangle from '../../../assets/eventos/Rectangle-2.svg';
-import textRectangle from '../../../assets/eventos/Rectangle-3.svg'; // Importa el SVG para el subtítulo
+import textRectangle from '../../../assets/eventos/Rectangle-3.svg';
+import BackgroundImage from '../../../assets/sculptor/Sculptor.svg';  // Importa el SVG para el subtítulo
 
 const Info1 = () => {
     return (
+
         <Box sx={{ backgroundColor: '#fff', color: 'black', padding: '20px 20px' }}>
 
             <Box>
-            <Typography 
-                    variant="h6" 
+                <Typography
+                    variant="h6"
                     sx={{ fontWeight: 'bold', fontSize: '2rem' }}
                 >
-                    Historia de los Concursos de Escultura 
+                    Historia de los Concursos de Escultura
                 </Typography>
             </Box>
 
@@ -46,9 +48,9 @@ const Info1 = () => {
                     }}
                 />
                 <Box sx={{ maxWidth: '850px' }}> {/* Contenedor que limita el ancho del texto */}
-                <Typography variant="body1" sx={{ lineHeight: '1.8', fontStyle: 'Work Sans' }}>
-                    Explora la historia y el futuro de la Bienal del Chaco. Aquí podrás sumergirte en los eventos que han dado vida a este icónico encuentro de arte, reviviendo todas sus ediciones desde 1988, descubriendo el presente de la Bienal 2024 y anticipando lo que nos esperan en las próximas ediciones.
-                </Typography>
+                    <Typography variant="body1" sx={{ lineHeight: '1.8', fontStyle: 'Work Sans' }}>
+                        Explora la historia y el futuro de la Bienal del Chaco. Aquí podrás sumergirte en los eventos que han dado vida a este icónico encuentro de arte, reviviendo todas sus ediciones desde 1988, descubriendo el presente de la Bienal 2024 y anticipando lo que nos esperan en las próximas ediciones.
+                    </Typography>
                 </Box>
             </Box>
         </Box>

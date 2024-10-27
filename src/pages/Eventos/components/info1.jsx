@@ -2,7 +2,6 @@ import React from 'react';
 import { Box, Typography } from '@mui/material';
 import titleRectangle from '../../../assets/eventos/Rectangle-2.svg';
 import textRectangle from '../../../assets/eventos/Rectangle-3.svg';
-import BackgroundImage from '../../../assets/sculptor/Sculptor.svg';  // Importa el SVG para el subtítulo
 
 const Info1 = () => {
     return (

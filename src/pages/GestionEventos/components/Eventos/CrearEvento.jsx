@@ -8,14 +8,15 @@ import Footer from '../../../../components/Footer';
 import fondoBoton from '../../../../assets/gestioneventos/Rectangle 32.svg';
 import { useNavigate } from 'react-router-dom';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import axios from 'axios';
+import { createEvento } from '../../../../api/eventos.routes'; // Importar la función desde eventos.routes.js
 
 
 const CrearEvento = () => {
   const [formData, setFormData] = useState({
     name: '',
     description: '',
-    date: '',
+    date_inicio: '',
+    date_fin: '',
     location: '',
     theme: '',
     images: null,
@@ -61,7 +62,8 @@ const CrearEvento = () => {
     const data = new FormData();
     data.append('name', formData.name);
     data.append('description', formData.description);
-    data.append('date', formData.date);
+    data.append('date_inicio', formData.date_inicio);
+    data.append('date_fin', formData.date_fin);
     data.append('location', formData.location);
     data.append('theme', formData.theme);
     if (formData.images) {
@@ -69,19 +71,18 @@ const CrearEvento = () => {
     }
 
     try {
-      const response = await axios.post('http://localhost:3000/api/eventos', data, {
-        headers: { 'Content-Type': 'multipart/form-data' },
-      });
-      console.log('Evento creado:', response.data);
+      // Usar la función createEvento desde eventos.routes.js
+      const response = await createEvento(data);
+      console.log('Evento creado:', response);
 
       // Mostrar mensaje de alerta
       alert('Evento creado exitosamente.');
-
       // Reiniciar el formulario después de la creación
       setFormData({
         name: '',
         description: '',
-        date: '',
+        date_inicio: '',
+        date_fin: '',
         location: '',
         theme: '',
         images: null,
@@ -135,10 +136,20 @@ const CrearEvento = () => {
             required
           />
           <TextField
-            label="Fecha del Evento"
-            name="date"
+            label="Fecha de inicio del Evento"
+            name="date_inicio"
             type="date"
-            value={formData.date}
+            value={formData.date_inicio}
+            onChange={handleChange}
+            fullWidth
+            InputLabelProps={{ shrink: true }}
+            required
+          />
+          <TextField
+            label="Fecha de fin del Evento"
+            name="date_fin"
+            type="date"
+            value={formData.date_fin}
             onChange={handleChange}
             fullWidth
             InputLabelProps={{ shrink: true }}
@@ -169,7 +180,6 @@ const CrearEvento = () => {
             onChange={handleChange}
             fullWidth
           />
-
           <Box
             sx={{
               border: '2px dashed #aaa',

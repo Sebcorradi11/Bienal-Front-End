@@ -1,9 +1,8 @@
-// userThunks.js o AuthHandler.js
+
 import { GoogleAuthProvider, GithubAuthProvider, signInWithPopup, signOut } from "firebase/auth";
-import { auth, db  } from './firebase';
-import { setDoc, doc, getDoc} from "firebase/firestore";
+import { auth, db } from './firebase';
+import { setDoc, doc, getDocs, query, where, updateDoc, collection } from "firebase/firestore";
 import { loginStart, login, loginFailure, logout } from '../store/userSlice';
-import { updateUserRoleByEmail } from './updateUserRoleByEmail ';
 
 export const handleGoogleLogin = (setError) => async (dispatch) => {
     dispatch(loginStart());
@@ -13,19 +12,43 @@ export const handleGoogleLogin = (setError) => async (dispatch) => {
         const email = credentials.user.email;
         const role = 'user';
 
-        // Después de la autenticación, obtén el rol actual del usuario en Firestore
-        const userRef = doc(db, "users", credentials.user.uid);
-        const userSnapshot = await getDoc(userRef);
+        // Consulta a Firestore para verificar si el correo electrónico ya existe
+        const usersRef = collection(db, "users");
+        const q = query(usersRef, where("email", "==", email));
+        const querySnapshot = await getDocs(q);
 
-        if (userSnapshot.exists()) {
-            const userData = userSnapshot.data();
-            const userRole = userData.role || role;
+        if (!querySnapshot.empty) {
+            // Si el correo ya existe, actualiza el documento
+            const userDoc = querySnapshot.docs[0];
+            await updateDoc(userDoc.ref, {
+                username: credentials.user.displayName || "Usuario desconocido",
+                role: userDoc.data().role || role,
+                lastLogin: new Date().toISOString()
+            });
 
+            // Actualiza el estado en Redux
             dispatch(login({
                 username: credentials.user.displayName,
-                role: userRole
+                role: userDoc.data().role || role,
+                picture: credentials.user.photoURL,
+            }));
+        } else {
+            // Si el correo no existe, crea un nuevo documento
+            const userRef = doc(usersRef, credentials.user.uid);
+            await setDoc(userRef, {
+                username: credentials.user.displayName || "Usuario desconocido",
+                email: email || "email@desconocido.com",
+                role: role,
+                createdAt: new Date().toISOString()
+            });
+
+            // Actualiza el estado en Redux
+            dispatch(login({
+                username: credentials.user.displayName,
+                role: role
             }));
         }
+
     } catch (error) {
         console.log("Error al iniciar sesión con Google:", error);
         dispatch(loginFailure(error.message));
@@ -35,29 +58,59 @@ export const handleGoogleLogin = (setError) => async (dispatch) => {
 
 
 
+
 export const handleGithubLogin = (setError) => async (dispatch) => {
     dispatch(loginStart());
     const provider = new GithubAuthProvider();
     try {
-        const credentials = await signInWithPopup(auth, provider); // Mueve esta línea aquí
+        const credentials = await signInWithPopup(auth, provider);
         const email = credentials.user.email;
         const role = 'user';
-        await setDoc(doc(db, "users", credentials.user.uid), {
-            username: credentials.user.displayName || "Usuario desconocido",
-            email: email || "email@desconocido.com",
-            role: role,
-            createdAt: new Date().toISOString()
-        });
-        dispatch(login({
-            username: credentials.user.displayName,
-            role: 'user'
-        }));
+
+        // Consulta a Firestore para verificar si el correo electrónico ya existe
+        const usersRef = collection(db, "users");
+        const q = query(usersRef, where("email", "==", email));
+        const querySnapshot = await getDocs(q);
+
+        if (!querySnapshot.empty) {
+            // Si el correo ya existe, actualiza el documento
+            const userDoc = querySnapshot.docs[0];
+            await updateDoc(userDoc.ref, {
+                username: credentials.user.displayName || "Usuario desconocido",
+                role: userDoc.data().role || role,
+                lastLogin: new Date().toISOString()
+            });
+
+            // Actualiza el estado en Redux
+            dispatch(login({
+                username: credentials.user.displayName,
+                role: userDoc.data().role || role,
+                picture: credentials.user.photoURL,
+            }));
+        } else {
+            // Si el correo no existe, crea un nuevo documento
+            const userRef = doc(usersRef, credentials.user.uid);
+            await setDoc(userRef, {
+                username: credentials.user.displayName || "Usuario desconocido",
+                email: email || "email@desconocido.com",
+                role: role,
+                createdAt: new Date().toISOString()
+            });
+
+            // Actualiza el estado en Redux
+            dispatch(login({
+                username: credentials.user.displayName,
+                role: role
+            }));
+        }
+
     } catch (error) {
         console.log("Error al iniciar sesión con Github:", error);
         dispatch(loginFailure(error.message));
         setError(error.message);
     }
 };
+
 
 export const handleLogout = () => async (dispatch) => {
     try {
@@ -67,5 +120,3 @@ export const handleLogout = () => async (dispatch) => {
         console.error("Logout error:", error);
     }
 };
-
-

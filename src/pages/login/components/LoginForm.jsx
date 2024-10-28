@@ -4,7 +4,7 @@ import LinkButtonList from './LinkButtonList';
 import PropTypes from 'prop-types';
 
 
-const LoginForm = ({ handleLogin, setError }) => {
+const LoginForm = ({ handleLogin, setError, setLoading }) => {
 
     return(
     <Container maxWidth="md">
@@ -25,7 +25,7 @@ const LoginForm = ({ handleLogin, setError }) => {
                     padding: '0 20px', // Añadir padding para mejor ajuste
                 }}
             >
-                <LinkButtonList handleLogin={handleLogin} setError={setError} />
+                <LinkButtonList handleLogin={handleLogin} setError={setError} setLoading={setLoading}/>
             </Box>
 
         </Paper>

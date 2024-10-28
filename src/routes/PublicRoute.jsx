@@ -1,9 +1,10 @@
 // src/routes/PublicRoute.jsx
 import { Navigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 
 const PublicRoute = ({ children }) => {
-  const isAuthenticated = false; // Aquí puedes verificar si el usuario está autenticado (IMPLEMENTAR LOGICA ACA PARA VERIFICAR EL USUARIO LOGEADO O NO)
-  return !isAuthenticated ? children : <Navigate to="/admin-panel" />;
+  const { isAuthenticated, role } = useSelector((state) => state.user);
+  return !isAuthenticated || role !== 'admin' ? children : <Navigate to="/adminPanel" />;
 };
 
 export default PublicRoute;

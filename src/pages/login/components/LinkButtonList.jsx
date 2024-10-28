@@ -4,11 +4,11 @@ import PropTypes from 'prop-types';
 
 
 
-const LinkButtonList = ({ handleLogin, setError }) => (
+const LinkButtonList = ({ handleLogin, setError, setLoading }) => (
     <>
-        <LinkButtons platform="google" onClick={() => handleLogin('google', setError)} />
+        <LinkButtons platform="google" onClick={() => handleLogin('google', setError, setLoading)} />
         {/* <LinkButtons platform="facebook" onClick={() => handleLogin('facebook', setError)} /> */}
-        <LinkButtons platform="github" onClick={() => handleLogin('github', setError)} />
+        <LinkButtons platform="github" onClick={() => handleLogin('github', setError, setLoading)} />
     </>
 );
 

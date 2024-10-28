@@ -105,11 +105,11 @@ const HeaderPublic = () => {
                             <NavLink to="/eventos" style={linkStyles}>
                                 Eventos
                             </NavLink>
-                            {username && <Typography sx={{ color: 'white' }}>Hola, {name}</Typography>}
+                            {username && <Typography sx={{ color: 'white' }}>{name}</Typography>}
                             <IconButton onClick={() => navigate('/login')} sx={{ padding: 0 }}>
                                     <Avatar
                                         src={picture ? picture : `/assets/avatar-default.webp`}
-                                        sx={{ width: 32, height: 32 }}
+                                        sx={{marginLeft: '-10px' ,width: 32, height: 32 }}
                                     />
                             </IconButton>
                             {username && ( // Mostrar Logout si el usuario está autenticado

@@ -6,10 +6,12 @@ import Footer from '../../components/Footer';
 import useLoginLogic from './components/LoginLogic';
 import { useState } from 'react';
 import ErrorMessage from './components/ErrorMessage';
+import LoaderSpinner from '../../components/LoaderSpinner';
 
 const Login = () => {
     const { handleLogin } = useLoginLogic();
     const [error, setError] = useState('');
+    const [isLoading, setLoading] = useState(false);
 
     return (
         <Box
@@ -19,6 +21,7 @@ const Login = () => {
                 minHeight: '100vh',
             }}
         >
+            {isLoading && <LoaderSpinner />}
             {/* Header */}
             <Box sx={{ flexShrink: 0 }}>
                 <HeaderPublic />
@@ -36,7 +39,7 @@ const Login = () => {
                 }}
             >
                 {error && <ErrorMessage error={error} />} {/* Asegúrate de que el error se pase correctamente */}
-                <LoginForm handleLogin={handleLogin} setError={setError} />
+                <LoginForm handleLogin={handleLogin} setError={setError} setLoading={setLoading}/>
             </Box>
 
             {/* Footer */}

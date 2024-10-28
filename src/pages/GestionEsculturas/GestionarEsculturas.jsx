@@ -6,7 +6,6 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import CrearEsculturaButton from './components/EsculturaButton';
 import BuscadorEscultura from './components/BuscadorEsculturas';
 import ListaEsculturas from './components/ListaEsculturas';
-import FiltrosFecha from './components/FiltrosFecha';
 import { useNavigate } from 'react-router-dom';
 
 const GestionarEsculturas = () => {
@@ -62,7 +61,6 @@ const GestionarEsculturas = () => {
                             width: isSmallScreen ? '100%' : 'auto',
                         }}
                     >
-                        <FiltrosFecha onFiltrar={handleFiltrar} />
                     </Box>
 
                     {/* Buscador a la derecha */}

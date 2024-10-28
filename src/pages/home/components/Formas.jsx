@@ -8,10 +8,11 @@ import { motion } from "framer-motion";
 import sculptorIcon from '../../../assets/home/Rectangle.svg';
 import sculpturesIcon from '../../../assets/home/Ellipse.svg';
 import eventsIcon from '../../../assets/home/Star.svg';
+import { NavLink, useNavigate } from 'react-router-dom';
 
 // Creo un box de forma que necesita como parametro el texto de las lineas 1, 2 y 3... Y la imagen.
 const Forma = ({l1, l2, l3, imagen, src}) => {
-
+    const navigate = useNavigate();
     const [rotation, setRotation] = useState({ x: 0, y: 0 });
 
     // Handler para actualizar la posicion del mouse cuando se mueve
@@ -32,7 +33,7 @@ const Forma = ({l1, l2, l3, imagen, src}) => {
       };
     }, []);
 
-    return(<a href={src} style={{ cursor: 'default', textDecoration: 'none', position: 'relative', display: 'inline-block' }}>
+    return(<Box onClick={() => navigate(src)} sx={{ cursor: 'default', textDecoration: 'none', position: 'relative', display: 'inline-block' }}>
         <motion.div
             whileHover={{ scale: 1.2, rotate: 90 }}
             whileTap={{ scale: 0.8, rotate: -90, borderRadius: "100%" }}
@@ -85,7 +86,7 @@ const Forma = ({l1, l2, l3, imagen, src}) => {
             {l3}
         </span>
     </Typography>
-    </a>    
+    </Box>    
     )
 }
 
@@ -114,17 +115,17 @@ const Formas = () => {
             >
                 {/* Primer SVG */}
                 <Grid item>
-                    <Forma l1={'Conocé'} l2={'a los'} l3={'Escultores'} imagen={sculptorIcon} src={'./escultores'}/>
+                    <Forma l1={'Conocé'} l2={'a los'} l3={'Escultores'} imagen={sculptorIcon} src={'/escultores'}/>
                 </Grid>
 
                 {/* Segundo SVG */}
                 <Grid item>
-                    <Forma l1={'Conocé'} l2={'las'} l3={'Esculturas'} imagen={sculpturesIcon} src={'./esculturas'}/>
+                    <Forma l1={'Conocé'} l2={'las'} l3={'Esculturas'} imagen={sculpturesIcon} src={'/esculturas'}/>
                 </Grid>
 
                 {/* Tercer SVG */}
                 <Grid item> 
-                    <Forma l1={'Conocé'} l2={'nuestros'} l3={'Eventos'} imagen={eventsIcon} src={'./eventos'}/>
+                    <Forma l1={'Conocé'} l2={'nuestros'} l3={'Eventos'} imagen={eventsIcon} src={'/eventos'}/>
                 </Grid>
             </Grid>
 

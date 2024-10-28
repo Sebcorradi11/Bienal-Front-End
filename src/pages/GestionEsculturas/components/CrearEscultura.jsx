@@ -88,7 +88,7 @@ const CrearEscultura = () => {
                         required
                     />
                     <TextField
-                        label="Temática"
+                        label="Descripción de la Temática"
                         name="tematica"
                         value={formData.tematica}
                         onChange={handleChange}

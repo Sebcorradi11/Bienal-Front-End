@@ -9,12 +9,12 @@ const urlServiceEsculturas = import.meta.env.VITE_URL_ESCULTURAS;
 // Axios Instances
 const eventosApi = axios.create({
   baseURL: urlServiceEventos,
-  withCredentials: false,
+  withCredentials: true,
 });
 
 const esculturasApi = axios.create({
   baseURL: urlServiceEsculturas,
-  withCredentials: false,
+  withCredentials: true,
 });
 
 const apiClient = axios.create({

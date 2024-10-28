@@ -3,7 +3,7 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import { ThemeProvider } from '@mui/material/styles';
 import { RoutesNavigation } from './routes/routes'; // Importamos el nuevo archivo de rutas
 import themeCustom from './theme'; // Tema personalizado
-import setUpInterceptors from './api/interceptor';
+import configureInterceptors from './api/interceptor';
 // Configurar react-query
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -17,8 +17,8 @@ const queryClient = new QueryClient({
 
 function App() {
   // Inicializamos el interceptor para todas las peticiones  (habilitar cuando esten las cookies)
-     setUpInterceptors(); 
-
+  configureInterceptors();
+  
   return (
     <QueryClientProvider client={queryClient}>
       <ThemeProvider theme={themeCustom}>

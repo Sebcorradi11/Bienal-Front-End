@@ -87,14 +87,15 @@ const Footer = () => {
 
             {/* Sección negra del footer */}
             <Box sx={{ backgroundColor: '#000', py: 2, color: 'white' }}>
-                <Grid2 container alignItems="center" justifyContent="flex-start">
+                <Grid2 container alignItems="center" justifyContent="flex-start" sx={{marginLeft: '40px'}} >
                     <Grid2>
+                        <a href='https://www.ucp.edu.ar/' target='_blank'>
                         <img
                             src={cuencaLogo}
                             alt="Universidad de la Cuenca del Plata"
                             style={{ height: '60px', cursor: 'pointer' }}
-                            onClick={() => handleExternalLink('https://www.ucp.edu.ar/')}
                         />
+                        </a>
                     </Grid2>
                 </Grid2>
             </Box>

@@ -29,7 +29,7 @@ const useLoginLogic = () => {
             if (role === 'admin') {
                 navigate('/adminPanel');
             } else {
-                navigate('/esculturas');
+                navigate('/');
             }
         }
     }, [isAuthenticated, role, navigate]);

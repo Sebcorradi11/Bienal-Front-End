@@ -7,6 +7,11 @@ import VerEvento from '../../pages/GestionEventos/components/Eventos/VerEvento';
 import CrearEscultor from '../../pages/GestionEventos/components/Escultores/AgregarEscultores';
 import ModificarEscultor from '../../pages/GestionEventos/components/Escultores/ModificarEscultores';
 import VerEscultor from '../../pages/GestionEventos/components/Escultores/VerEscultores';
+import GestionarEsculturas from '../../pages/GestionEsculturas/GestionarEsculturas';
+import CrearEsculturas from '../../pages/GestionEsculturas/components/CrearEscultura';
+import ModificarEscultura from '../../pages/GestionEsculturas/components/ModificarEscultura';
+import VerEscultura from '../../pages/GestionEsculturas/components/VerEscultura';
+
 
 export const onlyPrivateRoute = [
   {
@@ -28,6 +33,22 @@ export const onlyPrivateRoute = [
   {
     path: "/ver-evento/:id",
     component: VerEvento,
+  },
+  {
+    path: "/gestionar-esculturas",
+    component: GestionarEsculturas,
+  },
+  {
+    path: "/crear-escultura",
+    component: CrearEsculturas,
+  },
+  {
+    path: "/modificar-escultura/:id",
+    component: ModificarEscultura,
+  },
+  {
+    path: "/ver-escultura/:id",
+    component: VerEscultura,
   },
   {
     path: "/agregar-escultores",

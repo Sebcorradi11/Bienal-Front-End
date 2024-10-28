@@ -1,20 +1,22 @@
-// src/pages/GestionEventos/CrearEvento.js
 import React, { useState } from 'react';
-import { Box, TextField, Typography, Button, Icon } from '@mui/material';
-import { useMutation } from 'react-query';
+import {
+  Box, TextField, Typography, Button, Icon
+} from '@mui/material';
 import ImageIcon from '@mui/icons-material/Image';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import HeaderPublic from '../../../../components/HeaderPublic';
+import Footer from '../../../../components/Footer';
+import fondoBoton from '../../../../assets/gestioneventos/Rectangle 32.svg';
 import { useNavigate } from 'react-router-dom';
-import fondoBoton from '../../../assets/gestioneventos/Rectangle 32.svg';
-import HeaderPublic from '../../../components/HeaderPublic';
-import Footer from '../../../components/Footer';
-import { createEvento } from '../../../api/eventos.routes';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { createEvento } from '../../../../api/eventos.routes'; // Importar la función desde eventos.routes.js
+
 
 const CrearEvento = () => {
   const [formData, setFormData] = useState({
     name: '',
     description: '',
-    date: '',
+    date_inicio: '',
+    date_fin: '',
     location: '',
     theme: '',
     images: null,
@@ -22,32 +24,14 @@ const CrearEvento = () => {
   const [imagen, setImagen] = useState(null);
   const navigate = useNavigate();
 
-  // Mutación para crear el evento usando React Query
-  const { mutate: crearEvento, isLoading } = useMutation(createEvento, {
-    onSuccess: () => {
-      alert('Evento creado exitosamente.');
-      setFormData({
-        name: '',
-        description: '',
-        date: '',
-        location: '',
-        theme: '',
-        images: null,
-      });
-      setImagen(null);
-      // Desplazar la página hacia la parte superior
-      window.scrollTo(0, 0);
-    },
-    onError: (error) => {
-      console.error('Error al crear el evento:', error);
-      alert('Error al crear el evento. Inténtalo de nuevo.');
-    },
-  });
-
   // Maneja los cambios en los inputs del formulario
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
+  };
+
+  const handleAgregarEscultor = () => {
+    navigate('/agregar-escultores'); // Navega a la vista de agregar escultores
   };
 
   // Maneja la carga de imágenes desde el input
@@ -74,17 +58,43 @@ const CrearEvento = () => {
   };
 
   // Enviar los datos al backend para crear el evento
-  const handleCrearEvento = () => {
+  const handleCrearEvento = async () => {
     const data = new FormData();
     data.append('name', formData.name);
     data.append('description', formData.description);
-    data.append('date', formData.date);
+    data.append('date_inicio', formData.date_inicio);
+    data.append('date_fin', formData.date_fin);
     data.append('location', formData.location);
     data.append('theme', formData.theme);
     if (formData.images) {
-      data.append('images', formData.images);
+      data.append('imagen', formData.images);
     }
-    crearEvento(data); // Usa la mutación en lugar de axios directamente
+
+    try {
+      // Usar la función createEvento desde eventos.routes.js
+      const response = await createEvento(data);
+      console.log('Evento creado:', response);
+
+      // Mostrar mensaje de alerta
+      alert('Evento creado exitosamente.');
+      // Reiniciar el formulario después de la creación
+      setFormData({
+        name: '',
+        description: '',
+        date_inicio: '',
+        date_fin: '',
+        location: '',
+        theme: '',
+        images: null,
+      });
+      setImagen(null);
+
+      // Desplazar la página hacia la parte superior
+      window.scrollTo(0, 0);
+    } catch (error) {
+      console.error('Error al crear el evento:', error);
+      alert('Error al crear el evento. Inténtalo de nuevo.');
+    }
   };
 
   // Regresar a la página anterior
@@ -126,10 +136,20 @@ const CrearEvento = () => {
             required
           />
           <TextField
-            label="Fecha del Evento"
-            name="date"
+            label="Fecha de inicio del Evento"
+            name="date_inicio"
             type="date"
-            value={formData.date}
+            value={formData.date_inicio}
+            onChange={handleChange}
+            fullWidth
+            InputLabelProps={{ shrink: true }}
+            required
+          />
+          <TextField
+            label="Fecha de fin del Evento"
+            name="date_fin"
+            type="date"
+            value={formData.date_fin}
             onChange={handleChange}
             fullWidth
             InputLabelProps={{ shrink: true }}
@@ -160,7 +180,6 @@ const CrearEvento = () => {
             onChange={handleChange}
             fullWidth
           />
-
           <Box
             sx={{
               border: '2px dashed #aaa',
@@ -209,6 +228,7 @@ const CrearEvento = () => {
 
           <Button
             fullWidth
+            onClick={handleAgregarEscultor}
             sx={{
               height: '60px',
               borderRadius: '30px',
@@ -235,9 +255,8 @@ const CrearEvento = () => {
               color="primary"
               onClick={handleCrearEvento}
               sx={{ width: '48%' }}
-              disabled={isLoading}
             >
-              {isLoading ? 'Creando...' : 'Crear Evento'}
+              Crear Evento
             </Button>
             <Button
               startIcon={<ArrowBackIcon />}

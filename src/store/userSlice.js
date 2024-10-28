@@ -6,6 +6,7 @@ const userSlice = createSlice({
         isAuthenticated: false,
         role: 'user',
         username: '',
+        picture: '',
     },
     reducers: {
         loginStart: (state) => {
@@ -14,6 +15,7 @@ const userSlice = createSlice({
         login: (state, action) => {
             state.isAuthenticated = true;
             state.username = action.payload.username;
+            state.picture = action.payload.picture;
             state.role = action.payload.role;
         },
         loginFailure: (state) => {
@@ -23,6 +25,7 @@ const userSlice = createSlice({
             state.isAuthenticated = false;
             state.role = 'user';
             state.username = '';
+            state.picture = '';
         },
         updateRole: (state, action) => {
             state.role = action.payload; // Actualiza el rol en el estado de Redux

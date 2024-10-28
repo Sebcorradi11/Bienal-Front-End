@@ -3,7 +3,6 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import { ThemeProvider } from '@mui/material/styles';
 import { RoutesNavigation } from './routes/routes'; // Importamos el nuevo archivo de rutas
 import themeCustom from './theme'; // Tema personalizado
-import setUpInterceptors from './api/interceptor';
 
 // Configurar react-query
 const queryClient = new QueryClient({

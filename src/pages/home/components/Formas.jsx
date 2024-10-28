@@ -17,8 +17,8 @@ const Forma = ({l1, l2, l3, imagen, src}) => {
     // Handler para actualizar la posicion del mouse cuando se mueve
     const handleMouseMove = (e) => {
       const { innerWidth, innerHeight } = window;
-      const xAxis = (innerWidth / 2 - e.clientX) / 85;
-      const yAxis = (innerHeight / 2 - e.clientY) / 35;
+      const xAxis = (innerWidth / 2 - e.clientX) / 90;
+      const yAxis = (innerHeight / 2 - e.clientY) / 20;
       setRotation({ x: yAxis, y: -xAxis });
     };
   
@@ -73,7 +73,7 @@ const Forma = ({l1, l2, l3, imagen, src}) => {
             color: 'white',
             fontWeight: '400',
             lineHeight: { xs: '4vw', sm: '4vh' }, // Ajusta el interlineado para diferentes tamaños de pantalla
-            fontSize: { xs: '5vw', sm: '3vh', md: '2.5vh', lg: '2vw' }, // Ajusta el tamaño de fuente según el ancho de pantalla
+            fontSize: { xs: '4vw', sm: '2vh', md: '2vh', lg: '1.5vw' }, // Ajusta el tamaño de fuente según el ancho de pantalla
             pointerEvents: 'none',
         }}
     >

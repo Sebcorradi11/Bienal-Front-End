@@ -27,7 +27,7 @@ const HeaderPublic = () => {
     const isMobile = useMediaQuery(theme.breakpoints.down('md'));
     const [drawerOpen, setDrawerOpen] = useState(false);
     const dispatch = useDispatch();
-    const { username } = useSelector((state) => state.user); // Verifica si `username` está en el estado
+    const { username, picture } = useSelector((state) => state.user); // Verifica si `username` está en el estado
     let name;
     if(!username){
         console.log("El usuario ha cerrado sesión correctamente.");
@@ -105,9 +105,15 @@ const HeaderPublic = () => {
                             <NavLink to="/eventos" style={linkStyles}>
                                 Eventos
                             </NavLink>
-                            {username ? ( // Mostrar Logout si el usuario está autenticado
+                            {username && <Typography sx={{ color: 'white' }}>Hola, {name}</Typography>}
+                            <IconButton onClick={() => navigate('/login')} sx={{ padding: 0 }}>
+                                    <Avatar
+                                        src={picture ? picture : `/assets/avatar-default.webp`}
+                                        sx={{ width: 32, height: 32 }}
+                                    />
+                            </IconButton>
+                            {username && ( // Mostrar Logout si el usuario está autenticado
                                 <>
-                                    <Typography sx={{ color: 'white' }}>Hola, {name}</Typography>
                                     <Button
                                         onClick={handleUserLogout}
                                         sx={{
@@ -119,13 +125,6 @@ const HeaderPublic = () => {
                                         Logout
                                     </Button>
                                 </>
-                            ) : (
-                                <IconButton onClick={() => navigate('/login')} sx={{ padding: 0 }}>
-                                    <Avatar
-                                        src="/assets/avatar-default.webp"
-                                        sx={{ width: 32, height: 32 }}
-                                    />
-                                </IconButton>
                             )}
                         </>
                     ) : (

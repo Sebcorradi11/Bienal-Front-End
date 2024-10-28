@@ -8,7 +8,8 @@ const useLoginLogic = () => {
     const dispatch = useDispatch();
     const {isAuthenticated, role} = useSelector((state) => state.user); // Obtener el estado de autenticación
 
-    const handleLogin = async (platform, setError) => {
+    const handleLogin = async (platform, setError, setLoading) => {
+        setLoading(true);
             switch (platform) {
                 case 'google':
                     await dispatch(handleGoogleLogin(setError));
@@ -19,6 +20,7 @@ const useLoginLogic = () => {
                 default:
                     throw new Error('Plataforma no soportada');
             }
+        setLoading(false);
     };
 
     // Usar useEffect para redirigir solo si el usuario está autenticado y basado en el rol

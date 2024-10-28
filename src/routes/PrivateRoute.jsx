@@ -1,9 +1,11 @@
 // src/routes/PrivateRoute.jsx
 import { Navigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 
 const PrivateRoute = ({ children }) => {
-  const isAuthenticated = true; // Aquí puedes verificar si el usuario está autenticado
-  return isAuthenticated ? children : <Navigate to="/login" />;
+  const { isAuthenticated, role } = useSelector((state) => state.user);
+
+  return isAuthenticated && role === 'admin' ? children : <Navigate to="/login" />;
 };
 
 export default PrivateRoute;

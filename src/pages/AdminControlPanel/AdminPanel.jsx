@@ -55,7 +55,7 @@ const AdminControlPanel = () => {
                                 transition: 'transform 0.2s',
                                 '&:hover': { transform: 'scale(1.05)' },
                             }}
-                            onClick={() => handleNavigation('/manage-sculptures')}
+                            onClick={() => handleNavigation('/gestionar-esculturas')}
                         >
                             <Typography variant="h6">Gestionar Esculturas</Typography>
                         </Paper>

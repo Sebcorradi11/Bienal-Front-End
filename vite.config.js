@@ -21,12 +21,12 @@ export default defineConfig({
         theme_color: '#000',
         icons: [
           {
-            src: 'public/logo_bienal.png',
+            src: '/logo_bienal.png',
             sizes: '192x192',
             type: 'image/png',
           },
           {
-            src: 'public/logo_bienal.png',
+            src: '/logo_bienal.png',
             sizes: '512x512',
             type: 'image/png',
           },

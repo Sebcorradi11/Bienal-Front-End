@@ -1,6 +1,7 @@
 // src/routes/privateRoutes/index.ts
 import AdminPanel from '../../pages/AdminControlPanel/AdminPanel';
 import GestionEventos from '../../pages/GestionEventos/GestionarEventos';
+import GestionarUsuarios from '../../pages/GestionUsuarios/GestionarUsuarios';
 import CrearEvento from '../../pages/GestionEventos/components/Eventos/CrearEvento';
 import ModificarEvento from '../../pages/GestionEventos/components/Eventos/ModificarEvento';
 import VerEvento from '../../pages/GestionEventos/components/Eventos/VerEvento';
@@ -17,6 +18,10 @@ export const onlyPrivateRoute = [
   {
     path: "/AdminPanel",
     component: AdminPanel,
+  },
+  {
+    path: "/gestionar-usuarios",
+    component: GestionarUsuarios,
   },
   {
     path: "/gestionar-eventos",

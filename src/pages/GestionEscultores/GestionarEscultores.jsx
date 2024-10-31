@@ -3,12 +3,12 @@ import HeaderPublic from '../../components/HeaderPublic';
 import Footer from '../../components/Footer';
 import { Box, Container, Button, useMediaQuery, useTheme } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import CrearEsculturaButton from './components/EsculturaButton';
-import BuscadorEscultura from '../../components/Buscador';
-import ListaEsculturas from './components/ListaEsculturas';
+import CrearEscultorButton from './components/Escultores/ButtonEscultores';
+import BuscadorEscultor from '../../components/Buscador';
+import ListaEscultores from './components/Escultores/ListaEscultores';
 import { useNavigate } from 'react-router-dom';
 
-const GestionarEsculturas = () => {
+const GestionarEscultores = () => {
     const theme = useTheme();
     const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
     const navigate = useNavigate();
@@ -40,7 +40,7 @@ const GestionarEsculturas = () => {
                         justifyContent: 'space-between',
                     }}
                 >
-                    {/* Crear Escultura a la izquierda */}
+                    {/* Crear Escultor a la izquierda */}
                     <Box
                         sx={{
                             flex: 1,
@@ -49,18 +49,7 @@ const GestionarEsculturas = () => {
                             width: isSmallScreen ? '100%' : 'auto',
                         }}
                     >
-                        <CrearEsculturaButton />
-                    </Box>
-
-                    {/* Filtro de Fechas en el medio */}
-                    <Box
-                        sx={{
-                            flex: 1,
-                            display: 'flex',
-                            justifyContent: 'center',
-                            width: isSmallScreen ? '100%' : 'auto',
-                        }}
-                    >
+                        <CrearEscultorButton />
                     </Box>
 
                     {/* Buscador a la derecha */}
@@ -72,12 +61,12 @@ const GestionarEsculturas = () => {
                             width: isSmallScreen ? '100%' : 'auto',
                         }}
                     >
-                        <BuscadorEscultura />
+                        <BuscadorEscultor />
                     </Box>
                 </Box>
 
-                {/* Lista de esculturas con fechas filtradas */}
-                <ListaEsculturas fechaInicio={fechaInicio} fechaFin={fechaFin} />
+                {/* Lista de escultores con fechas filtradas */}
+                <ListaEscultores fechaInicio={fechaInicio} fechaFin={fechaFin} />
 
                 <Box
                     sx={{
@@ -114,4 +103,4 @@ const GestionarEsculturas = () => {
     );
 };
 
-export default GestionarEsculturas;
+export default GestionarEscultores;

@@ -46,7 +46,7 @@ const AdminControlPanel = () => {
                 <Grid container spacing={4} justifyContent="center">
                     <AdminControlItem title="Gestionar Eventos" path="/gestionar-eventos" onNavigate={handleNavigation} />
                     <AdminControlItem title="Gestionar Esculturas" path="/gestionar-esculturas" onNavigate={handleNavigation} />
-                    <AdminControlItem title="Gestionar Escultores" path="/manage-sculptors" onNavigate={handleNavigation} />
+                    <AdminControlItem title="Gestionar Escultores" path="/gestionar-escultores" onNavigate={handleNavigation} />
                     <AdminControlItem title="Gestionar Usuarios" path="/gestionar-usuarios" onNavigate={handleNavigation} />
                 </Grid>
             </Box>

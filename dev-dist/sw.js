@@ -31,6 +31,7 @@ if (!self.define) {
             document.head.appendChild(script);
           } else {
             nextDefineUri = uri;
+            // eslint-disable-next-line no-undef
             importScripts(uri);
             resolve();
           }
@@ -67,6 +68,7 @@ if (!self.define) {
     });
   };
 }
+// eslint-disable-next-line no-undef
 define(['./workbox-54d0af47'], (function (workbox) { 'use strict';
 
   self.skipWaiting();

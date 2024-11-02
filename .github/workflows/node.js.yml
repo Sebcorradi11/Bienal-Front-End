@@ -31,9 +31,9 @@ jobs:
       - name: Install playwright
         run: npx playwright install
       
-      # Wait for 15 minutes (900 seconds)
-      - name: Wait for 5 seconds
-        run: sleep 900
+      # Wait for 15 minutes (900 seconds). Aca lo que hacemos es esperar a que se buildee la pagina.
+      - name: Wait for 5
+        run: sleep 5
 
       # Run Playwright tests with npx
       - name: Run Playwright tests

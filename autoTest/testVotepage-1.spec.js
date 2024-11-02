@@ -12,4 +12,4 @@ test('test', async ({ page }) => {
   await page.locator('div:nth-child(5) > .MuiButtonBase-root').click();
   await page.getByRole('button', { name: 'Enviar Voto' }).click();
   await page.getByRole('img', { name: 'Perfil del Escultor' }).click();
-});
+}, { headless: true });

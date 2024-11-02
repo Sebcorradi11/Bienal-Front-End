@@ -30,6 +30,10 @@ jobs:
 
       - name: Install playwright
         run: npx playwright install
+      
+      # Wait for 15 minutes (900 seconds)
+      - name: Wait for 15 minutes
+        run: sleep 900
 
       # Run Playwright tests with npx
       - name: Run Playwright tests

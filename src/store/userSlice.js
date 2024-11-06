@@ -28,7 +28,7 @@ const userSlice = createSlice({
             state.picture = '';
         },
         updateRole: (state, action) => {
-            state.role = action.payload; // Actualiza el rol en el estado de Redux
+            state.role = action.payload; 
         }
     }
 });

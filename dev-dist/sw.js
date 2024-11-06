@@ -31,7 +31,6 @@ if (!self.define) {
             document.head.appendChild(script);
           } else {
             nextDefineUri = uri;
-            // eslint-disable-next-line no-undef
             importScripts(uri);
             resolve();
           }
@@ -68,7 +67,6 @@ if (!self.define) {
     });
   };
 }
-// eslint-disable-next-line no-undef
 define(['./workbox-54d0af47'], (function (workbox) { 'use strict';
 
   self.skipWaiting();
@@ -84,7 +82,7 @@ define(['./workbox-54d0af47'], (function (workbox) { 'use strict';
     "revision": "3ca0b8505b4bec776b69afdba2768812"
   }, {
     "url": "index.html",
-    "revision": "0.eifar3jev9g"
+    "revision": "0.04rgu5atdlg"
   }], {});
   workbox.cleanupOutdatedCaches();
   workbox.registerRoute(new workbox.NavigationRoute(workbox.createHandlerBoundToURL("index.html"), {

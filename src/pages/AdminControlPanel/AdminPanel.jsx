@@ -42,7 +42,7 @@ const AdminControlPanel = () => {
         >
             <Header />
 
-            <Box sx={{ flexGrow: 1, display: 'flex', justifyContent: 'center', alignItems: 'center', px: 4 }}>
+            <Box sx={{ flexGrow: 1, display: 'flex', justifyContent: 'center', alignItems: 'center', px: 4, py: 4 }}>
                 <Grid container spacing={4} justifyContent="center">
                     <AdminControlItem title="Gestionar Eventos" path="/gestionar-eventos" onNavigate={handleNavigation} />
                     <AdminControlItem title="Gestionar Esculturas" path="/gestionar-esculturas" onNavigate={handleNavigation} />

@@ -75,7 +75,7 @@ const Info2 = () => {
                         justifyContent: 'center',
                     }}
                 >
-                    <Typography variant="h5" sx={{ lineHeight: '2', fontSize: '22px' }}> {/* Texto más grande */}
+                    <Typography variant="h5" sx={{ lineHeight: '2', fontSize: '1rem' }}> {/* Texto más grande */}
                         América es continente de grandes escultores y escenario de una identidad
                         cultural, que ubica al arte en espacios naturales, junto a la vida diaria
                         de las urbes. Argentina, si bien con disímiles acentos, no es una excepción
@@ -83,7 +83,7 @@ const Info2 = () => {
                         concepción. Y dentro de esta tierra, está su capital, Resistencia,
                         mostrando un espíritu singular para dar expresión al lenguaje del arte.
                     </Typography>
-                    <Typography variant="h5" sx={{ lineHeight: '2', fontSize: '22px', mt: 2 }}>
+                    <Typography variant="h5" sx={{ lineHeight: '2', fontSize: '1rem', mt: 2 }}>
                         Resistencia, la Ciudad de las Esculturas, es la capital de la provincia del
                         Chaco, ubicada al norte de la República Argentina. Sus espacios abiertos
                         ofrecen la generosidad de una vegetación abundante y el arte al alcance de
@@ -114,10 +114,10 @@ const Info2 = () => {
                             1
                         </Typography>
                         <Box sx={{ ml: 3 }}>
-                            <Typography variant="h5" sx={{ fontWeight: 'bold', fontSize: '22px' }}>
+                            <Typography variant="h5" sx={{ fontWeight: 'bold', fontSize: '1.2rem' }}>
                                 Capital Nacional de las Esculturas
                             </Typography>
-                            <Typography variant="body1" sx={{ fontSize: '18px' }}>
+                            <Typography variant="body1" sx={{ fontSize: '1rem' }}>
                                 La ciudad de Resistencia fue declarada Capital Nacional de las
                                 Esculturas por el Congreso de la Nación en octubre de 2006. – Ley
                                 26.157 –.
@@ -146,10 +146,10 @@ const Info2 = () => {
                             2
                         </Typography>
                         <Box sx={{ ml: 3 }}>
-                            <Typography variant="h5" sx={{ fontWeight: 'bold', fontSize: '22px' }}>
+                            <Typography variant="h5" sx={{ fontWeight: 'bold', fontSize: '1.2rem' }}>
                                 Capital Mercosur de las Esculturas
                             </Typography>
-                            <Typography variant="body1" sx={{ fontSize: '18px' }}>
+                            <Typography variant="body1" sx={{ fontSize: '1rem' }}>
                                 En Octubre de 2010, el Parlamento del Mercosur Declara a la ciudad
                                 de Resistencia, Chaco, República Argentina, “Capital Mercosur De Las
                                 Esculturas”.

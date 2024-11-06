@@ -1,10 +1,14 @@
 // src/App.jsx
+
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ThemeProvider } from '@mui/material/styles';
-import { RoutesNavigation } from './routes/routes'; // Importamos el nuevo archivo de rutas
-import themeCustom from './theme'; // Tema personalizado
+import { RoutesNavigation } from './routes/routes'; // Archivo de rutas
+import themeCustom from './theme';
 import configureInterceptors from './api/interceptor';
-// Configurar react-query
+import useAuthStateListener from './auth/useAuthStateListener';
+import LoaderSpinner from './components/LoaderSpinner';
+import { useState } from 'react';
+
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -16,16 +20,23 @@ const queryClient = new QueryClient({
 });
 
 function App() {
-  // Inicializamos el interceptor para todas las peticiones  (habilitar cuando esten las cookies)
+
+  // Configuración del interceptor
   configureInterceptors();
-  
+
+  const [isLoading, setLoading] = useState(false);
+  useAuthStateListener(setLoading);
+   console.log("isLoading", isLoading)
   return (
     <QueryClientProvider client={queryClient}>
       <ThemeProvider theme={themeCustom}>
+        {isLoading &&<LoaderSpinner></LoaderSpinner>}
+      
         <RoutesNavigation />
       </ThemeProvider>
     </QueryClientProvider>
   );
+ 
 }
 
 export default App;

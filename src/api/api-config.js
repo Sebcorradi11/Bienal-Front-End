@@ -18,7 +18,7 @@ const esculturasApi = axios.create({
 });
 
 const apiClient = axios.create({
-  baseURL: "http://localhost:3000",
+  baseURL: "https://bienal-backend-api-gateway.onrender.com/",
   withCredentials: true // Permite enviar cookies en solicitudes
 });
 

@@ -4,7 +4,7 @@ import { eventosApi } from "./api-config";
 // Crear evento
 const createEvento = async (eventoData) => {
   try {
-    const response = await eventosApi.post("/eventos", eventoData, {
+    const response = await eventosApi.post("/createEvent", eventoData, {
       headers: { "Content-Type": "multipart/form-data" },
     });
     return response.data;
@@ -17,7 +17,7 @@ const createEvento = async (eventoData) => {
 // Obtener eventos (ejemplo)
 const getEventos = async () => {
   try {
-    const response = await eventosApi.get("/eventos");
+    const response = await eventosApi.get("/getAllEvents");
     return response.data;
   } catch (error) {
     console.error("Error obteniendo los eventos:", error);
@@ -27,7 +27,7 @@ const getEventos = async () => {
 
 const getEventoPorId = async (id) => {
   try {
-    const response = await eventosApi.get(`/eventos/${id}`);
+    const response = await eventosApi.get(`/${id}`);
     return response.data;
   } catch (error) {
     console.error('Error obteniendo el evento:', error);
@@ -37,7 +37,7 @@ const getEventoPorId = async (id) => {
 
 const eliminarEvento = async (id) => {
   try {
-    const response = await eventosApi.delete(`/eventos/${id}`);
+    const response = await eventosApi.delete(`/delete/${id}`);
     return response.data;
   } catch (error) {
     console.error('Error al eliminar el evento:', error);
@@ -47,7 +47,7 @@ const eliminarEvento = async (id) => {
 
 const getEventosPorRango = async (fechaInicio, fechaFin) => {
   try {
-    const response = await eventosApi.get(`/eventos/filtrar`, {
+    const response = await eventosApi.get(`/filterEvents`, {
       params: {
         inicio: fechaInicio,
         fin: fechaFin,
@@ -62,7 +62,7 @@ const getEventosPorRango = async (fechaInicio, fechaFin) => {
 
 const actualizarEvento = async (id, eventoData) => {
   try {
-    const response = await eventosApi.put(`/eventos/${id}`, eventoData, {
+    const response = await eventosApi.put(`/update/${id}`, eventoData, {
       headers: { 'Content-Type': 'multipart/form-data' },
     });
     return response.data;
@@ -74,7 +74,7 @@ const actualizarEvento = async (id, eventoData) => {
 
 const getEventoActual = async () => {
   try {
-    const response = await eventosApi.get("/eventos/actual");
+    const response = await eventosApi.get("/currentEvent");
     return response.data;
   } catch (error) {
     console.error("Error obteniendo el evento actual:", error);
@@ -84,7 +84,7 @@ const getEventoActual = async () => {
 
 const getEventosFuturos = async () => {
   try {
-    const response = await eventosApi.get("/eventos/futuros"); // Suponiendo que la ruta del backend es esta
+    const response = await eventosApi.get("/futureEvents"); // Suponiendo que la ruta del backend es esta
     return response.data;
   } catch (error) {
     console.error("Error obteniendo los eventos futuros:", error);
@@ -94,7 +94,7 @@ const getEventosFuturos = async () => {
 
 const getEventosPasados = async () => {
   try {
-    const response = await eventosApi.get("/eventos/pasados"); // Suponiendo que la ruta del backend es esta
+    const response = await eventosApi.get("/pastEvents"); // Suponiendo que la ruta del backend es esta
     return response.data;
   } catch (error) {
     console.error("Error obteniendo los eventos futuros:", error);

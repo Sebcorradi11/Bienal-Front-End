@@ -152,11 +152,22 @@ const HeaderPublic = () => {
                             </ListItemButton>
                         </ListItem>
                         {username ? (
+                            <>
                             <ListItem disablePadding>
                                 <ListItemButton onClick={handleUserLogout}>
                                     <ListItemText primary="Logout" />
                                 </ListItemButton>
                             </ListItem>
+                            <ListItem disablePadding>
+                            <IconButton onClick={() => navigate('/login')} sx={{ padding: 0 }}>
+                                    <Avatar
+                                        src={picture ? picture : `/assets/avatar-default.webp`}
+                                        sx={{marginLeft: '-10px' ,width: 32, height: 32 }}
+                                    />
+                            </IconButton>
+                            <Typography sx={{ color: 'black', marginLeft: '5px' }}>{name}</Typography>
+                            </ListItem>
+                            </>
                         ) : (
                             <ListItem disablePadding>
                                 <ListItemButton onClick={() => navigate('/login')}>

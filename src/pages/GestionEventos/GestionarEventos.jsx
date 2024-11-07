@@ -4,7 +4,7 @@ import Footer from '../../components/Footer';
 import { Box, Container, Button, useMediaQuery, useTheme } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import CrearEventoButton from './components/Eventos/EventoButton';
-import BuscadorEvento from './components/Eventos/BuscadorEvento';
+import BuscadorEvento from '../../components/Buscador';
 import ListaEventos from './components/Eventos/ListaEventos';
 import FiltrosFecha from './components/Eventos/FiltrosFecha';
 import { useNavigate } from 'react-router-dom';

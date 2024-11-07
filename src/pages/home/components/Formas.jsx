@@ -141,7 +141,7 @@ const Formas = () => {
                             </InputAdornment>
                         ),
                         sx: {
-                            width: '400px',
+                            width: '325px',
                             backgroundColor: '#D9D9D9', // Color gris personalizado
                             borderRadius: '30px',
                         },

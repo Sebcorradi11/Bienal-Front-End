@@ -20,7 +20,7 @@ const Predio = () => {
         paddingTop: '40px', // Espacio del borde superior
     }}
 >
-    <Box sx={{ width: { xs: '80%', sm: '70%', md: '45%' }, marginLeft: { xs: '2rem', sm: '3rem', md: '5rem' } }}>
+    <Box sx={{ width: { xs: '80%', sm: '70%', md: '45%' }, marginLeft: { xs: '-1rem', sm: '3rem', md: '5rem' } }}>
         <Typography
             variant="h2"
             sx={{

@@ -4,7 +4,7 @@ import StarBorderIcon from '@mui/icons-material/StarBorder';
 import StarIcon from '@mui/icons-material/Star';
 import SculptorImage from '../../../assets/vote/imagenPerfilEscultor.webp';  // Imagen del perfil del escultor
 
-const SculptorVote = () => {
+const SculptorVote = (evento, id_escultor) => {
     const [rating, setRating] = useState(0);
 
     const handleVote = (value) => {
@@ -12,7 +12,8 @@ const SculptorVote = () => {
     };
 
     const handleSubmit = () => {
-        console.log('Voto enviado:', rating);
+        console.log('Voto enviado:', rating, ' Evento: ', evento,' Escultor: ', id_escultor);
+
     };
 
     return (

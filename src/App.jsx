@@ -22,7 +22,7 @@ const queryClient = new QueryClient({
 function App() {
 
   // Configuración del interceptor
-  configureInterceptors();
+  // configureInterceptors();
 
   const [isLoading, setLoading] = useState(false);
   useAuthStateListener(setLoading);

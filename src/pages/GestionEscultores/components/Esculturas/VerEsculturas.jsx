@@ -2,7 +2,7 @@ import React from 'react';
 import { Box, Typography, List, ListItem, ListItemText, Button } from '@mui/material';
 import HeaderPublic from '../../../../components/HeaderPublic';
 import Footer from '../../../../components/Footer';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import BackButton from '../../../../components/BackButton';
 import { useNavigate } from 'react-router-dom';
 
 const VerEsculturas = () => {
@@ -46,23 +46,7 @@ const VerEsculturas = () => {
 
                 {/* Botón de Atrás */}
                 <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: 3 }}>
-                    <Button
-                        startIcon={<ArrowBackIcon />}
-                        onClick={handleAtras}
-                        sx={{
-                            height: '50px',
-                            width: '200px',
-                            borderRadius: '25px',
-                            backgroundColor: '#1976d2',
-                            color: 'white',
-                            textTransform: 'none',
-                            fontWeight: 'bold',
-                            boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
-                            '&:hover': { backgroundColor: '#1565c0' },
-                        }}
-                    >
-                        Atrás
-                    </Button>
+                    <BackButton sx={{ width: '48%' }} />
                 </Box>
             </Box>
 

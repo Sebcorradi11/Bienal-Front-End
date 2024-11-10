@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import HeaderPublic from '../../components/HeaderPublic';
 import Footer from '../../components/Footer';
 import { Box, Container, Button, useMediaQuery, useTheme } from '@mui/material';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import BackButton from '../../components/BackButton';
 import CrearEscultorButton from './components/Escultores/ButtonEscultores';
 import BuscadorEscultor from '../../components/Buscador';
 import ListaEscultores from './components/Escultores/ListaEscultores';
@@ -76,25 +76,7 @@ const GestionarEscultores = () => {
                         mb: 2,
                     }}
                 >
-                    <Button
-                        startIcon={<ArrowBackIcon />}
-                        onClick={handleAtras}
-                        sx={{
-                            height: '50px',
-                            width: '200px',
-                            borderRadius: '25px',
-                            backgroundColor: '#1976d2',
-                            color: 'white',
-                            textTransform: 'none',
-                            fontWeight: 'bold',
-                            boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
-                            '&:hover': {
-                                backgroundColor: '#1565c0',
-                            },
-                        }}
-                    >
-                        Atrás
-                    </Button>
+                    <BackButton sx={{ width: '48%' }} />
                 </Box>
             </Container>
 

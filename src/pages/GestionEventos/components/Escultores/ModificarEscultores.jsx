@@ -18,7 +18,6 @@ import EditIcon from '@mui/icons-material/Edit';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import HeaderPublic from '../../../../components/HeaderPublic';
 import Footer from '../../../../components/Footer';
-import fondoBoton from '../../../../assets/gestioneventos/Rectangle 32.svg';
 import { useNavigate } from 'react-router-dom';
 
 const ModificarEscultores = () => {

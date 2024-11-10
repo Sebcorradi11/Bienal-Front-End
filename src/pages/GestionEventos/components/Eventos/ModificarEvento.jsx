@@ -4,14 +4,14 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { getEventoPorId, actualizarEvento } from '../../../../api/eventos.routes';
 import HeaderPublic from '../../../../components/HeaderPublic';
 import Footer from '../../../../components/Footer';
-import fondoBoton from '../../../../assets/gestioneventos/Rectangle 32.svg';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import fondoBoton from '../../../../assets/fondobutton/Rectangle 32.svg';
+import BackButton from '../../../../components/BackButton';
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 const ModificarEvento = () => {
-  const { id } = useParams(); 
-  const navigate = useNavigate(); 
+  const { id } = useParams();
+  const navigate = useNavigate();
   const [evento, setEvento] = useState({
     name: '',
     date_inicio: '',
@@ -77,7 +77,7 @@ const ModificarEvento = () => {
     try {
       await actualizarEvento(id, formData);
       alert('Evento actualizado exitosamente');
-      navigate(-1); 
+      navigate(-1);
     } catch (error) {
       console.error('Error al actualizar el evento:', error);
       alert('Error al actualizar el evento');
@@ -85,7 +85,7 @@ const ModificarEvento = () => {
   };
 
   const handleAtras = () => {
-    navigate(-1); 
+    navigate(-1);
   };
 
   return (
@@ -256,15 +256,7 @@ const ModificarEvento = () => {
               >
                 Modificar Evento
               </Button>
-              <Button
-                startIcon={<ArrowBackIcon />}
-                variant="outlined"
-                color="secondary"
-                onClick={handleAtras}
-                sx={{ width: { xs: '100%', sm: '48%' } }}
-              >
-                Atrás
-              </Button>
+              <BackButton sx={{ width: '48%' }} />
             </Box>
           </Grid>
         </Grid>

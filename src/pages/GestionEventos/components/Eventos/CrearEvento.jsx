@@ -5,9 +5,9 @@ import {
 import ImageIcon from '@mui/icons-material/Image';
 import HeaderPublic from '../../../../components/HeaderPublic';
 import Footer from '../../../../components/Footer';
-import fondoBoton from '../../../../assets/gestioneventos/Rectangle 32.svg';
+import fondoBoton from '../../../../assets/fondobutton/Rectangle 32.svg';
 import { useNavigate } from 'react-router-dom';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import BackButton from '../../../../components/BackButton';
 import { createEvento } from '../../../../api/eventos.routes'; // Importar la función desde eventos.routes.js
 
 
@@ -258,15 +258,7 @@ const CrearEvento = () => {
             >
               Crear Evento
             </Button>
-            <Button
-              startIcon={<ArrowBackIcon />}
-              variant="outlined"
-              color="secondary"
-              onClick={handleAtras}
-              sx={{ width: '48%' }}
-            >
-              Atrás
-            </Button>
+            <BackButton sx={{ width: '48%' }} />
           </Box>
         </Box>
       </Box>

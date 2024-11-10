@@ -3,7 +3,7 @@ import HeaderPublic from '../../components/HeaderPublic';
 import Footer from '../../components/Footer';
 import { Box, Container, Button, useMediaQuery, useTheme } from '@mui/material';
 import BackButton from '../../components/BackButton';
-import CrearEventoButton from './components/Eventos/EventoButton';
+import ButtonNavigate from '../../components/ButtonNavigate';
 import BuscadorEvento from '../../components/Buscador';
 import ListaEventos from './components/Eventos/ListaEventos';
 import FiltrosFecha from './components/Eventos/FiltrosFecha';
@@ -22,9 +22,6 @@ const GestionarEventos = () => {
     setFechaFin(fin);
   };
 
-  const handleAtras = () => {
-    navigate(-1); // Navega a la página anterior
-  };
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
@@ -50,7 +47,7 @@ const GestionarEventos = () => {
               width: isSmallScreen ? '100%' : 'auto',
             }}
           >
-            <CrearEventoButton />
+            <ButtonNavigate name="Crear Eventos" route="/crear-evento" />
           </Box>
 
           {/* Filtro de Fechas en el medio */}

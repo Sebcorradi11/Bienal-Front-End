@@ -9,10 +9,6 @@ const VerEsculturas = () => {
     const esculturas = ['Simpleza', 'Amor', 'Peligro']; // Lista de esculturas a mostrar
     const navigate = useNavigate();
 
-    const handleAtras = () => {
-        navigate(-1); // Navega a la página anterior
-    };
-
     return (
         <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
             <HeaderPublic />

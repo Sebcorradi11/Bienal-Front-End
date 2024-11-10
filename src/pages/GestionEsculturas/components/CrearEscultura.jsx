@@ -49,10 +49,6 @@ const CrearEscultura = () => {
         }
     };
 
-    const handleAtras = () => {
-        navigate(-1);
-    };
-
     return (
         <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
             <HeaderPublic />

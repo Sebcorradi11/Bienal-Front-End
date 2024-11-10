@@ -3,7 +3,7 @@ import HeaderPublic from '../../components/HeaderPublic';
 import Footer from '../../components/Footer';
 import { Box, Container, Button, useMediaQuery, useTheme } from '@mui/material';
 import BackButton from '../../components/BackButton';
-import CrearEscultorButton from './components/Escultores/ButtonEscultores';
+import ButtonNavigate from '../../components/ButtonNavigate';
 import BuscadorEscultor from '../../components/Buscador';
 import ListaEscultores from './components/Escultores/ListaEscultores';
 import { useNavigate } from 'react-router-dom';
@@ -21,9 +21,6 @@ const GestionarEscultores = () => {
         setFechaFin(fin);
     };
 
-    const handleAtras = () => {
-        navigate(-1); // Navega a la página anterior
-    };
 
     return (
         <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
@@ -49,7 +46,7 @@ const GestionarEscultores = () => {
                             width: isSmallScreen ? '100%' : 'auto',
                         }}
                     >
-                        <CrearEscultorButton />
+                        <ButtonNavigate name="Crear Escultor" route="/crear-escultor" />
                     </Box>
 
                     {/* Buscador a la derecha */}

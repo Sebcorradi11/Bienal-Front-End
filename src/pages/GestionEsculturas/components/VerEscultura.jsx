@@ -31,9 +31,6 @@ const VerEscultura = () => {
         cargarEscultura();
     }, [id]);
 
-    const handleAtras = () => {
-        navigate(-1);
-    };
 
     if (error) {
         return <Typography variant="h6" color="error">{error}</Typography>;

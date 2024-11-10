@@ -28,10 +28,6 @@ const AgregarEsculturas = () => {
         }
     };
 
-    const handleAtras = () => {
-        navigate(-1); // Navega a la página anterior
-    };
-
     const handleEliminarEscultura = (index) => {
         setEsculturas(esculturas.filter((_, i) => i !== index));
     };

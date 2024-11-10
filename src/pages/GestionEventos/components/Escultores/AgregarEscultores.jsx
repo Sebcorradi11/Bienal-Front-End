@@ -27,11 +27,6 @@ const AgregarEscultores = () => {
             setNuevoEscultor('');
         }
     };
-
-    const handleAtras = () => {
-        navigate(-1); // Navega a la página anterior
-    };
-
     const handleEliminarEscultor = (index) => {
         setEscultores(escultores.filter((_, i) => i !== index));
     };

@@ -7,9 +7,7 @@ import BackButton from '../../../../components/BackButton';
 const VerEscultores = () => {
     const escultores = ['Juan Pérez', 'Luis Bernardi', 'Lucas Giménez']; // Lista fija para ver
 
-    const handleAtras = () => {
-        navigate(-1); // Navega a la página anterior
-    };
+
 
     return (
         <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>

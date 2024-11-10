@@ -3,7 +3,7 @@ import HeaderPublic from '../../components/HeaderPublic';
 import Footer from '../../components/Footer';
 import { Box, Container, Button, useMediaQuery, useTheme } from '@mui/material';
 import BackButton from '../../components/BackButton';
-import CrearEsculturaButton from './components/EsculturaButton';
+import ButtonNavigate from '../../components/ButtonNavigate';
 import BuscadorEscultura from '../../components/Buscador';
 import ListaEsculturas from './components/ListaEsculturas';
 import { useNavigate } from 'react-router-dom';
@@ -21,9 +21,7 @@ const GestionarEsculturas = () => {
         setFechaFin(fin);
     };
 
-    const handleAtras = () => {
-        navigate(-1); // Navega a la página anterior
-    };
+
 
     return (
         <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
@@ -49,7 +47,7 @@ const GestionarEsculturas = () => {
                             width: isSmallScreen ? '100%' : 'auto',
                         }}
                     >
-                        <CrearEsculturaButton />
+                        <ButtonNavigate name="Crear Esculturas" route="/crear-escultura" />
                     </Box>
 
                     {/* Filtro de Fechas en el medio */}

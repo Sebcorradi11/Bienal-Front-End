@@ -32,9 +32,6 @@ const VerEvento = () => {
     cargarEvento();
   }, [id]);
 
-  const handleAtras = () => {
-    navigate(-1); // Navega hacia la página anterior
-  };
   const handleVerEscultores = () => {
     navigate(`/ver-escultores/${id}`); // Navega a la vista de escultores para el evento con su ID
   };

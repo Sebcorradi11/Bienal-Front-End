@@ -4,8 +4,8 @@ import { useParams, useNavigate } from 'react-router-dom';
 // import { getEscultorPorId } from '../../../../api/escultores.routes'; // Cambia la función de la API a la de escultores
 import HeaderPublic from '../../../../components/HeaderPublic';
 import Footer from '../../../../components/Footer';
-import fondoBoton from '../../../../assets/gestioneventos/Rectangle 32.svg';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import fondoBoton from '../../../../assets/fondobutton/Rectangle 32.svg';
+import BackButton from '../../../../components/BackButton';
 
 const VerEscultor = () => {
     const { id } = useParams();
@@ -24,11 +24,6 @@ const VerEscultor = () => {
         };
         cargarEscultor();
     }, [id]);
-
-    const handleAtras = () => {
-        navigate(-1);
-    };
-
 
     if (error) {
         return <Typography variant="h6" color="error">{error}</Typography>;
@@ -118,22 +113,7 @@ const VerEscultor = () => {
                             <Typography variant="h6">Esculturas</Typography>
                         </Button>
 
-                        {/* Botón Atrás */}
-                        <Button
-                            startIcon={<ArrowBackIcon />}
-                            onClick={handleAtras}
-                            variant="outlined"
-                            color="primary"
-                            fullWidth
-                            sx={{
-                                marginTop: 2,
-                                height: '50px',
-                                borderRadius: '25px',
-                                textTransform: 'none',
-                            }}
-                        >
-                            Atrás
-                        </Button>
+                        <BackButton sx={{ width: '48%' }} />
                     </Grid>
                 </Grid>
             </Box>

@@ -1,14 +1,14 @@
 import React from 'react';
 import { Button, Box } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
-import fondoBoton from '../../../assets/gestionesculturas/Rectangle 32.svg';
+import fondoBoton from '../assets/fondobutton/Rectangle 32.svg';
 import { useNavigate } from 'react-router-dom';
 
-const EsculturaButton = () => {
+const ButtonNavigate = ({ name, route }) => {
     const navigate = useNavigate();
 
     const handleClick = () => {
-        navigate('/crear-escultura');
+        navigate(route); // Navega a la ruta proporcionada
     };
 
     return (
@@ -39,10 +39,10 @@ const EsculturaButton = () => {
                 }}
                 startIcon={<AddIcon />}
             >
-                Crear Escultura
+                {name} {/* Mostrar el texto que se pasa como prop */}
             </Button>
         </Box>
     );
 };
 
-export default EsculturaButton;
+export default ButtonNavigate;

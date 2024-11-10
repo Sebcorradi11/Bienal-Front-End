@@ -4,10 +4,10 @@ import { useParams, useNavigate } from 'react-router-dom';
 // import { getEscultorPorId, actualizarEscultor } from '../../../../api/escultores.routes';
 import HeaderPublic from '../../../../components/HeaderPublic';
 import Footer from '../../../../components/Footer';
-import fondoBoton from '../../../../assets/gestioneventos/Rectangle 32.svg';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import fondoBoton from '../../../../assets/fondobutton/Rectangle 32.svg';
 import AddIcon from '@mui/icons-material/Add';
-import DeleteIcon from '@mui/icons-material/Delete';
+import BackButton from '../../../../components/BackButton';
+
 
 const ModificarEscultor = () => {
     const { id } = useParams();
@@ -68,10 +68,6 @@ const ModificarEscultor = () => {
             console.error('Error al actualizar el escultor:', error);
             alert('Error al actualizar el escultor');
         }
-    };
-
-    const handleAtras = () => {
-        navigate(-1);
     };
 
     return (
@@ -234,15 +230,7 @@ const ModificarEscultor = () => {
                             >
                                 Modificar Escultor
                             </Button>
-                            <Button
-                                startIcon={<ArrowBackIcon />}
-                                variant="outlined"
-                                color="secondary"
-                                onClick={handleAtras}
-                                sx={{ width: { xs: '100%', sm: '48%' } }}
-                            >
-                                Atrás
-                            </Button>
+                            <BackButton sx={{ width: '48%' }} />
                         </Box>
                     </Grid>
                 </Grid>

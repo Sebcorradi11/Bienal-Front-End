@@ -5,9 +5,8 @@ import {
 import ImageIcon from '@mui/icons-material/Image';
 import HeaderPublic from '../../../components/HeaderPublic';
 import Footer from '../../../components/Footer';
-import fondoBoton from '../../../assets/gestionesculturas/Rectangle 32.svg';
 import { useNavigate } from 'react-router-dom';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import BackButton from '../../../components/BackButton';
 
 const CrearEscultura = () => {
     const [formData, setFormData] = useState({
@@ -48,10 +47,6 @@ const CrearEscultura = () => {
             reader.onloadend = () => setImagenVistaPrevia((prev) => ({ ...prev, [field]: reader.result }));
             reader.readAsDataURL(file);
         }
-    };
-
-    const handleAtras = () => {
-        navigate(-1);
     };
 
     return (
@@ -169,15 +164,7 @@ const CrearEscultura = () => {
                         >
                             Crear Escultura
                         </Button>
-                        <Button
-                            startIcon={<ArrowBackIcon />}
-                            variant="outlined"
-                            color="secondary"
-                            onClick={handleAtras}
-                            sx={{ width: '48%' }}
-                        >
-                            Atrás
-                        </Button>
+                        <BackButton sx={{ width: '48%' }} />
                     </Box>
                 </Box>
             </Box>

@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import HeaderPublic from '../../components/HeaderPublic';
 import Footer from '../../components/Footer';
 import { Box, Container, Button, useMediaQuery, useTheme } from '@mui/material';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import CrearEsculturaButton from './components/EsculturaButton';
+import BackButton from '../../components/BackButton';
+import ButtonNavigate from '../../components/ButtonNavigate';
 import BuscadorEscultura from '../../components/Buscador';
 import ListaEsculturas from './components/ListaEsculturas';
 import { useNavigate } from 'react-router-dom';
@@ -21,9 +21,7 @@ const GestionarEsculturas = () => {
         setFechaFin(fin);
     };
 
-    const handleAtras = () => {
-        navigate(-1); // Navega a la página anterior
-    };
+
 
     return (
         <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
@@ -49,7 +47,7 @@ const GestionarEsculturas = () => {
                             width: isSmallScreen ? '100%' : 'auto',
                         }}
                     >
-                        <CrearEsculturaButton />
+                        <ButtonNavigate name="Crear Esculturas" route="/crear-escultura" />
                     </Box>
 
                     {/* Filtro de Fechas en el medio */}
@@ -87,25 +85,7 @@ const GestionarEsculturas = () => {
                         mb: 2,
                     }}
                 >
-                    <Button
-                        startIcon={<ArrowBackIcon />}
-                        onClick={handleAtras}
-                        sx={{
-                            height: '50px',
-                            width: '200px',
-                            borderRadius: '25px',
-                            backgroundColor: '#1976d2',
-                            color: 'white',
-                            textTransform: 'none',
-                            fontWeight: 'bold',
-                            boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
-                            '&:hover': {
-                                backgroundColor: '#1565c0',
-                            },
-                        }}
-                    >
-                        Atrás
-                    </Button>
+                    <BackButton sx={{ width: '48%' }} />
                 </Box>
             </Container>
 

@@ -6,6 +6,7 @@ const userSlice = createSlice({
         isAuthenticated: false,
         role: 'user',
         username: '',
+        email:'',
         picture: '',
     },
     reducers: {
@@ -17,6 +18,7 @@ const userSlice = createSlice({
             state.username = action.payload.username;
             state.picture = action.payload.picture;
             state.role = action.payload.role;
+            state.email = action.payload.email;
         },
         loginFailure: (state) => {
             state.isAuthenticated = false;
@@ -26,6 +28,7 @@ const userSlice = createSlice({
             state.role = 'user';
             state.username = '';
             state.picture = '';
+            state.email = '';
         },
         updateRole: (state, action) => {
             state.role = action.payload; 

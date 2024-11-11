@@ -3,16 +3,37 @@ import { Box, Typography, Button, Grid, IconButton } from '@mui/material';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import StarIcon from '@mui/icons-material/Star';
 import SculptorImage from '../../../assets/vote/imagenPerfilEscultor.webp';  // Imagen del perfil del escultor
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { nologged, voted } from '../../../store/voteSlice';
 
-const SculptorVote = () => {
+
+const SculptorVote = ({evento, id_escultor}) => {
+    const dispatch = useDispatch();
+
     const [rating, setRating] = useState(0);
+    const { isAuthenticated, email } = useSelector((state) => state.user);
+    const navigate = useNavigate();  // Usar el hook useNavigate
 
     const handleVote = (value) => {
         setRating(value);
     };
 
     const handleSubmit = () => {
-        console.log('Voto enviado:', rating);
+        if(isAuthenticated){
+        console.log(isAuthenticated, email)
+        console.log('Voto enviado:', rating, ' Evento: ', evento,' Escultor: ', id_escultor);
+    }
+    else{
+        dispatch(nologged(({
+            event: evento,
+            sculptor: id_escultor,
+            email: email,
+            puntuation: rating
+        })));
+        console.log('No autenticado')
+        navigate('/login');
+    }
     };
 
     return (

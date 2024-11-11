@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Box, Typography, Button, Grid } from '@mui/material';
 import { useParams, useNavigate } from 'react-router-dom';
-// import { getEscultorPorId } from '../../../../api/escultores.routes'; // Cambia la función de la API a la de escultores
+import { getEscultorPorId } from '../../../../api/Sculptores/sculptoresApi';
 import HeaderPublic from '../../../../components/HeaderPublic';
 import Footer from '../../../../components/Footer';
 import fondoBoton from '../../../../assets/fondobutton/Rectangle 32.svg';
@@ -16,7 +16,7 @@ const VerEscultor = () => {
     useEffect(() => {
         const cargarEscultor = async () => {
             try {
-                const data = await getEscultorPorId(id); // Llamar a la API para obtener el escultor por ID
+                const data = await getEscultorPorId(id);
                 setEscultor(data);
             } catch (error) {
                 setError('No se pudo cargar el escultor.');
@@ -32,9 +32,11 @@ const VerEscultor = () => {
     if (!escultor) {
         return <Typography variant="h6">Cargando escultor...</Typography>;
     }
+
     const handleVerEsculturas = () => {
         navigate('/ver-escultura/:id'); // Navega a la vista de agregar escultores
     };
+
     return (
         <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
             <HeaderPublic />
@@ -55,24 +57,21 @@ const VerEscultor = () => {
                 >
                     <Grid item xs={12} md={8} lg={6}>
                         <Typography variant="h4" gutterBottom textAlign="center">
-                            Ver Escultor - {escultor.nombre} {escultor.apellido}
+                            Ver Escultor - {escultor.name}
                         </Typography>
 
                         <Box sx={{ marginBottom: 2 }}>
                             <Typography variant="body1" gutterBottom>
-                                <strong>Nombre:</strong> {escultor.nombre}
+                                <strong>Nombre:</strong> {escultor.name}
                             </Typography>
                             <Typography variant="body1" gutterBottom>
-                                <strong>Apellido:</strong> {escultor.apellido}
+                                <strong>Biografía:</strong> {escultor.biography}
                             </Typography>
                             <Typography variant="body1" gutterBottom>
-                                <strong>Biografía:</strong> {escultor.biografia}
+                                <strong>País:</strong> {escultor.country}
                             </Typography>
                             <Typography variant="body1" gutterBottom>
-                                <strong>Contacto:</strong> {escultor.contacto}
-                            </Typography>
-                            <Typography variant="body1" gutterBottom>
-                                <strong>Obras Previas:</strong> {escultor.obrasPrevias}
+                                <strong>Contacto:</strong> {escultor.contactInfo?.email} - {escultor.contactInfo?.phone}
                             </Typography>
                         </Box>
 
@@ -90,7 +89,7 @@ const VerEscultor = () => {
                             }}
                         >
                             <img
-                                src={escultor.imagen || 'https://via.placeholder.com/300'}
+                                src={escultor.profileImage || 'https://via.placeholder.com/300'}
                                 alt="Imagen del escultor"
                                 style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                             />

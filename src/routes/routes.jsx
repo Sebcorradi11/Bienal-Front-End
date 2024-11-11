@@ -4,7 +4,9 @@ import { onlyPublicRoute } from './publicRoutes';
 import { onlyPrivateRoute } from './privateRoutes';
 import PublicRoute from './PublicRoute'; // Protege rutas públicas
 import PrivateRoute from './PrivateRoute'; // Protege rutas privadas
+import UserRoute from './UserRoute';
 import NotFound from '../pages/notFound/NotFound';
+import { onlyUserRoute } from './userRoutes';
 
 export const RoutesNavigation = () => {
   return (
@@ -42,6 +44,21 @@ const RouterContainer = () => {
               <PrivateRoute>
                 <Component />
               </PrivateRoute>
+            }
+          />
+        );
+      })}
+
+      {/* Rutas del usuario */}
+      {onlyUserRoute.map(({ component: Component, path }) => {
+        return (
+          <Route
+            path={path}
+            key={path}
+            element={
+              <UserRoute>
+                <Component />
+              </UserRoute>
             }
           />
         );

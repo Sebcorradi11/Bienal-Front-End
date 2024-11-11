@@ -21,10 +21,6 @@ export const onlyPublicRoute = [
     component: EventosPage,
   },
   {
-    path: "/vote",
-    component: VotesPage,
-  },
-  {
     path: "/",
     component: Home,
   },

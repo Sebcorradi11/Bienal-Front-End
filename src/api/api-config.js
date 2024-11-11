@@ -18,7 +18,7 @@ const esculturasApi = axios.create({
 });
 
 const apiClient = axios.create({
-  baseURL: "https://bienal-front-end-viuu.vercel.app/",
+  baseURL: "https://bienal-backend.ddns.net/",
   withCredentials: true // Permite enviar cookies en solicitudes
 });
 

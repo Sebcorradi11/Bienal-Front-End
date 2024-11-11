@@ -4,9 +4,10 @@ import { VitePWA } from 'vite-plugin-pwa';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react(),
+  plugins: [
+    react(),
     VitePWA({
-      registerType: 'autoUpdate', // Actualiza el servicio cada vez que detecte un cambio
+      registerType: 'autoUpdate',
       workbox: {
         clientsClaim: true,
         skipWaiting: true
@@ -31,8 +32,16 @@ export default defineConfig({
             type: 'image/png',
           },
         ],
-      },
+      }
     }),
   ],
-
+server: {
+    proxy: {
+      '/api/*': {
+        target: 'https://bienal-backend.ddns.net',
+        changeOrigin: true,
+        secure: true,
+      },
+    },
+  },
 })

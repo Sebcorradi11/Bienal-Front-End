@@ -47,22 +47,15 @@ const CrearEscultor = () => {
         data.append('contactInfo[email]', formData.email);
         data.append('contactInfo[phone]', formData.phone);
 
-        // Adjunta el archivo solo si existe
         if (formData.profileImage) {
             data.append('profileImage', formData.profileImage);
-        }
-
-        // Verificación completa de los datos que se están enviando
-        console.log("Datos que se envían al backend:");
-        for (let [key, value] of data.entries()) {
-            console.log(`${key}:`, value);
+            console.log('Archivo adjunto:', formData.profileImage); // Verifica el archivo aquí
         }
 
         try {
             const response = await crearSculptor(data);
             console.log('Escultor creado:', response);
             alert('Escultor creado exitosamente.');
-            // Limpia el formulario
             setFormData({
                 name: '',
                 biography: '',
@@ -74,14 +67,14 @@ const CrearEscultor = () => {
             setImagen(null);
         } catch (error) {
             console.error('Error al crear el escultor:', error);
-
-            // Verifica el mensaje de error específico del backend
-            if (error.response && error.response.data) {
-                console.error('Mensaje de error del backend:', error.response.data);
-            }
-            alert('Error al crear el escultor. Inténtalo de nuevo.');
+            console.error('Mensaje de error del backend:', error.response?.data);
+            alert(`Error al crear el escultor: ${error.response?.data.error || 'Inténtalo de nuevo.'}`);
         }
     };
+
+
+
+
     return (
         <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
             <HeaderPublic />

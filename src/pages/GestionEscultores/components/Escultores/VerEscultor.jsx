@@ -97,17 +97,17 @@ const VerEscultor = () => {
 
                         <Button
                             fullWidth
-                            onClick={handleVerEsculturas}
                             sx={{
-                                marginTop: 3,
                                 height: '60px',
                                 borderRadius: '30px',
                                 backgroundImage: `url(${fondoBoton})`,
                                 backgroundSize: 'cover',
                                 color: 'white',
                                 textTransform: 'none',
+                                mb: 2,
                                 '&:hover': { opacity: 0.9 },
                             }}
+                            onClick={handleVerEsculturas}
                         >
                             <Typography variant="h6">Esculturas</Typography>
                         </Button>

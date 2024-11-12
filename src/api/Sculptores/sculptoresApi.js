@@ -45,18 +45,16 @@ export const obtenerSculptorPorId = async (id) => {
     }
 };
 
-// Función para actualizar un sculptor por ID
 export const actualizarSculptor = async (id, data) => {
     try {
         const response = await sculptoresApi.put(`/update/${id}`, data);
         return response.data;
     } catch (error) {
-        console.error('Error al actualizar sculptor:', error);
+        console.error('Error al actualizar el escultor:', error);
         throw error;
     }
 };
 
-// Función para eliminar un sculptor por ID
 export const eliminarSculptor = async (id) => {
     try {
         const response = await sculptoresApi.delete(`/delete/${id}`);

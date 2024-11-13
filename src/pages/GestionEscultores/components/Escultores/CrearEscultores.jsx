@@ -3,19 +3,19 @@ import { Box, TextField, Typography, Button, Icon } from '@mui/material';
 import ImageIcon from '@mui/icons-material/Image';
 import HeaderPublic from '../../../../components/HeaderPublic';
 import Footer from '../../../../components/Footer';
-import fondoBoton from '../../../../assets/gestioneventos/Rectangle 32.svg';
+import fondoBoton from '../../../../assets/fondobutton/Rectangle 32.svg';
 import { useNavigate } from 'react-router-dom';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-// import { createEscultor } from '../../../../api/escultores.routes'; // Importar la función desde escultores.routes.js
+import BackButton from '../../../../components/BackButton';
+import { crearSculptor } from '../../../../api/Sculptores/sculptoresApi';
 
 const CrearEscultor = () => {
     const [formData, setFormData] = useState({
-        nombre: '',
-        apellido: '',
-        biografia: '',
-        contacto: '',
-        obrasPrevias: '',
-        imagen: null,
+        name: '',
+        biography: '',
+        country: '',
+        email: '',
+        phone: '',
+        profileImage: null,
     });
     const [imagen, setImagen] = useState(null);
     const navigate = useNavigate();
@@ -27,117 +27,67 @@ const CrearEscultor = () => {
 
     const handleImageUpload = (event) => {
         const file = event.target.files[0];
-        setFormData({ ...formData, imagen: file });
+        setFormData({ ...formData, profileImage: file });
         if (file) {
             const reader = new FileReader();
             reader.onloadend = () => setImagen(reader.result);
             reader.readAsDataURL(file);
         }
     };
-    const handleAgregarEsculturas = () => {
-        navigate('/agregar-escultura'); // Navega a la vista de agregar escultores
-    };
 
+    const handleAgregarEsculturas = () => {
+        navigate('/agregar-escultura');
+    };
 
     const handleCrearEscultor = async () => {
         const data = new FormData();
-        data.append('nombre', formData.nombre);
-        data.append('apellido', formData.apellido);
-        data.append('biografia', formData.biografia);
-        data.append('contacto', formData.contacto);
-        data.append('obrasPrevias', formData.obrasPrevias);
-        if (formData.imagen) {
-            data.append('imagen', formData.imagen);
+        data.append('name', formData.name);
+        data.append('biography', formData.biography);
+        data.append('country', formData.country);
+        data.append('contactInfo[email]', formData.email);
+        data.append('contactInfo[phone]', formData.phone);
+
+        if (formData.profileImage) {
+            data.append('profileImage', formData.profileImage);
+            console.log('Archivo adjunto:', formData.profileImage); // Verifica el archivo aquí
         }
 
         try {
-            const response = await createEscultor(data);
+            const response = await crearSculptor(data);
             console.log('Escultor creado:', response);
             alert('Escultor creado exitosamente.');
             setFormData({
-                nombre: '',
-                apellido: '',
-                biografia: '',
-                contacto: '',
-                obrasPrevias: '',
-                imagen: null,
+                name: '',
+                biography: '',
+                country: '',
+                email: '',
+                phone: '',
+                profileImage: null,
             });
             setImagen(null);
-            window.scrollTo(0, 0);
         } catch (error) {
             console.error('Error al crear el escultor:', error);
-            alert('Error al crear el escultor. Inténtalo de nuevo.');
+            console.error('Mensaje de error del backend:', error.response?.data);
+            alert(`Error al crear el escultor: ${error.response?.data.error || 'Inténtalo de nuevo.'}`);
         }
     };
 
-    const handleAtras = () => {
-        navigate(-1);
-    };
+
+
 
     return (
         <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
             <HeaderPublic />
-
-            <Box
-                sx={{
-                    flexGrow: 1,
-                    padding: { xs: 2, md: 4 },
-                    gap: 3,
-                    backgroundColor: '#f5f5f5',
-                }}
-            >
+            <Box sx={{ flexGrow: 1, padding: { xs: 2, md: 4 }, gap: 3, backgroundColor: '#f5f5f5' }}>
                 <Typography variant="h4" textAlign="center" gutterBottom>
                     Crear Escultor
                 </Typography>
-
-                <Box
-                    component="form"
-                    sx={{
-                        maxWidth: 600,
-                        margin: '0 auto',
-                        display: 'grid',
-                        gap: 2,
-                    }}
-                >
-                    <TextField
-                        label="Nombre"
-                        name="nombre"
-                        value={formData.nombre}
-                        onChange={handleChange}
-                        fullWidth
-                        required
-                    />
-                    <TextField
-                        label="Apellido"
-                        name="apellido"
-                        value={formData.apellido}
-                        onChange={handleChange}
-                        fullWidth
-                        required
-                    />
-                    <TextField
-                        label="Biografía"
-                        name="biografia"
-                        value={formData.biografia}
-                        onChange={handleChange}
-                        multiline
-                        rows={3}
-                        fullWidth
-                    />
-                    <TextField
-                        label="Contacto"
-                        name="contacto"
-                        value={formData.contacto}
-                        onChange={handleChange}
-                        fullWidth
-                    />
-                    <TextField
-                        label="Obras Previas"
-                        name="obrasPrevias"
-                        value={formData.obrasPrevias}
-                        onChange={handleChange}
-                        fullWidth
-                    />
+                <Box component="form" sx={{ maxWidth: 600, margin: '0 auto', display: 'grid', gap: 2 }}>
+                    <TextField label="Nombre" name="name" value={formData.name} onChange={handleChange} fullWidth required />
+                    <TextField label="Biografía" name="biography" value={formData.biography} onChange={handleChange} multiline rows={3} fullWidth required />
+                    <TextField label="País" name="country" value={formData.country} onChange={handleChange} fullWidth required />
+                    <TextField label="Correo Electrónico" name="email" value={formData.email} onChange={handleChange} fullWidth required />
+                    <TextField label="Teléfono" name="phone" value={formData.phone} onChange={handleChange} fullWidth />
 
                     <Box
                         sx={{
@@ -156,29 +106,16 @@ const CrearEscultor = () => {
                             <ImageIcon />
                         </Icon>
                         <Typography variant="body2" sx={{ mt: 1 }}>
-                            Arrastra y suelta la imagen aquí o{' '}
-                            <strong>selecciona el archivo</strong> que desea subir
+                            Arrastra y suelta la imagen aquí o <strong>selecciona el archivo</strong> que desea subir
                         </Typography>
                     </Box>
 
                     {imagen && (
-                        <Box
-                            sx={{
-                                display: 'flex',
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                                marginTop: 2,
-                            }}
-                        >
+                        <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: 2 }}>
                             <img
                                 src={imagen}
                                 alt="Imagen del escultor"
-                                style={{
-                                    maxWidth: '100%',
-                                    maxHeight: '300px',
-                                    objectFit: 'cover',
-                                    borderRadius: '8px',
-                                }}
+                                style={{ maxWidth: '100%', maxHeight: '300px', objectFit: 'cover', borderRadius: '8px' }}
                             />
                         </Box>
                     )}
@@ -199,34 +136,14 @@ const CrearEscultor = () => {
                         <Typography variant="h6">Esculturas</Typography>
                     </Button>
 
-                    <Box
-                        sx={{
-                            display: 'flex',
-                            justifyContent: 'space-between',
-                            marginTop: 2,
-                        }}
-                    >
-                        <Button
-                            variant="contained"
-                            color="primary"
-                            onClick={handleCrearEscultor}
-                            sx={{ width: '48%' }}
-                        >
+                    <Box sx={{ display: 'flex', justifyContent: 'space-between', marginTop: 2 }}>
+                        <Button variant="contained" color="primary" onClick={handleCrearEscultor} sx={{ width: '48%' }}>
                             Crear Escultor
                         </Button>
-                        <Button
-                            startIcon={<ArrowBackIcon />}
-                            variant="outlined"
-                            color="secondary"
-                            onClick={handleAtras}
-                            sx={{ width: '48%' }}
-                        >
-                            Atrás
-                        </Button>
+                        <BackButton sx={{ width: '48%' }} />
                     </Box>
                 </Box>
             </Box>
-
             <Footer />
         </Box>
     );

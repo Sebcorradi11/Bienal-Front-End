@@ -47,6 +47,7 @@ const EventoActual = () => {
           {actualEvent ? (
             <Grid item xs={12} sm={6} md={4} lg={3}>
               <EventCard
+                id={actualEvent._id}
                 title={actualEvent.name}
                 date="Hoy"
                 image={actualEvent.images[0]} // Suponiendo que es un array

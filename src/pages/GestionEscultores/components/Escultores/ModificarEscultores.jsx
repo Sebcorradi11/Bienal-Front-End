@@ -1,24 +1,24 @@
 import React, { useEffect, useState } from 'react';
-import { Box, TextField, Typography, Button, Grid, IconButton } from '@mui/material';
+import { Box, TextField, Typography, Button, Grid } from '@mui/material';
 import { useParams, useNavigate } from 'react-router-dom';
-// import { getEscultorPorId, actualizarEscultor } from '../../../../api/escultores.routes';
+import { getEscultorPorId, actualizarSculptor } from '../../../../api/sculptores/sculptoresApi';
+
 import HeaderPublic from '../../../../components/HeaderPublic';
 import Footer from '../../../../components/Footer';
-import fondoBoton from '../../../../assets/gestioneventos/Rectangle 32.svg';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import fondoBoton from '../../../../assets/fondobutton/Rectangle 32.svg';
 import AddIcon from '@mui/icons-material/Add';
-import DeleteIcon from '@mui/icons-material/Delete';
+import BackButton from '../../../../components/BackButton';
 
 const ModificarEscultor = () => {
     const { id } = useParams();
     const navigate = useNavigate();
     const [escultor, setEscultor] = useState({
-        nombre: '',
-        apellido: '',
-        biografia: '',
-        contacto: '',
-        obrasPrevias: '',
-        imagen: null,
+        name: '',
+        lastName: '',
+        biography: '',
+        contactInfo: '',
+        works: '',
+        profileImage: null,
     });
     const [nuevaImagen, setNuevaImagen] = useState(null);
 
@@ -26,7 +26,14 @@ const ModificarEscultor = () => {
         const cargarEscultor = async () => {
             try {
                 const data = await getEscultorPorId(id);
-                setEscultor(data);
+                setEscultor({
+                    name: data.name || '',
+                    lastName: data.lastName || '',
+                    biography: data.biography || '',
+                    contactInfo: data.contactInfo || '',
+                    works: data.works || '',
+                    profileImage: data.profileImage || null,
+                });
             } catch (error) {
                 console.error('Error al cargar el escultor:', error);
             }
@@ -44,24 +51,21 @@ const ModificarEscultor = () => {
         setNuevaImagen(file);
         alert('Imagen cargada correctamente');
     };
-    const handleModificarEsculturas = () => {
-        navigate('/modificar-escultura/:id'); // Navega a la vista de agregar escultores
-    };
 
     const handleModificar = async () => {
         const formData = new FormData();
-        formData.append('nombre', escultor.nombre);
-        formData.append('apellido', escultor.apellido);
-        formData.append('biografia', escultor.biografia);
-        formData.append('contacto', escultor.contacto);
-        formData.append('obrasPrevias', escultor.obrasPrevias);
-
+        formData.append('name', escultor.name); // Campo de nombre
+        formData.append('lastName', escultor.lastName); // Campo de apellido (agregado aquí)
+        formData.append('country', escultor.country); // Si el país es necesario
+        formData.append('biography', escultor.biography);
+        formData.append('contactInfo', JSON.stringify(escultor.contactInfo)); 
+    
         if (nuevaImagen) {
-            formData.append('imagen', nuevaImagen);
+            formData.append('profileImage', nuevaImagen);
         }
-
+    
         try {
-            await actualizarEscultor(id, formData);
+            await actualizarSculptor(id, formData);
             alert('Escultor actualizado exitosamente');
             navigate(-1);
         } catch (error) {
@@ -70,80 +74,61 @@ const ModificarEscultor = () => {
         }
     };
 
-    const handleAtras = () => {
-        navigate(-1);
-    };
-
     return (
         <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
             <HeaderPublic />
-            <Box
-                sx={{
-                    flexGrow: 1,
-                    padding: { xs: 2, md: 4 },
-                    backgroundColor: '#f5f5f5',
-                }}
-            >
+            <Box sx={{ flexGrow: 1, p: { xs: 2, md: 4 }, backgroundColor: '#f5f5f5' }}>
                 <Grid container spacing={4} justifyContent="center" alignItems="center" sx={{ minHeight: '80vh' }}>
                     <Grid item xs={12} md={8} lg={6}>
                         <Typography variant="h4" gutterBottom textAlign="center">
-                            Modificar Escultor - {escultor.nombre} {escultor.apellido}
+                            Modificar Escultor - {escultor.name} {escultor.lastName}
                         </Typography>
 
-                        {/* Campos del formulario */}
                         <TextField
                             label="Nombre"
-                            name="nombre"
-                            value={escultor.nombre}
+                            name="name"
+                            value={escultor.name}
                             onChange={handleChange}
                             fullWidth
                             InputLabelProps={{ shrink: true }}
-                            sx={{ marginBottom: 2 }}
+                            sx={{ mb: 2 }}
                         />
                         <TextField
                             label="Apellido"
-                            name="apellido"
-                            value={escultor.apellido}
+                            name="lastName"
+                            value={escultor.lastName}
                             onChange={handleChange}
                             fullWidth
                             InputLabelProps={{ shrink: true }}
-                            sx={{ marginBottom: 2 }}
+                            sx={{ mb: 2 }}
                         />
                         <TextField
                             label="Biografía"
-                            name="biografia"
-                            value={escultor.biografia}
+                            name="biography"
+                            value={escultor.biography}
                             onChange={handleChange}
                             multiline
                             rows={3}
                             fullWidth
-                            sx={{ marginBottom: 2 }}
+                            sx={{ mb: 2 }}
                         />
                         <TextField
                             label="Contacto"
-                            name="contacto"
-                            value={escultor.contacto}
+                            name="contactInfo"
+                            value={escultor.contactInfo}
                             onChange={handleChange}
                             fullWidth
-                            sx={{ marginBottom: 2 }}
+                            sx={{ mb: 2 }}
                         />
-                        <TextField
-                            label="Obras Previas"
-                            name="obrasPrevias"
-                            value={escultor.obrasPrevias}
-                            onChange={handleChange}
-                            fullWidth
-                            sx={{ marginBottom: 2 }}
-                        />
+                    
 
-                        {/* Gestionar imagen */}
-                        <Box sx={{ marginBottom: 2 }}>
+                        <Box sx={{ mb: 2 }}>
                             <Typography variant="body1" gutterBottom>
                                 Imagen del Escultor
                             </Typography>
                             <Grid container spacing={1}>
                                 <Grid item>
-                                    {escultor.imagen && (
+                                    {escultor.profileImage && (
                                         <Box
                                             sx={{
                                                 position: 'relative',
@@ -151,11 +136,11 @@ const ModificarEscultor = () => {
                                                 height: 100,
                                                 overflow: 'hidden',
                                                 borderRadius: '8px',
-                                                marginBottom: 1,
+                                                mb: 1,
                                             }}
                                         >
                                             <img
-                                                src={escultor.imagen}
+                                                src={escultor.profileImage}
                                                 alt="Imagen del escultor"
                                                 style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                                             />
@@ -181,12 +166,7 @@ const ModificarEscultor = () => {
                                         }}
                                     >
                                         <AddIcon />
-                                        <input
-                                            type="file"
-                                            hidden
-                                            accept="image/*"
-                                            onChange={handleAgregarImagen}
-                                        />
+                                        <input type="file" hidden accept="image/*" onChange={handleAgregarImagen} />
                                     </Button>
                                 </Grid>
                             </Grid>
@@ -194,7 +174,6 @@ const ModificarEscultor = () => {
 
                         <Button
                             fullWidth
-                            onClick={handleModificarEsculturas}
                             sx={{
                                 height: '60px',
                                 borderRadius: '30px',
@@ -202,48 +181,15 @@ const ModificarEscultor = () => {
                                 backgroundSize: 'cover',
                                 color: 'white',
                                 textTransform: 'none',
+                                mb: 2,
                                 '&:hover': { opacity: 0.9 },
                             }}
+                            onClick={handleModificar}
                         >
-                            <Typography variant="h6">Esculturas</Typography>
+                            <Typography variant="h6">Modificar Escultor</Typography>
                         </Button>
 
-                        {/* Botones de Modificar Escultor y Atrás */}
-                        <Box
-                            sx={{
-                                display: 'flex',
-                                justifyContent: 'space-between',
-                                gap: 2,
-                                flexDirection: { xs: 'column', sm: 'row' },
-                            }}
-                        >
-                            <Button
-                                variant="contained"
-                                onClick={handleModificar}
-                                sx={{
-                                    width: { xs: '100%', sm: '48%' },
-                                    height: '60px',
-                                    borderRadius: '30px',
-                                    backgroundImage: `url(${fondoBoton})`,
-                                    backgroundSize: 'cover',
-                                    backgroundPosition: 'center',
-                                    color: 'white',
-                                    textTransform: 'none',
-                                    '&:hover': { opacity: 0.9 },
-                                }}
-                            >
-                                Modificar Escultor
-                            </Button>
-                            <Button
-                                startIcon={<ArrowBackIcon />}
-                                variant="outlined"
-                                color="secondary"
-                                onClick={handleAtras}
-                                sx={{ width: { xs: '100%', sm: '48%' } }}
-                            >
-                                Atrás
-                            </Button>
-                        </Box>
+                        <BackButton sx={{ width: '100%' }} />
                     </Grid>
                 </Grid>
             </Box>

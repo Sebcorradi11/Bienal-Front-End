@@ -48,6 +48,7 @@ const EventosFuturos = () => {
             {futureEvents.map((event) => (
               <Grid item key={event._id} xs={12} sm={6} md={4} lg={3}>
                 <EventCard
+                  id={event._id}
                   title={event.name}
                   date={event.date}
                   image={event.images[0]}

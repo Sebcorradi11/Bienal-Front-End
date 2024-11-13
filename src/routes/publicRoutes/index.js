@@ -6,7 +6,7 @@ import VotesPage from '../../pages/Votos/VotesPage';
 import Home from '../../pages/home/Home';
 import LoginPage from '../../pages/login/Login';
 import QrPage from '../../pages/Qr/Qrpage';
-
+import VerEvento1 from '../../pages/Eventos/components/verEvento1';
 export const onlyPublicRoute = [
   {
     path: "/esculturas",
@@ -36,4 +36,9 @@ export const onlyPublicRoute = [
     path: "/qr",
     component: QrPage,
   },
+  
+  {
+    path: "/ver-evento-public/:id",
+    component: VerEvento1,
+  }
 ];

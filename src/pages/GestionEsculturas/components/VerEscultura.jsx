@@ -4,8 +4,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { getEsculturaPorId } from '../mock';
 import HeaderPublic from '../../../components/HeaderPublic';
 import Footer from '../../../components/Footer';
-import fondoBoton from '../../../assets/gestionesculturas/Rectangle 32.svg';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import BackButton from '../../../components/BackButton';
 
 const VerEscultura = () => {
     const { id } = useParams();
@@ -32,9 +31,6 @@ const VerEscultura = () => {
         cargarEscultura();
     }, [id]);
 
-    const handleAtras = () => {
-        navigate(-1);
-    };
 
     if (error) {
         return <Typography variant="h6" color="error">{error}</Typography>;
@@ -104,21 +100,7 @@ const VerEscultura = () => {
                         </Grid>
 
                         {/* Botón Atrás */}
-                        <Button
-                            startIcon={<ArrowBackIcon />}
-                            onClick={handleAtras}
-                            variant="outlined"
-                            color="primary"
-                            fullWidth
-                            sx={{
-                                marginTop: 2,
-                                height: '50px',
-                                borderRadius: '25px',
-                                textTransform: 'none',
-                            }}
-                        >
-                            Atrás
-                        </Button>
+                        <BackButton sx={{ width: '48%' }} />
                     </Grid>
                 </Grid>
             </Box>

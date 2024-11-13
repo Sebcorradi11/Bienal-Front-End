@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import HeaderPublic from '../../components/HeaderPublic';
 import Footer from '../../components/Footer';
 import { Box, Container, Button, useMediaQuery, useTheme } from '@mui/material';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import BackButton from '../../components/BackButton';
 import { collection, getDocs, updateDoc, doc } from 'firebase/firestore';
 import { db } from '../../auth/firebase';
 import LoaderSpinner from '../../components/LoaderSpinner';
@@ -55,43 +55,25 @@ const GestionarUsuarios = () => {
     navigate(-1);
   };
 
-const formatDate = (timestamp) => {
-  const date = new Date(timestamp);
-  const day = String(date.getDate()).padStart(2, '0');
-  const month = String(date.getMonth() + 1).padStart(2, '0');
-  const year = date.getFullYear();
-  const hours = String(date.getHours()).padStart(2, '0');
-  const minutes = String(date.getMinutes()).padStart(2, '0');
-  return `${day}/${month}/${year} ${hours}.${minutes}`;
-};
+  const formatDate = (timestamp) => {
+    const date = new Date(timestamp);
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    return `${day}/${month}/${year} ${hours}.${minutes}`;
+  };
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
       <HeaderPublic />
       {isLoading && <LoaderSpinner />}
       <Container sx={{ mt: 4, flexGrow: 1 }}>
-      
+
         {/* Botón de retroceso */}
         <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4, mb: 2 }}>
-          <Button
-            startIcon={<ArrowBackIcon />}
-            onClick={handleAtras}
-            sx={{
-              height: '50px',
-              width: '200px',
-              borderRadius: '25px',
-              backgroundColor: '#1976d2',
-              color: 'white',
-              textTransform: 'none',
-              fontWeight: 'bold',
-              boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
-              '&:hover': {
-                backgroundColor: '#1565c0',
-              },
-            }}
-          >
-            Atrás
-          </Button>
+          <BackButton sx={{ width: '48%' }} />
         </Box>
         {/* Sección de Usuarios */}
         <Box sx={{ mb: 3 }}>
@@ -116,9 +98,9 @@ const formatDate = (timestamp) => {
                 <p>Rol actual: {user.role}</p>
                 <p>Fecha de creación: {formatDate(user.createdAt)}</p>
               </Box>
-            
+
               <Box sx={{ display: 'flex', gap: 1 }}>
-              {user.role === 'admin' ? (                <Button
+                {user.role === 'admin' ? (<Button
                   variant="contained"
                   color="secondary"
                   onClick={() => cambiarRol(user.id, 'user')}
@@ -141,7 +123,7 @@ const formatDate = (timestamp) => {
                 >
                   Cambiar a Admin
                 </Button>)}
-                
+
 
               </Box>
             </Box>

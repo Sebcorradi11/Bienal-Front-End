@@ -34,16 +34,7 @@ export const getEscultorPorId = async (id) => {
     }
 };
 
-// Función para obtener un sculptor por ID
-export const obtenerSculptorPorId = async (id) => {
-    try {
-        const response = await sculptoresApi.get(`/${id}`);
-        return response.data;
-    } catch (error) {
-        console.error('Error al obtener sculptor:', error);
-        throw error;
-    }
-};
+
 
 export const actualizarSculptor = async (id, data) => {
     try {

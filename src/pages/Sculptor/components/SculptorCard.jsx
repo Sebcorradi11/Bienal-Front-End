@@ -1,10 +1,17 @@
-// SculptorCard.jsx
 import React from 'react';
 import { Box, Typography, Avatar } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
-const SculptorCard = ({ name, country, image, flag }) => {
+const SculptorCard = ({ name, country, image, flag, id }) => {
+    const navigate = useNavigate();
+
+    const handleClick = () => {
+        navigate(`/ver-escultor/${id}`); // Redirige al usuario a la página del escultor al hacer clic en la tarjeta
+    };
+
     return (
         <Box
+            onClick={handleClick} // Navegación al hacer clic en cualquier parte de la tarjeta
             sx={{
                 display: 'flex',
                 flexDirection: 'column',
@@ -12,6 +19,7 @@ const SculptorCard = ({ name, country, image, flag }) => {
                 gap: 1,
                 maxWidth: 150,
                 padding: 2,
+                cursor: 'pointer', // Indica que la tarjeta es clickeable
             }}
         >
             <Avatar

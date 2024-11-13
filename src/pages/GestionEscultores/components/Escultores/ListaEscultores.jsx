@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Box, Typography, IconButton, Grid } from '@mui/material';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import EditIcon from '@mui/icons-material/Edit';
-import { obtenerTodosSculptores, eliminarSculptor } from '../../../../api/sculptores/sculptoresApi';
+import { obtenerTodosSculptores, eliminarSculptor } from '../../../../api/Sculptores/sculptoresApi';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useNavigate } from 'react-router-dom';
 

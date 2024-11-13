@@ -7,6 +7,7 @@ import HeaderPublic from '../../../components/HeaderPublic';
 import Footer from '../../../components/Footer';
 import { useNavigate } from 'react-router-dom';
 import BackButton from '../../../components/BackButton';
+import { createEscultura } from '../../../api/sculptures.routes';
 
 const CrearEscultura = () => {
     const [formData, setFormData] = useState({
@@ -18,8 +19,6 @@ const CrearEscultura = () => {
         imagenPost: null,
     });
     const [imagenVistaPrevia, setImagenVistaPrevia] = useState({});
-
-    const navigate = useNavigate();
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -49,6 +48,41 @@ const CrearEscultura = () => {
         }
     };
 
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        const esculturaData = new FormData();
+        esculturaData.append('name', formData.nombre);
+        esculturaData.append('description', formData.tematica);
+        esculturaData.append('creation_date', formData.fechaCreacion);
+
+        if (formData.imagenPre) esculturaData.append('imagenPre', formData.imagenPre);
+        if (formData.imagenDurante) esculturaData.append('imagenDurante', formData.imagenDurante);
+        if (formData.imagenPost) esculturaData.append('imagenPost', formData.imagenPost);
+
+        try {
+            const response = await createEscultura(esculturaData);
+            console.log("Escultura creada:", response);
+
+            alert('Escultura creada exitosamente.');
+
+            setFormData({
+                nombre: '',
+                tematica: '',
+                fechaCreacion: '',
+                imagenPre: null,
+                imagenDurante: null,
+                imagenPost: null,
+            });
+            setImagenVistaPrevia({});
+
+            window.scrollTo(0, 0);
+        } catch (error) {
+            console.error("Error al crear la escultura:", error);
+            alert('Error al crear la escultura. Inténtalo de nuevo.');
+        }
+    };
+
     return (
         <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
             <HeaderPublic />
@@ -67,6 +101,7 @@ const CrearEscultura = () => {
 
                 <Box
                     component="form"
+                    onSubmit={handleSubmit}
                     sx={{
                         maxWidth: 600,
                         margin: '0 auto',
@@ -158,6 +193,7 @@ const CrearEscultura = () => {
                         }}
                     >
                         <Button
+                            type="submit"
                             variant="contained"
                             color="primary"
                             sx={{ width: '48%' }}

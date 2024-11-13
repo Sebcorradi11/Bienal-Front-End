@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Box, Typography, Grid, IconButton } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import { getEsculturas, eliminarEscultura } from '../mock';
+import { getEsculturas, eliminarEscultura } from '../../../api/sculptures.routes'; // Importa el servicio real
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -68,13 +68,13 @@ const ListaEsculturas = () => {
                                 }}
                             >
                                 <Typography variant="body1" fontWeight="bold" gutterBottom>
-                                    {escultura.nombre}
+                                    {escultura.name}
                                 </Typography>
                                 <Typography variant="body2" gutterBottom>
-                                    Temática: {escultura.tematica}
+                                    Descripción: {escultura.description}
                                 </Typography>
                                 <Typography variant="body2" gutterBottom>
-                                    Fecha de Creación: {new Date(escultura.fechaCreacion).toLocaleDateString('es-AR')}
+                                    Fecha de Creación: {new Date(escultura.creation_date).toLocaleDateString('es-AR')}
                                 </Typography>
 
                                 <Box sx={{ display: 'flex', justifyContent: 'space-between', gap: 1 }}>

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Typography, Button, Grid } from '@mui/material';
-import { useParams, useNavigate } from 'react-router-dom';
-import { getEsculturaPorId } from '../mock';
+import { Box, Typography, Grid } from '@mui/material';
+import { useParams } from 'react-router-dom';
+import { getEsculturaPorId } from '../../../api/sculptures.routes'; // Usa la función real
 import HeaderPublic from '../../../components/HeaderPublic';
 import Footer from '../../../components/Footer';
 import BackButton from '../../../components/BackButton';
@@ -10,7 +10,6 @@ const VerEscultura = () => {
     const { id } = useParams();
     const [escultura, setEscultura] = useState(null);
     const [error, setError] = useState(null);
-    const navigate = useNavigate();
 
     const formatearFecha = (fecha) => {
         const opciones = { year: 'numeric', month: '2-digit', day: '2-digit' };
@@ -25,12 +24,12 @@ const VerEscultura = () => {
                 const data = await getEsculturaPorId(id);
                 setEscultura(data);
             } catch (error) {
+                console.error('Error al cargar la escultura:', error);
                 setError('No se pudo cargar la escultura.');
             }
         };
         cargarEscultura();
     }, [id]);
-
 
     if (error) {
         return <Typography variant="h6" color="error">{error}</Typography>;
@@ -60,21 +59,21 @@ const VerEscultura = () => {
                 >
                     <Grid item xs={12} md={8} lg={6}>
                         <Typography variant="h4" gutterBottom textAlign="center">
-                            Ver Escultura - {escultura.nombre}
+                            Ver Escultura - {escultura.name}
                         </Typography>
 
                         <Box sx={{ marginBottom: 2 }}>
                             <Typography variant="body1" gutterBottom>
-                                <strong>Temática:</strong> {escultura.tematica}
+                                <strong>Descripción:</strong> {escultura.description}
                             </Typography>
                             <Typography variant="body1" gutterBottom>
-                                <strong>Fecha de Creación:</strong> {formatearFecha(escultura.fechaCreacion)}
+                                <strong>Fecha de Creación:</strong> {formatearFecha(escultura.creation_date)}
                             </Typography>
                         </Box>
 
                         {/* Mostrar imágenes */}
                         <Grid container spacing={2} sx={{ marginBottom: 3 }}>
-                            {['imagenPreEvento', 'imagenDuranteEvento', 'imagenPostEvento'].map((key, index) => (
+                            {['imagenesPre', 'imagenesDurante', 'imagenesPost'].map((key, index) => (
                                 <Grid item xs={12} sm={4} key={index}>
                                     <Box
                                         sx={{
@@ -90,7 +89,7 @@ const VerEscultura = () => {
                                         }}
                                     >
                                         <img
-                                            src={escultura[key] || 'https://via.placeholder.com/300'}
+                                            src={escultura[key]?.[0] || 'https://via.placeholder.com/300'} // Muestra la primera imagen del array o un placeholder
                                             alt={`Imagen ${key}`}
                                             style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                                         />

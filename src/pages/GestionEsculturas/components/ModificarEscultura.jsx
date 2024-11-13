@@ -4,8 +4,8 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { getEsculturaPorId, actualizarEscultura } from '../mock';
 import HeaderPublic from '../../../components/HeaderPublic';
 import Footer from '../../../components/Footer';
-import fondoBoton from '../../../assets/gestionesculturas/Rectangle 32.svg';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import fondoBoton from '../../../assets/fondobutton/Rectangle 32.svg';
+import BackButton from '../../../components/BackButton';
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 
@@ -74,10 +74,6 @@ const ModificarEscultura = () => {
             console.error('Error al actualizar la escultura:', error);
             alert('Error al actualizar la escultura');
         }
-    };
-
-    const handleAtras = () => {
-        navigate(-1);
     };
 
     return (
@@ -211,15 +207,7 @@ const ModificarEscultura = () => {
                             >
                                 Modificar Escultura
                             </Button>
-                            <Button
-                                startIcon={<ArrowBackIcon />}
-                                variant="outlined"
-                                color="secondary"
-                                onClick={handleAtras}
-                                sx={{ width: { xs: '100%', sm: '48%' } }}
-                            >
-                                Atrás
-                            </Button>
+                            <BackButton sx={{ width: '48%' }} />
                         </Box>
                     </Grid>
                 </Grid>

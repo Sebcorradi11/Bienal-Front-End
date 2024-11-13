@@ -12,8 +12,8 @@ import {
 import DeleteIcon from '@mui/icons-material/Delete';
 import HeaderPublic from '../../../../components/HeaderPublic';
 import Footer from '../../../../components/Footer';
-import fondoBoton from '../../../../assets/gestioneventos/Rectangle 32.svg';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import fondoBoton from '../../../../assets/fondobutton/Rectangle 32.svg';
+import BackButton from '../../../../components/BackButton';
 import { useNavigate } from 'react-router-dom'; // Importa useNavigate
 
 const AgregarEscultores = () => {
@@ -27,11 +27,6 @@ const AgregarEscultores = () => {
             setNuevoEscultor('');
         }
     };
-
-    const handleAtras = () => {
-        navigate(-1); // Navega a la página anterior
-    };
-
     const handleEliminarEscultor = (index) => {
         setEscultores(escultores.filter((_, i) => i !== index));
     };
@@ -109,23 +104,7 @@ const AgregarEscultores = () => {
 
                 {/* Botón de Atrás */}
                 <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: 3 }}>
-                    <Button
-                        startIcon={<ArrowBackIcon />}
-                        onClick={handleAtras}
-                        sx={{
-                            height: '50px',
-                            width: '200px',
-                            borderRadius: '25px',
-                            backgroundColor: '#1976d2',
-                            color: 'white',
-                            textTransform: 'none',
-                            fontWeight: 'bold',
-                            boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
-                            '&:hover': { backgroundColor: '#1565c0' },
-                        }}
-                    >
-                        Atrás
-                    </Button>
+                    <BackButton sx={{ width: '48%' }} />
                 </Box>
             </Box>
 

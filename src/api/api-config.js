@@ -4,7 +4,7 @@ import axios from "axios";
 // URLs base para cada microservicio (usando import.meta.env para Vite)
 const urlServiceEventos = import.meta.env.VITE_URL_EVENTOS;
 const urlServiceEsculturas = import.meta.env.VITE_URL_ESCULTURAS;
-
+const urlServiceVotacion = import.meta.env.VITE_URL_VOTACION;
 
 // Axios Instances
 const eventosApi = axios.create({
@@ -17,9 +17,14 @@ const esculturasApi = axios.create({
   withCredentials: true,
 });
 
+const votacionApi = axios.create({
+  baseURL: urlServiceVotacion,
+  withCredentials: false,
+});
+
 const apiClient = axios.create({
-  baseURL: "https://bienal-backend.ddns.net/",
-  withCredentials: true // Permite enviar cookies en solicitudes
+  baseURL: "http://localhost:3000/",
+  withCredentials: false // Permite enviar cookies en solicitudes
 });
 
 export const verificarAutenticacion = () => {
@@ -32,4 +37,4 @@ export const verificarAutenticacion = () => {
       });
 };
 
-export { eventosApi, esculturasApi };
+export { eventosApi, esculturasApi, votacionApi };

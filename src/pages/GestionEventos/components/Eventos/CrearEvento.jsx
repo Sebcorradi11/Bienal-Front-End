@@ -67,9 +67,8 @@ const CrearEvento = () => {
     data.append('location', formData.location);
     data.append('theme', formData.theme);
     if (formData.images) {
-      data.append('imagen', formData.images);
+      data.append('images', formData.images); // solo uno, sin forEach
     }
-
     try {
       // Usar la función createEvento desde eventos.routes.js
       const response = await createEvento(data);

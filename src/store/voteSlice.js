@@ -4,6 +4,7 @@ const voteSlice = createSlice({
   name: 'votation',
   initialState: {
     isVotating: false,
+    voted: false,
     event: '',
     sculptor: '',
     email: '',
@@ -19,6 +20,7 @@ const voteSlice = createSlice({
     },
     voted: (state) => {
       state.isVotating = false;
+      state.voted = true;
       state.event = '';
       state.sculptor = '';
       state.email = '';

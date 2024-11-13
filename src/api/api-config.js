@@ -9,7 +9,7 @@ const urlServiceEsculturas = import.meta.env.VITE_URL_ESCULTURAS;
 // Axios Instances
 const eventosApi = axios.create({
   baseURL: urlServiceEventos,
-  withCredentials: true,
+  withCredentials: false,
 });
 
 const esculturasApi = axios.create({

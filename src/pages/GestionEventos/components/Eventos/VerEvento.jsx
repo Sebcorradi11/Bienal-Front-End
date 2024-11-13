@@ -33,7 +33,7 @@ const VerEvento = () => {
   }, [id]);
 
   const handleVerEscultores = () => {
-    navigate(`/ver-escultores/${id}`); // Navega a la vista de escultores para el evento con su ID
+    navigate(`/ver-evento/${id}`); // Navega a la vista de escultores para el evento con su ID
   };
 
   if (error) {

@@ -7,6 +7,7 @@ import Home from '../../pages/home/Home';
 import LoginPage from '../../pages/login/Login';
 import QrPage from '../../pages/Qr/Qrpage';
 import VerEsculturaPublic from '../../pages/sculptures/components/verEsculturaPublic';
+import VerEscultoresPublic from '../../pages/sculptor/components/DetalleEscultor';
 import VerEvento1 from '../../pages/Eventos/components/verEvento1';
 export const onlyPublicRoute = [
   {
@@ -45,5 +46,9 @@ export const onlyPublicRoute = [
   {
     path: "/ver-escultura-public/:id",
     component: VerEsculturaPublic,
+  },
+  {
+    path: "/ver-escultores-public/:id",
+    component: VerEscultoresPublic,
   }
 ];

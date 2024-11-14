@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Box, TextField, Typography, Button, Grid } from '@mui/material';
 import { useParams, useNavigate } from 'react-router-dom';
-import { getEscultorPorId, actualizarSculptor } from '../../../../api/sculptores/sculptoresApi';
+import { getEscultorPorId, actualizarSculptor } from '../../../../api/Sculptores/sculptoresApi';
 
 import HeaderPublic from '../../../../components/HeaderPublic';
 import Footer from '../../../../components/Footer';

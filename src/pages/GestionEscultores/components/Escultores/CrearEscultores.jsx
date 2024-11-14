@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Box, TextField, Typography, Button, Icon } from '@mui/material';
 import ImageIcon from '@mui/icons-material/Image';
 import HeaderPublic from '../../../../components/HeaderPublic';
@@ -16,18 +16,31 @@ const CrearEscultor = () => {
         email: '',
         phone: '',
         profileImage: null,
+        works: []
     });
     const [imagen, setImagen] = useState(null);
     const navigate = useNavigate();
 
+    useEffect(() => {
+        const savedFormData = JSON.parse(localStorage.getItem('formData') || '{}');
+        const savedSculptures = JSON.parse(localStorage.getItem('selectedSculptures') || '[]');
+
+        setFormData((prevData) => ({ ...prevData, ...savedFormData, works: savedSculptures }));
+    }, []);
+
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setFormData({ ...formData, [name]: value });
+        const updatedFormData = { ...formData, [name]: value };
+        setFormData(updatedFormData);
+
+        const { profileImage, ...dataToSave } = updatedFormData;
+        localStorage.setItem('formData', JSON.stringify(dataToSave));
     };
 
     const handleImageUpload = (event) => {
         const file = event.target.files[0];
         setFormData({ ...formData, profileImage: file });
+
         if (file) {
             const reader = new FileReader();
             reader.onloadend = () => setImagen(reader.result);
@@ -49,13 +62,19 @@ const CrearEscultor = () => {
 
         if (formData.profileImage) {
             data.append('profileImage', formData.profileImage);
-            console.log('Archivo adjunto:', formData.profileImage); // Verifica el archivo aquí
         }
+
+        // Asegurarse de que `works` siempre sea un array en el formato adecuado
+        const worksArray = Array.isArray(formData.works) ? formData.works : [formData.works];
+        worksArray.forEach((work) => {
+            data.append('works', work);
+        });
 
         try {
             const response = await crearSculptor(data);
-            console.log('Escultor creado:', response);
             alert('Escultor creado exitosamente.');
+            localStorage.removeItem('formData');
+            localStorage.removeItem('selectedSculptures');
             setFormData({
                 name: '',
                 biography: '',
@@ -63,17 +82,17 @@ const CrearEscultor = () => {
                 email: '',
                 phone: '',
                 profileImage: null,
+                works: []
             });
             setImagen(null);
+            window.scrollTo(0, 0);
+
+            navigate(`/ver-escultor/${response._id}`);
         } catch (error) {
             console.error('Error al crear el escultor:', error);
-            console.error('Mensaje de error del backend:', error.response?.data);
             alert(`Error al crear el escultor: ${error.response?.data.error || 'Inténtalo de nuevo.'}`);
         }
     };
-
-
-
 
     return (
         <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
@@ -88,6 +107,22 @@ const CrearEscultor = () => {
                     <TextField label="País" name="country" value={formData.country} onChange={handleChange} fullWidth required />
                     <TextField label="Correo Electrónico" name="email" value={formData.email} onChange={handleChange} fullWidth required />
                     <TextField label="Teléfono" name="phone" value={formData.phone} onChange={handleChange} fullWidth />
+
+                    <Button
+                        fullWidth
+                        onClick={handleAgregarEsculturas}
+                        sx={{
+                            height: '60px',
+                            borderRadius: '30px',
+                            backgroundImage: `url(${fondoBoton})`,
+                            backgroundSize: 'cover',
+                            color: 'white',
+                            textTransform: 'none',
+                            '&:hover': { opacity: 0.9 },
+                        }}
+                    >
+                        <Typography variant="h6">Esculturas</Typography>
+                    </Button>
 
                     <Box
                         sx={{
@@ -114,27 +149,11 @@ const CrearEscultor = () => {
                         <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: 2 }}>
                             <img
                                 src={imagen}
-                                alt="Imagen del escultor"
-                                style={{ maxWidth: '100%', maxHeight: '300px', objectFit: 'cover', borderRadius: '8px' }}
+                                alt="Vista previa de la imagen"
+                                style={{ maxWidth: '100%', maxHeight: '200px', objectFit: 'cover', borderRadius: '8px' }}
                             />
                         </Box>
                     )}
-
-                    <Button
-                        fullWidth
-                        onClick={handleAgregarEsculturas}
-                        sx={{
-                            height: '60px',
-                            borderRadius: '30px',
-                            backgroundImage: `url(${fondoBoton})`,
-                            backgroundSize: 'cover',
-                            color: 'white',
-                            textTransform: 'none',
-                            '&:hover': { opacity: 0.9 },
-                        }}
-                    >
-                        <Typography variant="h6">Esculturas</Typography>
-                    </Button>
 
                     <Box sx={{ display: 'flex', justifyContent: 'space-between', marginTop: 2 }}>
                         <Button variant="contained" color="primary" onClick={handleCrearEscultor} sx={{ width: '48%' }}>

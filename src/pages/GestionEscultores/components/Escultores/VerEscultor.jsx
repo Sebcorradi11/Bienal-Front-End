@@ -18,11 +18,18 @@ const VerEscultor = () => {
             try {
                 const data = await getEscultorPorId(id);
                 setEscultor(data);
+                localStorage.setItem('escultor', JSON.stringify(data)); // Guardamos el escultor en localStorage
             } catch (error) {
                 setError('No se pudo cargar el escultor.');
             }
         };
-        cargarEscultor();
+
+        const storedEscultor = JSON.parse(localStorage.getItem('escultor'));
+        if (storedEscultor && storedEscultor._id === id) {
+            setEscultor(storedEscultor);
+        } else {
+            cargarEscultor();
+        }
     }, [id]);
 
     if (error) {
@@ -34,13 +41,12 @@ const VerEscultor = () => {
     }
 
     const handleVerEsculturas = () => {
-        navigate('/ver-escultura/:id'); // Navega a la vista de agregar escultores
+        navigate(`/ver-esculturas/${id}`);
     };
 
     return (
         <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
             <HeaderPublic />
-
             <Box
                 sx={{
                     flexGrow: 1,
@@ -48,18 +54,11 @@ const VerEscultor = () => {
                     backgroundColor: '#f5f5f5',
                 }}
             >
-                <Grid
-                    container
-                    spacing={4}
-                    justifyContent="center"
-                    alignItems="center"
-                    sx={{ minHeight: '80vh' }}
-                >
+                <Grid container spacing={4} justifyContent="center" alignItems="center" sx={{ minHeight: '80vh' }}>
                     <Grid item xs={12} md={8} lg={6}>
                         <Typography variant="h4" gutterBottom textAlign="center">
                             Ver Escultor - {escultor.name}
                         </Typography>
-
                         <Box sx={{ marginBottom: 2 }}>
                             <Typography variant="body1" gutterBottom>
                                 <strong>Nombre:</strong> {escultor.name}
@@ -74,7 +73,6 @@ const VerEscultor = () => {
                                 <strong>Contacto:</strong> {escultor.contactInfo?.email} - {escultor.contactInfo?.phone}
                             </Typography>
                         </Box>
-
                         <Box
                             sx={{
                                 display: 'flex',
@@ -94,7 +92,6 @@ const VerEscultor = () => {
                                 style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                             />
                         </Box>
-
                         <Button
                             fullWidth
                             sx={{
@@ -111,12 +108,10 @@ const VerEscultor = () => {
                         >
                             <Typography variant="h6">Esculturas</Typography>
                         </Button>
-
                         <BackButton sx={{ width: '48%' }} />
                     </Grid>
                 </Grid>
             </Box>
-
             <Footer />
         </Box>
     );

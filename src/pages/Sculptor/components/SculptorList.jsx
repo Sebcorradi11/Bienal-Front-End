@@ -11,13 +11,12 @@ const SculptorList = () => {
         const cargarEscultores = async () => {
             try {
                 const data = await obtenerTodosSculptores();
-                setSculptors(data);
+                setSculptors(Array.isArray(data) ? data : []);
             } catch (error) {
                 setError('No se pudo cargar la lista de escultores.');
                 console.error('Error al cargar escultores:', error);
             }
         };
-
         cargarEscultores();
     }, []);
 
@@ -28,11 +27,17 @@ const SculptorList = () => {
     return (
         <Box sx={{ paddingY: 4, backgroundColor: '#fff' }}>
             <Grid container spacing={3} justifyContent="center">
-            {Array.isArray(sculptors) && sculptors.map((sculptor) => (
-    <Grid item key={sculptor.id} xs={12} sm={6} md={4} lg={3}>
-        <SculptorCard {...sculptor} />
-    </Grid>
-))}
+                {sculptors.map((sculptor) => (
+                    <Grid item key={sculptor._id} xs={12} sm={6} md={4} lg={3}>
+                        <SculptorCard 
+                            id={sculptor._id} 
+                            name={sculptor.name} 
+                            country={sculptor.country} 
+                            image={sculptor.profileImage} 
+                            flag={sculptor.flag} // Asegúrate de tener el campo `flag` en los datos
+                        />
+                    </Grid>
+                ))}
             </Grid>
         </Box>
     );

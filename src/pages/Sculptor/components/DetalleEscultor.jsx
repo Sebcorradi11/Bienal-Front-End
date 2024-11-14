@@ -8,6 +8,7 @@ import fondoBoton from '../../../assets/fondobutton/Rectangle 32.svg';
 
 const VerEscultor = () => {
     const { id } = useParams();
+console.log("ID desde useParams:", id);
     const [escultor, setEscultor] = useState(null);
     const [error, setError] = useState(null);
     const navigate = useNavigate();
@@ -75,36 +76,36 @@ const VerEscultor = () => {
 
                 {/* Botón para ver más esculturas relacionadas */}
                 <Box sx={{ backgroundColor: '#000', color: '#fff', p: 3, mt: 4, borderRadius: '8px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <Box>
-                        <Typography variant="h5" component="h3" sx={{ fontWeight: '400', fontFamily: 'bold', mb: 1 }}>
-                            Conocé las esculturas de
-                        </Typography>
-                        <Typography variant="h5" component="span" sx={{ fontStyle: 'italic', fontFamily: 'Instrument Serif, serif', fontWeight: 'bold' }}>
-                            {escultor.name}
-                        </Typography>
-                    </Box>
-                    <Button
-                        onClick={() => navigate(`/ver-esculturas/${id}`)}
-                        sx={{
-                            backgroundImage: `url(${fondoBoton})`,
-                            backgroundSize: 'cover',
-                            backgroundPosition: 'center',
-                            color: 'white',
-                            textTransform: 'none',
-                            fontWeight: 'bold',
-                            fontSize: '1.2rem',
-                            borderRadius: '20px',
-                            px: 5,
-                            py: 1.5,
-                            '&:hover': {
-                                opacity: 0.9,
-                            },
-                        }}
-                    >
-                        Ver Más
-                    </Button>
-                </Box>
-            </Box>
+          <Box>
+            <Typography variant="h5" component="h3" sx={{ fontWeight: '400', fontFamily: 'bold', mb: 1 }}>
+              Conocé las esculturas de los artistas
+            </Typography>
+            <Typography variant="h5" component="span" sx={{ fontStyle: 'italic', fontFamily: 'Instrument Serif, serif', fontWeight: 'bold' }}>
+              Bienal 2024
+            </Typography>
+          </Box>
+          <Button
+            onClick={() => navigate(`/ver-escultores/${id}`)}
+            sx={{
+              backgroundImage: `url(${fondoBoton})`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+              color: 'white',
+              textTransform: 'none',
+              fontWeight: 'bold',
+              fontSize: '1.2rem',
+              borderRadius: '20px',
+              px: 5,
+              py: 1.5,
+              '&:hover': {
+                opacity: 0.9,
+              },
+            }}
+          >
+            Ver Más
+          </Button>
+        </Box>
+      </Box>
 
             <Footer />
         </Box>

@@ -101,6 +101,10 @@ export const onlyPrivateRoute = [
     component: AgregarEscultura,
   },
   {
+    path: "/:evento/:escultor/qr",
+    component: AgregarEscultura,
+  },
+  {
     path: "/modificar-escultura/:id",
     component: ModificarEscultura,
   },

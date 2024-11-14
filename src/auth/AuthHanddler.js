@@ -6,9 +6,12 @@ import { loginStart, login, loginFailure, logout } from '../store/userSlice';
 import Cookies from 'js-cookie';
 import { verificarAutenticacion } from '../api/api-config';
 
-export const handleGoogleLogin = (setError) => async (dispatch) => {
+
+export const handleGoogleLogin = (setError, votationState) => async (dispatch) => {
     dispatch(loginStart());
     const provider = new GoogleAuthProvider();
+
+
     try {
         const credentials = await signInWithPopup(auth, provider);
         const email = credentials.user.email;
@@ -32,11 +35,12 @@ export const handleGoogleLogin = (setError) => async (dispatch) => {
                 role: userDoc.data().role || role,
                 lastLogin: new Date().toISOString()
             });
-
+            console.log('desde auth, ', credentials.user.email)
             dispatch(login({
                 username: credentials.user.displayName,
                 role: userDoc.data().role || role,
                 picture: credentials.user.photoURL,
+                email: email,
             }));
         } else {
             const userRef = doc(usersRef, credentials.user.uid);
@@ -49,7 +53,9 @@ export const handleGoogleLogin = (setError) => async (dispatch) => {
 
             dispatch(login({
                 username: credentials.user.displayName,
-                role: role
+                role: role,
+                picture: credentials.user.photoURL,
+                email: email,
             }));
         }
 
@@ -94,6 +100,7 @@ export const handleGithubLogin = (setError) => async (dispatch) => {
                 username: credentials.user.displayName,
                 role: userDoc.data().role || role,
                 picture: credentials.user.photoURL,
+                email: email,
             }));
         } else {
             // Si el correo no existe, crea un nuevo documento
@@ -108,7 +115,9 @@ export const handleGithubLogin = (setError) => async (dispatch) => {
             // Actualiza el estado en Redux
             dispatch(login({
                 username: credentials.user.displayName,
-                role: role
+                role: role,
+                picture: credentials.user.photoURL,
+                email: email,
             }));
         }
 

@@ -1,6 +1,6 @@
 // src/pages/Sculptor/components/Info.jsx
 import React from 'react';
-import { Box, Typography, Container } from '@mui/material';
+import { Box,} from '@mui/material';
 import BackgroundImage from '../../../assets/sculptor/Sculptor.svg'; // Asegúrate de colocar correctamente la ruta del SVG
 
 const Info = () => {

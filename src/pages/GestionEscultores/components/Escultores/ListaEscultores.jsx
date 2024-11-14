@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { Box, Typography, IconButton, Grid } from '@mui/material';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import EditIcon from '@mui/icons-material/Edit';
+import { obtenerTodosSculptores, eliminarSculptor } from '../../../../api/Sculptores/sculptoresApi';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useNavigate } from 'react-router-dom';
-//import { getEscultores, eliminarEscultor } from '../../../../api/escultores.routes';
 
 const ListaEscultores = () => {
     const [escultores, setEscultores] = useState([]);
@@ -17,7 +17,8 @@ const ListaEscultores = () => {
 
     const cargarEscultores = async () => {
         try {
-            const data = await getEscultores();
+            const data = await obtenerTodosSculptores();
+            console.log("Datos de escultores:", data); // Verifica que los datos sean correctos
             setEscultores(data);
         } catch (error) {
             console.error('Error al cargar los escultores:', error);
@@ -36,7 +37,8 @@ const ListaEscultores = () => {
         const confirmacion = window.confirm('¿Estás seguro de que quieres eliminar este escultor?');
         if (confirmacion) {
             try {
-                await eliminarEscultor(id);
+                await eliminarSculptor(id);
+                await eliminarSculptor(id);
                 setEscultores(escultores.filter((e) => e._id !== id));
                 alert('Escultor eliminado exitosamente');
             } catch (error) {
@@ -48,7 +50,6 @@ const ListaEscultores = () => {
 
     return (
         <Box sx={{ padding: { xs: 2, md: 3 }, marginTop: 3 }}>
-            {/* Mostrar mensaje si no hay escultores */}
             {escultores.length === 0 ? (
                 <Typography variant="h6" sx={{ textAlign: 'center', marginTop: 4 }}>
                     No hay escultores registrados
@@ -70,7 +71,8 @@ const ListaEscultores = () => {
                                 }}
                             >
                                 <Typography variant="body1" fontWeight="bold" gutterBottom>
-                                    {escultor.nombre}
+                                    {escultor.name} {/* Asegúrate de que el campo coincide con el esquema del backend */}
+                                    {escultor.name} {/* Asegúrate de que el campo coincide con el esquema del backend */}
                                 </Typography>
                                 <Box sx={{ display: 'flex', justifyContent: 'space-between', gap: 1 }}>
                                     <IconButton

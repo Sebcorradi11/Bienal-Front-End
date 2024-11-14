@@ -7,11 +7,13 @@ import Footer from '../../../../components/Footer';
 import fondoBoton from '../../../../assets/fondobutton/Rectangle 32.svg';
 import BackButton from '../../../../components/BackButton';
 
+
 const VerEvento = () => {
   const { id } = useParams(); // Obtiene el ID del evento de la URL
   const [evento, setEvento] = useState(null); // Estado para el evento
   const [error, setError] = useState(null); // Estado para manejar errores
   const navigate = useNavigate(); // Hook para navegar
+
 
   const formatearFecha = (fecha) => {
     const opciones = { year: 'numeric', month: '2-digit', day: '2-digit' };
@@ -20,6 +22,18 @@ const VerEvento = () => {
       .toLocaleDateString('es-AR', opciones);
   };
 
+
+  useEffect(() => {
+    const cargarEvento = async () => {
+      try {
+        const data = await getEventoPorId(id); // Llamar a la API para obtener el evento por ID
+        setEvento(data);
+      } catch (error) {
+        setError('No se pudo cargar el evento.');
+      }
+    };
+    cargarEvento();
+  }, [id]);
   useEffect(() => {
     const cargarEvento = async () => {
       try {
@@ -39,7 +53,13 @@ const VerEvento = () => {
   if (error) {
     return <Typography variant="h6" color="error">{error}</Typography>;
   }
+  if (error) {
+    return <Typography variant="h6" color="error">{error}</Typography>;
+  }
 
+  if (!evento) {
+    return <Typography variant="h6">Cargando evento...</Typography>;
+  }
   if (!evento) {
     return <Typography variant="h6">Cargando evento...</Typography>;
   }
@@ -122,8 +142,9 @@ const VerEvento = () => {
               <Typography variant="h6">Escultores</Typography>
             </Button>
 
-            {/* Botón Atrás */}
-            <BackButton sx={{ width: '48%' }} />
+            <Box sx={{ marginTop: 2 }}> {/* Añade un margen superior menor para mantener una separación */}
+              <BackButton fullWidth sx={{ width: '48%' }} />
+            </Box>
           </Grid>
         </Grid>
       </Box>

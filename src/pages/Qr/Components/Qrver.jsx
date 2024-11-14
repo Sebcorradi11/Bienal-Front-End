@@ -2,18 +2,20 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Box, Typography, CircularProgress } from '@mui/material';
 import axios from 'axios';
-
+import HeaderPublic from '../../../components/HeaderPublic';
+import Footer from '../../../components/Footer';
 const QrVer = () => {
     const { Idevento, Idescultor } = useParams();
     const [qrCodeImage, setQrCodeImage] = useState(null);
     const [loading, setLoading] = useState(true);
     const [timer, setTimer] = useState(60);
+    const baseUrl=import.meta.env.VITE_URL_BASECONFIG;
 
     // Función para obtener el QR desde el backend
     const fetchQRCode = async () => {
         setLoading(true);
         try {
-            const response = await axios.get(`http://localhost:3000/api/qr/generate-qr/${Idevento}/${Idescultor}`);
+            const response = await axios.get(`${baseUrl}api/qr/generate-qr/${Idevento}/${Idescultor}`);
             setQrCodeImage(response.data.qrCodeImage);
             setTimer(60); // Reinicia el contador
         } catch (error) {
@@ -42,18 +44,22 @@ const QrVer = () => {
     }, [timer]);
 
     return (
-        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: '100vh' }}>
-            <Typography variant="h4" textAlign="center" gutterBottom>
-                Código QR para el Escultor
-            </Typography>
-            {loading ? (
-                <CircularProgress />
-            ) : (
-                <>
-                    <img src={qrCodeImage} alt="QR Code" style={{ width: '200px', height: '200px', marginBottom: '20px' }} />
-                    <Typography variant="body1">Válido por: {timer} segundos</Typography>
-                </>
-            )}
+        <Box>
+            <HeaderPublic />
+            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: '100vh' }}>
+                <Typography variant="h4" textAlign="center" gutterBottom>
+                    Código QR para el Escultor
+                </Typography>
+                {loading ? (
+                    <CircularProgress />
+                ) : (
+                    <>
+                        <img src={qrCodeImage} alt="QR Code" style={{ width: '200px', height: '200px', marginBottom: '20px' }} />
+                        <Typography variant="body1">Válido por: {timer} segundos</Typography>
+                    </>
+                )}
+            </Box>
+            <Footer />
         </Box>
     );
 };

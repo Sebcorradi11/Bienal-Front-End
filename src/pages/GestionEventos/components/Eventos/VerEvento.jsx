@@ -149,7 +149,7 @@ const VerEvento = () => {
 
             <Button
               fullWidth
-              onClick={handleVerEscultores}
+              onClick={handleVerResultados}
               sx={{
                 marginTop: 3,
                 height: '60px',
@@ -164,7 +164,7 @@ const VerEvento = () => {
                 },
               }}
             >
-              <Typography variant="h6">Resutados</Typography>
+              <Typography variant="h6">Resultados</Typography>
             </Button>
 
             <Box sx={{ marginTop: 2 }}> {/* Añade un margen superior menor para mantener una separación */}

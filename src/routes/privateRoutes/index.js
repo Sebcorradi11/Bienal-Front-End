@@ -25,6 +25,7 @@ import VerEscultura from '../../pages/GestionEscultores/components/Esculturas/Ve
 import CrearEsculturas from '../../pages/GestionEsculturas/components/CrearEscultura';
 import ModificarEsculturas from '../../pages/GestionEsculturas/components/ModificarEscultura';
 import VerEsculturas from '../../pages/GestionEsculturas/components/VerEscultura';
+import QrVer from '../../pages/Qr/Components/Qrver';
 
 
 export const onlyPrivateRoute = [
@@ -101,16 +102,16 @@ export const onlyPrivateRoute = [
     component: AgregarEscultura,
   },
   {
-    path: "/:evento/:escultor/qr",
-    component: AgregarEscultura,
-  },
-  {
     path: "/modificar-escultura/:id",
     component: ModificarEscultura,
   },
   {
     path: "/ver-escultura/:id",
     component: VerEscultura,
+  },
+  {
+    path: "/:Idevento/:Idescultor/qr",
+    component: QrVer,
   },
 
 ];

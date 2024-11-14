@@ -40,5 +40,6 @@ export const onlyPublicRoute = [
   {
     path: "/ver-evento-public/:id",
     component: VerEvento1,
-  }
+  },
+  
 ];

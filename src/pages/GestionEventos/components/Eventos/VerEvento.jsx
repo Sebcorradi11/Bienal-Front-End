@@ -122,8 +122,9 @@ const VerEvento = () => {
               <Typography variant="h6">Escultores</Typography>
             </Button>
 
-            {/* Botón Atrás */}
-            <BackButton sx={{ width: '48%' }} />
+            <Box sx={{ marginTop: 2 }}> {/* Añade un margen superior menor para mantener una separación */}
+              <BackButton fullWidth sx={{ width: '48%' }} />
+            </Box>
           </Grid>
         </Grid>
       </Box>

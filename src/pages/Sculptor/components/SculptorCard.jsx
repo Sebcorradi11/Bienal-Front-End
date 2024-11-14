@@ -1,12 +1,21 @@
 // SculptorCard.jsx
 import React from 'react';
 import { Box, Typography, Avatar } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
-const SculptorCard = ({ name, country, image, flag }) => {
+const SculptorCard = ({ name, country, image, flag, id }) => {
+    const navigate = useNavigate(); // Definir navigate
+
+    const handleClick = () => {
+        navigate(`/ver-escultores/${id}`); // Usar id en la ruta
+    };
+
     return (
-        <Box
+        <Box 
+            onClick={handleClick}
             sx={{
                 display: 'flex',
+                cursor: 'pointer',
                 flexDirection: 'column',
                 alignItems: 'center',
                 gap: 1,

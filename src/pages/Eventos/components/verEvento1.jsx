@@ -4,7 +4,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { getEventoPorId } from '../../../api/eventos.routes';
 import HeaderPublic from '../../../components/HeaderPublic';
 import Footer from '../../../components/Footer';
-
+import '../../../pages/Sculptor/SculptorPage';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import TwitterIcon from '@mui/icons-material/Twitter';
@@ -16,28 +16,24 @@ const VerEvento1 = () => {
   const [evento, setEvento] = useState(null);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
-  
-  {/* AGREGAR RUTA CORRESPONDIENTE*/}
-  const compartirEnlace = `/ver-evento-public/:id`; // Cambia esto al enlace real de tu aplicación
 
-  // Función para compartir en WhatsApp
+  // Define el enlace público para compartir
+  const compartirEnlace = `/ver-evento-public/${id}`;
+
   const compartirWhatsApp = () => {
     const url = `https://wa.me/?text=${encodeURIComponent(compartirEnlace)}`;
     window.open(url, '_blank');
   };
 
-  // Función para compartir en X
   const compartirX = () => {
     const url = `https://twitter.com/share?url=${encodeURIComponent(compartirEnlace)}&text=¡Mira este evento de la Bienal!`;
     window.open(url, '_blank');
   };
 
-  // Función para compartir en Instagram (solo abre el perfil de Instagram, ya que Instagram no permite compartir enlaces directamente a una publicación específica)
   const compartirInstagram = () => {
-    window.open('https://www.instagram.com/', '_blank'); // Cambia si tienes un perfil específico
+    window.open('https://www.instagram.com/', '_blank');
   };
 
-  // Función para copiar el enlace al portapapeles
   const copiarVinculo = () => {
     navigator.clipboard.writeText(compartirEnlace).then(() => {
       alert('¡Enlace copiado al portapapeles!');
@@ -78,12 +74,11 @@ const VerEvento1 = () => {
       <HeaderPublic />
 
       <Grid container spacing={6} justifyContent="center" alignItems="flex-start" sx={{ flexGrow: 1, px: { xs: 3, md: 8 }, py: 6, width: '100%' }}>
-        {/* Título y Descripción */}
         <Grid item xs={12} md={6}>
           <Typography variant="h2" component="h1" sx={{ fontWeight: 'bold', fontSize: { xs: '3rem', md: '4rem' }, mb: 2 }}>
             Bienal 2024
           </Typography>
-          <Typography variant="h4" component="h2" sx={{ fontStyle: 'italic',fontSize: { xs: '1.8rem', md: '2.8rem' }, mb: 4 }}>
+          <Typography variant="h4" component="h2" sx={{ fontStyle: 'italic', fontSize: { xs: '1.8rem', md: '2.8rem' }, mb: 4 }}>
             {evento.theme}
           </Typography>
 
@@ -102,27 +97,26 @@ const VerEvento1 = () => {
           <Typography variant="body1" sx={{ mb: 5, fontSize: '1.2rem' }}>{evento.location}</Typography>
         </Grid>
 
-        {/* Imagen y Botones de Compartir Centrados */}
         <Grid item xs={12} md={6} sx={{ textAlign: { xs: 'center', md: 'left' } }}>
-          <Grid container direction="column" alignItems="center" sx={{ gap: '4px' }}>
+          <Grid container direction="column" alignItems="center" sx={{ gap: '16px' }}>
             <Grid item>
               <img
                 src={evento.images[0] || 'https://via.placeholder.com/350'}
                 alt="Imagen del evento"
-                style={{ width: '200%', maxWidth: '400px' }}
+                style={{ width: '100%', maxWidth: '350px', height: 'auto', borderRadius: '8px' }}
               />
             </Grid>
 
-            <Grid item>
-              <Typography  variant="h5" sx={{ fontWeight: 'bold', textAlign: 'center',ml: 15,mt:-5 }}>
+            <Grid item sx={{ mt: 4 }}>
+              <Typography variant="h5" sx={{ fontWeight: 'bold', textAlign: 'center' }}>
                 Compartí
               </Typography>
-              <Typography variant="h5" component="span" sx={{ fontStyle: 'italic', fontFamily: 'Instrument Serif, serif', fontWeight: 'bold',ml: 15,  }}>
+              <Typography variant="h5" component="span" sx={{ fontStyle: 'italic', fontFamily: 'Instrument Serif, serif', fontWeight: 'bold' }}>
                 Bienal 2024
               </Typography>
             </Grid>
 
-            <Grid item sx={{ mt: 1, ml: 15 }}>
+            <Grid item>
               <Grid container spacing={1} justifyContent="center">
                 <IconButton onClick={compartirWhatsApp} color="inherit" sx={{ fontSize: { xs: '2rem', md: '2.5rem' } }}>
                   <WhatsAppIcon fontSize="inherit" />
@@ -130,10 +124,10 @@ const VerEvento1 = () => {
                 <IconButton onClick={compartirInstagram} color="inherit" sx={{ fontSize: { xs: '2rem', md: '2.5rem' } }}>
                   <InstagramIcon fontSize="inherit" />
                 </IconButton>
-                <IconButton  onClick={compartirX} color="inherit" sx={{ fontSize: { xs: '2rem', md: '2.5rem' } }}>
+                <IconButton onClick={compartirX} color="inherit" sx={{ fontSize: { xs: '2rem', md: '2.5rem' } }}>
                   <TwitterIcon fontSize="inherit" />
                 </IconButton>
-                <IconButton  onClick={copiarVinculo} color="inherit"  sx={{ fontSize: { xs: '2rem', md: '2.5rem' } }}>
+                <IconButton onClick={copiarVinculo} color="inherit" sx={{ fontSize: { xs: '2rem', md: '2.5rem' } }}>
                   <LinkIcon fontSize="inherit" />
                 </IconButton>
               </Grid>
@@ -141,8 +135,7 @@ const VerEvento1 = () => {
           </Grid>
         </Grid>
       </Grid>
-
-      {/* Sección de Artistas Participantes */}
+      
       <Grid container justifyContent="space-between" alignItems="center" sx={{ backgroundColor: '#000', color: '#fff', p: { xs: 2, md: 4 }, mt: 6, textAlign: { xs: 'center', md: 'left' }, width: '100%', borderRadius: '0' }}>
         <Grid item xs={12} md={8}>
           <Typography variant="h6" component="span" sx={{ fontWeight: 400, fontSize: '2rem', display: 'block' }}>
@@ -155,7 +148,7 @@ const VerEvento1 = () => {
 
         <Grid item xs={12} md={4} sx={{ textAlign: { xs: 'center', md: 'right' } }}>
           <Button
-            onClick={() => navigate(`/ver-escultores/${id}`)}
+            onClick={() => navigate('/Escultores')}
             sx={{
               backgroundImage: `url(${fondoBoton})`,
               backgroundSize: 'cover',
@@ -178,7 +171,6 @@ const VerEvento1 = () => {
         </Grid>
       </Grid>
 
-      {/* Footer */}
       <Footer sx={{ mt: 4, py: 2, fontSize: '0.8rem', width: '100%', backgroundColor: '#000', color: '#fff', borderRadius: '0' }} />
     </Box>
   );

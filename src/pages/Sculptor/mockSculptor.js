@@ -29,7 +29,7 @@ export const sculptors = [
     },
     {
         id: 5,
-        name: 'Billy Lee',
+        name: 'Bilasdasd',
         country: 'Estados Unidos',
         image: '/assets/sculptors/billy_lee.webp',
         flag: '/assets/flags/usa.svg',

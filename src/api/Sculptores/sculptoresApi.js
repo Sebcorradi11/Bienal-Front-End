@@ -16,6 +16,7 @@ export const crearSculptor = async (data) => {
 export const obtenerTodosSculptores = async () => {
     try {
         const response = await sculptoresApi.get('/getAllSculptors');
+        console.log("Datos obtenidos del servidor:", response.data); // Verifica aquí
         return response.data;
     } catch (error) {
         console.error('Error al obtener sculptores:', error);
@@ -34,16 +35,7 @@ export const getEscultorPorId = async (id) => {
     }
 };
 
-// Función para obtener un sculptor por ID
-export const obtenerSculptorPorId = async (id) => {
-    try {
-        const response = await sculptoresApi.get(`/${id}`);
-        return response.data;
-    } catch (error) {
-        console.error('Error al obtener sculptor:', error);
-        throw error;
-    }
-};
+
 
 export const actualizarSculptor = async (id, data) => {
     try {

@@ -21,7 +21,7 @@ export const onlyPublicRoute = [
     component: EventosPage,
   },
   {
-    path: "/vote",
+    path: "/vote/:id_escultor/:id_evento/:token",
     component: VotesPage,
   },
   {

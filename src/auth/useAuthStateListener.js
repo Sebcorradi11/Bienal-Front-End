@@ -23,11 +23,12 @@ const useAuthStateListener = (setLoader) => {
                 const userDoc = await getDoc(userDocRef);
 
                 if (userDoc.exists()) {
-                    const { role, username, picture } = userDoc.data();
+                    const { role, username, picture, email } = userDoc.data();
                     dispatch(login({
                         username: username || user.displayName,
                         role: role || "user",
                         picture: picture || user.photoURL,
+                        email: email || user.email
                     }));
                 } else {
                     console.error("Usuario no encontrado en Firestore");

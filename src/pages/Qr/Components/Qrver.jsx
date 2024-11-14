@@ -1,79 +1,67 @@
-// File: src/components/qr/QRPage.jsx
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import { Box, Typography, CircularProgress } from '@mui/material';
+import axios from 'axios';
+import HeaderPublic from '../../../components/HeaderPublic';
+import Footer from '../../../components/Footer';
+const QrVer = () => {
+    const { Idevento, Idescultor } = useParams();
+    const [qrCodeImage, setQrCodeImage] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [timer, setTimer] = useState(60);
+    const baseUrl=import.meta.env.VITE_URL_BASECONFIG;
 
-import React, { useEffect, useState } from 'react';
-
-const Qrver = () => {
-  const [qrCode, setQrCode] = useState('');
-  const [countdown, setCountdown] = useState(120);
-
-  // Function to fetch QR code from backend
-  const fetchQRCode = async () => {
-    try {
-      const response = await fetch('https://bakend-example-ecommerce.vercel.app/api/qr/generate');
-      const data = await response.json();
-      if (data.qrCode) {
-        setQrCode(data.qrCode);
-        localStorage.setItem('qrCode', data.qrCode); // Store QR code in localStorage
-        localStorage.setItem('lastQRCodeUpdate', Date.now()); // Save the fetch time
-        setCountdown(120); // Reset countdown
-      } else {
-        console.error('Error: QR code not found in response');
-      }
-    } catch (error) {
-      console.error('Error fetching QR code:', error);
-    }
-  };
-
-  // Function to initialize countdown and load QR code from localStorage if available
-  const initializeCountdown = () => {
-    const lastQRCodeUpdate = localStorage.getItem('lastQRCodeUpdate');
-    const storedQrCode = localStorage.getItem('qrCode');
-
-    if (lastQRCodeUpdate && storedQrCode) {
-      const timePassed = Math.floor((Date.now() - lastQRCodeUpdate) / 1000);
-      const remainingTime = 120 - timePassed;
-
-      if (remainingTime > 0) {
-        setQrCode(storedQrCode); // Load QR code from localStorage
-        setCountdown(remainingTime); // Set countdown to remaining time
-      } else {
-        fetchQRCode(); // Fetch a new QR code if 120 seconds have passed
-      }
-    } else {
-      fetchQRCode(); // Fetch QR code initially if none exists in localStorage
-    }
-  };
-
-  // Countdown and QR refresh logic
-  useEffect(() => {
-    initializeCountdown();
-
-    const intervalId = setInterval(() => {
-      setCountdown((prevCountdown) => {
-        if (prevCountdown <= 1) {
-          fetchQRCode(); // Fetch a new QR code when countdown reaches zero
-          return 120; // Reset countdown to 120 seconds
+    // Función para obtener el QR desde el backend
+    const fetchQRCode = async () => {
+        setLoading(true);
+        try {
+            const response = await axios.get(`${baseUrl}api/qr/generate-qr/${Idevento}/${Idescultor}`);
+            setQrCodeImage(response.data.qrCodeImage);
+            setTimer(60); // Reinicia el contador
+        } catch (error) {
+            console.error("Error al obtener el QR:", error);
+        } finally {
+            setLoading(false);
         }
-        return prevCountdown - 1;
-      });
-    }, 1000);
+    };
 
-    return () => clearInterval(intervalId);
-  }, []);
+    // Llama a fetchQRCode cuando se carga el componente
+    useEffect(() => {
+        fetchQRCode();
+    }, []);
 
-  return (
-    <div style={{ textAlign: 'center', padding: '20px' }}>
-      <h1>Generar Código QR</h1>
-      <div id="qrCodeContainer">
-        {qrCode ? (
-          <img src={qrCode} alt="QR Code" style={{ width: '300px', height: '300px' }} />
-        ) : (
-          <p>Cargando código QR...</p>
-        )}
-      </div>
-      <p>QR se actualizará en: <span id="countdown">{countdown}</span> segundos</p>
-    </div>
-  );
+    // Manejo del contador de 60 segundos
+    useEffect(() => {
+        if (timer === 0) {
+            fetchQRCode();
+        }
+
+        const interval = setInterval(() => {
+            setTimer((prevTimer) => (prevTimer > 0 ? prevTimer - 1 : 0));
+        }, 1000);
+
+        return () => clearInterval(interval); // Limpia el intervalo al desmontar el componente
+    }, [timer]);
+
+    return (
+        <Box>
+            <HeaderPublic />
+            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: '100vh' }}>
+                <Typography variant="h4" textAlign="center" gutterBottom>
+                    Código QR para el Escultor
+                </Typography>
+                {loading ? (
+                    <CircularProgress />
+                ) : (
+                    <>
+                        <img src={qrCodeImage} alt="QR Code" style={{ width: '200px', height: '200px', marginBottom: '20px' }} />
+                        <Typography variant="body1">Válido por: {timer} segundos</Typography>
+                    </>
+                )}
+            </Box>
+            <Footer />
+        </Box>
+    );
 };
 
-export default Qrver;
+export default QrVer;

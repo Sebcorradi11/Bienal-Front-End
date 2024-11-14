@@ -6,11 +6,12 @@ const urlServiceEventos = import.meta.env.VITE_URL_EVENTOS;
 const urlServiceEsculturas = import.meta.env.VITE_URL_ESCULTURAS;
 const urlServiceVotacion = import.meta.env.VITE_URL_VOTACION;
 const urlServiceSculptores = import.meta.env.VITE_URL_ESCULTORES;
+const baseConfig = import.meta.env.VITE_URL_BASECONFIG
 
 // Axios Instances
 const eventosApi = axios.create({
   baseURL: urlServiceEventos,
-  withCredentials: false,
+  withCredentials: true,
 });
 
 // Instancia de Axios para sculptores
@@ -31,7 +32,7 @@ const votacionApi = axios.create({
 
 
 const apiClient = axios.create({
-  baseURL: "http://localhost:3000/",
+  baseURL: baseConfig,
   withCredentials: false // Permite enviar cookies en solicitudes
 });
 

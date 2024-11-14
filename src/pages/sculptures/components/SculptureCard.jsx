@@ -1,27 +1,42 @@
 import React from 'react';
-import { Card, CardMedia, Typography, Box } from '@mui/material';
+import { Box, Typography, Avatar } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
-const SculptureCard = ({ title, image, authorName }) => {
+const SculptureCard = ({ id, title, image, authorName }) => {
+    const navigate = useNavigate();
+
+    const handleClick = () => {
+        navigate(`/ver-escultura-public/${id}`);
+    };
+
     return (
-        <Card sx={{ position: 'relative',borderRadius: '16px', overflow: 'hidden', width: '300px', height:'400px',boxShadow:'0px 4px 10px rgba(0, 0, 0, 0.1)',}}>
-            <CardMedia
-                component="img"
-                image={image}
+        <Box 
+            onClick={handleClick}
+            sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                gap: 1,
+                maxWidth: 200,
+                padding: 2,
+                cursor: 'pointer',
+                boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)',
+                borderRadius: '16px',
+                overflow: 'hidden',
+            }}
+        >
+            <Avatar
+                src={image} 
                 alt={title}
-                sx={{ 
-                    height: '70%', 
-                    objectFit: 'cover' 
-                }}
+                sx={{ width: 120, height: 120, borderRadius: '8px' }}
             />
-            <Box sx={{position: 'absolute', bottom: 0, left: 0, right: 0, borderRadius:'16px',backgroundColor: 'black', padding: '8px', color: 'white', width: '100%', boxSizing: 'border-box',}}>
-                <Typography variant="h6" sx={{ fontStyle: 'italic' }}>
-                    {title}
-                </Typography>
-                <Typography variant="body2">
-                    {authorName}
-                </Typography>
-            </Box>
-        </Card>
+            <Typography variant="h6" sx={{ fontStyle: 'italic', textAlign: 'center', mt: 1 }}>
+                {title}
+            </Typography>
+            <Typography variant="body2" sx={{ color: 'gray', textAlign: 'center' }}>
+                {authorName}
+            </Typography>
+        </Box>
     );
 };
 

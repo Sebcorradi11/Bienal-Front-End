@@ -2,15 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { Box, Typography, IconButton, Grid } from '@mui/material';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import EditIcon from '@mui/icons-material/Edit';
-import { obtenerTodosSculptores, eliminarSculptor } from '../../../../api/sculptores/sculptoresApi';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { obtenerTodosSculptores, eliminarSculptor } from '../../../../api/Sculptores/sculptoresApi';
 import { useNavigate } from 'react-router-dom';
 
-const ListaEscultores = () => {
+const ListaEscultores = ({ searchQuery }) => {
     const [escultores, setEscultores] = useState([]);
     const navigate = useNavigate();
 
-    // Cargar escultores al inicio
     useEffect(() => {
         cargarEscultores();
     }, []);
@@ -18,7 +17,6 @@ const ListaEscultores = () => {
     const cargarEscultores = async () => {
         try {
             const data = await obtenerTodosSculptores();
-            console.log("Datos de escultores:", data); // Verifica que los datos sean correctos
             setEscultores(data);
         } catch (error) {
             console.error('Error al cargar los escultores:', error);
@@ -38,6 +36,8 @@ const ListaEscultores = () => {
         if (confirmacion) {
             try {
                 await eliminarSculptor(id);
+
+                await eliminarSculptor(id);
                 setEscultores(escultores.filter((e) => e._id !== id));
                 alert('Escultor eliminado exitosamente');
             } catch (error) {
@@ -47,15 +47,31 @@ const ListaEscultores = () => {
         }
     };
 
+    const highlightText = (text, query) => {
+        if (!query) return text;
+        const parts = text.split(new RegExp(`(${query})`, 'gi'));
+        return parts.map((part, index) =>
+            part.toLowerCase() === query.toLowerCase() ? (
+                <span key={index} style={{ color: 'blue', fontWeight: 'bold' }}>{part}</span>
+            ) : (
+                part
+            )
+        );
+    };
+
+    const filteredEscultores = escultores.filter((escultor) =>
+        escultor.name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+
     return (
         <Box sx={{ padding: { xs: 2, md: 3 }, marginTop: 3 }}>
-            {escultores.length === 0 ? (
+            {filteredEscultores.length === 0 ? (
                 <Typography variant="h6" sx={{ textAlign: 'center', marginTop: 4 }}>
                     No hay escultores registrados
                 </Typography>
             ) : (
                 <Grid container spacing={2}>
-                    {escultores.map((escultor) => (
+                    {filteredEscultores.map((escultor) => (
                         <Grid item xs={12} sm={6} md={4} key={escultor._id}>
                             <Box
                                 sx={{
@@ -70,7 +86,7 @@ const ListaEscultores = () => {
                                 }}
                             >
                                 <Typography variant="body1" fontWeight="bold" gutterBottom>
-                                    {escultor.name} {/* Asegúrate de que el campo coincide con el esquema del backend */}
+                                    {highlightText(escultor.name, searchQuery)}
                                 </Typography>
                                 <Box sx={{ display: 'flex', justifyContent: 'space-between', gap: 1 }}>
                                     <IconButton

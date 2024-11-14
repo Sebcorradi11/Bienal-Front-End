@@ -35,7 +35,7 @@ const useLoginLogic = () => {
                 // Preparar datos para el voto
                 const voteData = {
                     userId: email,
-                    sculptureId: sculptor,
+                    sculptorId: sculptor,
                     eventId: event,
                     score: puntuation,
                 };

@@ -12,6 +12,7 @@ import VerEvento from '../../pages/GestionEventos/components/Eventos/VerEvento';
 import CrearEscultores from '../../pages/GestionEventos/components/Escultores/AgregarEscultores';
 import ModificarEscultores from '../../pages/GestionEventos/components/Escultores/ModificarEscultores';
 import VerEscultores from '../../pages/GestionEventos/components/Escultores/VerEscultores';
+import VerResultados from '../../pages/GestionEventos/components/Escultores/VerResultados';
 
 //RUTAS GESTIONAR ESCULTORES
 import CrearEscultor from '../../pages/GestionEscultores/components/Escultores/CrearEscultores';
@@ -19,12 +20,13 @@ import ModificarEscultor from '../../pages/GestionEscultores/components/Escultor
 import VerEscultor from '../../pages/GestionEscultores/components/Escultores/VerEscultor';
 import AgregarEscultura from '../../pages/GestionEscultores/components/Esculturas/AgregarEsculturas';
 import ModificarEscultura from '../../pages/GestionEscultores/components/Esculturas/ModificarEsculturas';
-import VerEscultura from '../../pages/GestionEscultores/components/Esculturas/VerEsculturas';
+import VerEsculturas from '../../pages/GestionEscultores/components/Esculturas/VerEsculturas';
 
 //RUTAS GESTIONAR ESCULTURAS
 import CrearEsculturas from '../../pages/GestionEsculturas/components/CrearEscultura';
 import ModificarEsculturas from '../../pages/GestionEsculturas/components/ModificarEscultura';
-import VerEsculturas from '../../pages/GestionEsculturas/components/VerEscultura';
+import VerEscultura from '../../pages/GestionEsculturas/components/VerEscultura';
+import QrVer from '../../pages/Qr/Components/Qrver';
 
 
 export const onlyPrivateRoute = [
@@ -70,7 +72,7 @@ export const onlyPrivateRoute = [
   },
   {
     path: "/ver-escultura/:id",
-    component: VerEsculturas,
+    component: VerEscultura,
   },
   {
     path: "/agregar-escultores",
@@ -83,6 +85,10 @@ export const onlyPrivateRoute = [
   {
     path: "/ver-escultores/:id",
     component: VerEscultores,
+  },
+  {
+    path: "/ver-resultados/:id",
+    component: VerResultados,
   },
   {
     path: "/crear-escultor",
@@ -101,16 +107,16 @@ export const onlyPrivateRoute = [
     component: AgregarEscultura,
   },
   {
-    path: "/:evento/:escultor/qr",
-    component: AgregarEscultura,
-  },
-  {
     path: "/modificar-escultura/:id",
     component: ModificarEscultura,
   },
   {
     path: "/ver-escultura/:id",
     component: VerEscultura,
+  },
+  {
+    path: "/:Idevento/:Idescultor/qr",
+    component: QrVer,
   },
 
 ];

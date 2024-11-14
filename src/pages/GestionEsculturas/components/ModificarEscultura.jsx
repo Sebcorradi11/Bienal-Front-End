@@ -42,9 +42,9 @@ const ModificarEscultura = () => {
         });
         // Establecer las URLs de las imágenes actuales para mostrar en la vista previa
         setImagenVistaPrevia({
-          imagenPre: `${data.imagenPre}?t=${new Date().getTime()}` || null,
-          imagenDurante: `${data.imagenDurante}?t=${new Date().getTime()}` || null,
-          imagenPost: `${data.imagenPost}?t=${new Date().getTime()}` || null,
+          imagenPre: data.imagenPre ? `${data.imagenPre}?t=${new Date().getTime()}` : null,
+          imagenDurante: data.imagenDurante ? `${data.imagenDurante}?t=${new Date().getTime()}` : null,
+          imagenPost: data.imagenPost ? `${data.imagenPost}?t=${new Date().getTime()}` : null,
         });
         setLoading(false);
       } catch (error) {

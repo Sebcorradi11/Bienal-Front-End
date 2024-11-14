@@ -4,6 +4,7 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import { ThemeProvider } from '@mui/material/styles';
 import { RoutesNavigation } from './routes/routes'; // Archivo de rutas
 import themeCustom from './theme';
+import { HelmetProvider } from 'react-helmet-async';
 import configureInterceptors from './api/interceptor';
 import useAuthStateListener from './auth/useAuthStateListener';
 import LoaderSpinner from './components/LoaderSpinner';
@@ -30,9 +31,11 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <ThemeProvider theme={themeCustom}>
+      <HelmetProvider>
         {isLoading &&<LoaderSpinner></LoaderSpinner>}
       
         <RoutesNavigation />
+        </HelmetProvider>
       </ThemeProvider>
     </QueryClientProvider>
   );

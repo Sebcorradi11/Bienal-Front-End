@@ -5,11 +5,13 @@ import axios from 'axios';
 
 // Interceptor para manejar requests y responses
 const requestHandler = (request) => {
-  // Agregar cualquier encabezado o token aquí
-  const token = Cookies.get("authToken");
-  if (token) {
+  // Solo agrega el token si el método no es GET
+  if (request.method !== 'get') {
+    const token = Cookies.get("authToken");
+    if (token) {
       request.headers["Authorization"] = `Bearer ${token}`;
-      console.log("Token añadido a la solicitud:", token); // Agregar este log
+      console.log("Token añadido a la solicitud:", token);
+    }
   }
   return request;
 };
@@ -30,7 +32,6 @@ const setUpInterceptors = () => {
 };
 
 export const configureInterceptors = () => {
-  setUpInterceptors(axios);
   setUpInterceptors(eventosApi);
   setUpInterceptors(esculturasApi);
 };

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import HeaderPublic from '../../components/HeaderPublic';
 import Footer from '../../components/Footer';
-import { Box, Container, Button, useMediaQuery, useTheme } from '@mui/material';
+import { Box, Container, useMediaQuery, useTheme } from '@mui/material';
 import BackButton from '../../components/BackButton';
 import ButtonNavigate from '../../components/ButtonNavigate';
 import BuscadorEscultor from '../../components/Buscador';

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Box, Typography, IconButton, Grid } from '@mui/material';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import EditIcon from '@mui/icons-material/Edit';
-import { obtenerTodosSculptores, eliminarSculptor } from '../../../../api/sculptores/sculptoresApi';
+import { obtenerTodosSculptores, eliminarSculptor } from '../../../../api/Sculptores/sculptoresApi';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useNavigate } from 'react-router-dom';
 
@@ -38,6 +38,7 @@ const ListaEscultores = () => {
         if (confirmacion) {
             try {
                 await eliminarSculptor(id);
+                await eliminarSculptor(id);
                 setEscultores(escultores.filter((e) => e._id !== id));
                 alert('Escultor eliminado exitosamente');
             } catch (error) {
@@ -70,6 +71,7 @@ const ListaEscultores = () => {
                                 }}
                             >
                                 <Typography variant="body1" fontWeight="bold" gutterBottom>
+                                    {escultor.name} {/* Asegúrate de que el campo coincide con el esquema del backend */}
                                     {escultor.name} {/* Asegúrate de que el campo coincide con el esquema del backend */}
                                 </Typography>
                                 <Box sx={{ display: 'flex', justifyContent: 'space-between', gap: 1 }}>

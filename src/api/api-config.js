@@ -7,6 +7,7 @@ const urlServiceEsculturas = import.meta.env.VITE_URL_ESCULTURAS;
 const urlServiceVotacion = import.meta.env.VITE_URL_VOTACION;
 const urlServiceSculptores = import.meta.env.VITE_URL_ESCULTORES;
 
+
 // Axios Instances
 const eventosApi = axios.create({
   baseURL: urlServiceEventos,

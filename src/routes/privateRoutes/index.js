@@ -26,7 +26,6 @@ import CrearEsculturas from '../../pages/GestionEsculturas/components/CrearEscul
 import ModificarEsculturas from '../../pages/GestionEsculturas/components/ModificarEscultura';
 import VerEscultura from '../../pages/GestionEsculturas/components/VerEscultura';
 import QrVer from '../../pages/Qr/Components/Qrver';
-import VerEscultura from '../../pages/GestionEsculturas/components/VerEscultura';
 
 
 export const onlyPrivateRoute = [

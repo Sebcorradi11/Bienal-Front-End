@@ -68,7 +68,7 @@ const VerEscultor = () => {
 
   return (
     <Grid container direction="column" sx={{ minHeight: '100vh', backgroundColor: '#f8f9fa' }}>
-      <Helmet>
+    <Helmet>
         <title>{`Bienal 2024 - ${escultor.name}`}</title>
         <meta property="og:title" content={`Bienal 2024 - ${escultor.name}`} />
         <meta property="og:description" content={escultor.biography} />
@@ -83,7 +83,7 @@ const VerEscultor = () => {
         <meta name="twitter:description" content={escultor.biography} />
         <meta name="twitter:image" content={escultor.profileImage || 'https://via.placeholder.com/250'} />
         <meta name="twitter:url" content={compartirEnlace} />
-      </Helmet>
+    </Helmet>
       
       <HeaderPublic />
 

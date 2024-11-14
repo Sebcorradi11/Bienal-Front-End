@@ -47,6 +47,7 @@ const VerEvento = () => {
   }, [id]);
 
   const handleVerEscultores = () => {
+    console.log('Ver escultores');
     navigate(`/ver-escultores/${id}`); // Navega a la vista de escultores para el evento con su ID
   };
 

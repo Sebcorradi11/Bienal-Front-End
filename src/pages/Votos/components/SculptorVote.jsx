@@ -25,7 +25,7 @@ const SculptorVote = ({ evento, id_escultor }) => {
         if (isAuthenticated) {
             const body = {
                 userId: email, 
-                sculptureId: id_escultor, 
+                sculptorId: id_escultor, 
                 eventId: evento,
                 score: rating
             };

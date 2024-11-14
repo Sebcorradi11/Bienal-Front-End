@@ -4,7 +4,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { getEventoPorId } from '../../../api/eventos.routes';
 import HeaderPublic from '../../../components/HeaderPublic';
 import Footer from '../../../components/Footer';
-import '../../../pages/Sculptor/SculptorPage';
+import '../../sculptor/SculptorPage';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import TwitterIcon from '@mui/icons-material/Twitter';

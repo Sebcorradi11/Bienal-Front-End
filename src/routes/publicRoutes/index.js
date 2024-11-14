@@ -1,6 +1,6 @@
 // src/routes/publicRoutes/index.ts
 import SculpturesPage from '../../pages/sculptures/SculpturesPage';
-import SculptorPage from '../../pages/Sculptor/SculptorPage';
+import SculptorPage from '../../pages/sculptor/SculptorPage';
 import EventosPage from '../../pages/Eventos/EventosPage';
 import VotesPage from '../../pages/Votos/VotesPage';
 import Home from '../../pages/home/Home';

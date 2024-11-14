@@ -12,6 +12,7 @@ import VerEvento from '../../pages/GestionEventos/components/Eventos/VerEvento';
 import CrearEscultores from '../../pages/GestionEventos/components/Escultores/AgregarEscultores';
 import ModificarEscultores from '../../pages/GestionEventos/components/Escultores/ModificarEscultores';
 import VerEscultores from '../../pages/GestionEventos/components/Escultores/VerEscultores';
+import VerResultados from '../../pages/GestionEventos/components/Escultores/VerResultados';
 
 //RUTAS GESTIONAR ESCULTORES
 import CrearEscultor from '../../pages/GestionEscultores/components/Escultores/CrearEscultores';
@@ -84,6 +85,10 @@ export const onlyPrivateRoute = [
   {
     path: "/ver-escultores/:id",
     component: VerEscultores,
+  },
+  {
+    path: "/ver-resultados/:id",
+    component: VerResultados,
   },
   {
     path: "/crear-escultor",

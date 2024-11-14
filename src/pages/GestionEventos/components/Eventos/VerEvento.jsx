@@ -51,6 +51,10 @@ const VerEvento = () => {
     navigate(`/ver-escultores/${id}`); // Navega a la vista de escultores para el evento con su ID
   };
 
+  const handleVerResultados = () => {
+    navigate(`/ver-resultados/${id}`); // Navega a la vista de escultores para el evento con su ID
+  };
+
   if (error) {
     return <Typography variant="h6" color="error">{error}</Typography>;
   }
@@ -141,6 +145,26 @@ const VerEvento = () => {
               }}
             >
               <Typography variant="h6">Escultores</Typography>
+            </Button>
+
+            <Button
+              fullWidth
+              onClick={handleVerEscultores}
+              sx={{
+                marginTop: 3,
+                height: '60px',
+                borderRadius: '30px',
+                backgroundImage: `url(${fondoBoton})`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                color: 'white',
+                textTransform: 'none',
+                '&:hover': {
+                  opacity: 0.9,
+                },
+              }}
+            >
+              <Typography variant="h6">Resutados</Typography>
             </Button>
 
             <Box sx={{ marginTop: 2 }}> {/* Añade un margen superior menor para mantener una separación */}

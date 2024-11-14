@@ -5,6 +5,7 @@ import axios from "axios";
 const urlServiceEventos = import.meta.env.VITE_URL_EVENTOS;
 const urlServiceEsculturas = import.meta.env.VITE_URL_ESCULTURAS;
 const urlServiceVotacion = import.meta.env.VITE_URL_VOTACION;
+const urlServiceSculptores = import.meta.env.VITE_URL_VOTACION;
 
 // Axios Instances
 const eventosApi = axios.create({
@@ -13,10 +14,10 @@ const eventosApi = axios.create({
 });
 
 // Instancia de Axios para sculptores
-// const sculptoresApi = axios.create({
-//   baseURL: urlServiceSculptores,
-//   withCredentials: false,
-// });
+const sculptoresApi = axios.create({
+  baseURL: urlServiceSculptores,
+  withCredentials: false,
+});
 
 const esculturasApi = axios.create({
   baseURL: urlServiceEsculturas,
@@ -28,10 +29,6 @@ const votacionApi = axios.create({
   withCredentials: false,
 });
 
-const votacionApi = axios.create({
-  baseURL: urlServiceVotacion,
-  withCredentials: false,
-});
 
 const apiClient = axios.create({
   baseURL: "http://localhost:3000/",
@@ -48,4 +45,4 @@ export const verificarAutenticacion = () => {
     });
 };
 
-export { eventosApi, esculturasApi, votacionApi };
+export { eventosApi, esculturasApi, votacionApi, sculptoresApi  };

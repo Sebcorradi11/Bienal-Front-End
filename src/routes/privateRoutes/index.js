@@ -19,12 +19,12 @@ import ModificarEscultor from '../../pages/GestionEscultores/components/Escultor
 import VerEscultor from '../../pages/GestionEscultores/components/Escultores/VerEscultor';
 import AgregarEscultura from '../../pages/GestionEscultores/components/Esculturas/AgregarEsculturas';
 import ModificarEscultura from '../../pages/GestionEscultores/components/Esculturas/ModificarEsculturas';
-import VerEscultura from '../../pages/GestionEscultores/components/Esculturas/VerEsculturas';
+import VerEsculturas from '../../pages/GestionEscultores/components/Esculturas/VerEsculturas';
 
 //RUTAS GESTIONAR ESCULTURAS
 import CrearEsculturas from '../../pages/GestionEsculturas/components/CrearEscultura';
 import ModificarEsculturas from '../../pages/GestionEsculturas/components/ModificarEscultura';
-import VerEsculturas from '../../pages/GestionEsculturas/components/VerEscultura';
+import VerEscultura from '../../pages/GestionEsculturas/components/VerEscultura';
 
 
 export const onlyPrivateRoute = [
@@ -70,7 +70,7 @@ export const onlyPrivateRoute = [
   },
   {
     path: "/ver-escultura/:id",
-    component: VerEsculturas,
+    component: VerEscultura,
   },
   {
     path: "/agregar-escultores",
@@ -109,8 +109,8 @@ export const onlyPrivateRoute = [
     component: ModificarEscultura,
   },
   {
-    path: "/ver-escultura/:id",
-    component: VerEscultura,
+    path: "/ver-esculturas/:id",
+    component: VerEsculturas,
   },
 
 ];

@@ -4,23 +4,17 @@ import Footer from '../../components/Footer';
 import { Box, Container, useMediaQuery, useTheme } from '@mui/material';
 import BackButton from '../../components/BackButton';
 import ButtonNavigate from '../../components/ButtonNavigate';
-import BuscadorEscultor from '../../components/Buscador';
+import Buscador from '../../components/Buscador';
 import ListaEscultores from './components/Escultores/ListaEscultores';
-import { useNavigate } from 'react-router-dom';
 
 const GestionarEscultores = () => {
     const theme = useTheme();
     const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
-    const navigate = useNavigate();
+    const [searchQuery, setSearchQuery] = useState('');
 
-    const [fechaInicio, setFechaInicio] = useState('');
-    const [fechaFin, setFechaFin] = useState('');
-
-    const handleFiltrar = (inicio, fin) => {
-        setFechaInicio(inicio);
-        setFechaFin(fin);
+    const handleBuscar = (query) => {
+        setSearchQuery(query);
     };
-
 
     return (
         <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
@@ -37,7 +31,6 @@ const GestionarEscultores = () => {
                         justifyContent: 'space-between',
                     }}
                 >
-                    {/* Crear Escultor a la izquierda */}
                     <Box
                         sx={{
                             flex: 1,
@@ -49,7 +42,6 @@ const GestionarEscultores = () => {
                         <ButtonNavigate name="Crear Escultor" route="/crear-escultor" />
                     </Box>
 
-                    {/* Buscador a la derecha */}
                     <Box
                         sx={{
                             flex: 1,
@@ -58,12 +50,11 @@ const GestionarEscultores = () => {
                             width: isSmallScreen ? '100%' : 'auto',
                         }}
                     >
-                        <BuscadorEscultor />
+                        <Buscador onBuscar={handleBuscar} />
                     </Box>
                 </Box>
 
-                {/* Lista de escultores con fechas filtradas */}
-                <ListaEscultores fechaInicio={fechaInicio} fechaFin={fechaFin} />
+                <ListaEscultores searchQuery={searchQuery} />
 
                 <Box
                     sx={{

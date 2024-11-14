@@ -10,11 +10,13 @@ import TwitterIcon from '@mui/icons-material/Twitter';
 import LinkIcon from '@mui/icons-material/Link';
 import fondoBoton from '../../../assets/fondobutton/Rectangle 32.svg';
 import { Helmet } from 'react-helmet-async';
+import LoaderSpinner from '../../../components/LoaderSpinner';
 
 const VerEsculturaPublic = () => {
     const { id } = useParams();
     const [escultura, setEscultura] = useState(null);
     const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(true); // Estado de carga
     const navigate = useNavigate();
 
     const frontUrl = import.meta.env.VITE_FRONT_URL;
@@ -54,19 +56,21 @@ const VerEsculturaPublic = () => {
             try {
                 const data = await getEsculturaPorId(id);
                 setEscultura(data);
+                setLoading(false); // Finalizar carga al obtener la escultura
             } catch (error) {
                 setError('No se pudo cargar la escultura.');
+                setLoading(false); // Finalizar carga en caso de error
             }
         };
         cargarEscultura();
     }, [id]);
 
-    if (error) {
-        return <Typography variant="h6" color="error">{error}</Typography>;
+    if (loading) {
+        return <LoaderSpinner loading={loading} size={60} color="#000" />;
     }
 
-    if (!escultura) {
-        return <Typography variant="h6">Cargando escultura...</Typography>;
+    if (error) {
+        return <Typography variant="h6" color="error">{error}</Typography>;
     }
 
     return (
@@ -145,7 +149,7 @@ const VerEsculturaPublic = () => {
             <Grid container justifyContent="space-between" alignItems="center" sx={{ backgroundColor: '#000', color: '#fff', p: { xs: 2, md: 4 }, mt: 6, textAlign: { xs: 'center', md: 'left' }, width: '100%', borderRadius: '0' }}>
                 <Grid item xs={12} md={8}>
                     <Typography variant="h6" component="span" sx={{ fontWeight: 400, fontSize: '2rem', display: 'block' }}>
-                    Conocé a los escultores presentados en la Bienal del Chaco 2024.
+                        Conocé a los escultores presentados en la Bienal del Chaco 2024.
                     </Typography>
                 </Grid>
 

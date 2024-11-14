@@ -10,11 +10,13 @@ import TwitterIcon from '@mui/icons-material/Twitter';
 import LinkIcon from '@mui/icons-material/Link';
 import fondoBoton from '../../../assets/fondobutton/Rectangle 32.svg';
 import { Helmet } from 'react-helmet-async';
+import LoaderSpinner from '../../../components/LoaderSpinner';
 
 const VerEscultor = () => {
   const { id } = useParams();
   const [escultor, setEscultor] = useState(null);
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true); // Estado de carga
   const navigate = useNavigate();
 
   const frontUrl = import.meta.env.VITE_FRONT_URL;
@@ -47,19 +49,21 @@ const VerEscultor = () => {
       try {
         const data = await getEscultorPorId(id);
         setEscultor(data);
+        setLoading(false); // Finalizar carga al obtener el escultor
       } catch (error) {
         setError('No se pudo cargar el escultor.');
+        setLoading(false); // Finalizar carga en caso de error
       }
     };
     cargarEscultor();
   }, [id]);
 
-  if (error) {
-    return <Typography variant="h6" color="error">{error}</Typography>;
+  if (loading) {
+    return <LoaderSpinner loading={loading} size={60} color="#000" />;
   }
 
-  if (!escultor) {
-    return <Typography variant="h6">Cargando escultor...</Typography>;
+  if (error) {
+    return <Typography variant="h6" color="error">{error}</Typography>;
   }
 
   return (

@@ -1,11 +1,30 @@
-// SculptorList.jsx
-// src/pages/Sculptor/components/SculptorList.jsx
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Grid, Box, Typography } from '@mui/material';
 import SculptorCard from './SculptorCard';
-import { sculptors } from '../mockSculptor';
+import { obtenerTodosSculptores } from '../../../api/Sculptores/sculptoresApi';
 
 const SculptorList = () => {
+    const [sculptors, setSculptors] = useState([]);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        const cargarEscultores = async () => {
+            try {
+                const data = await obtenerTodosSculptores();
+                setSculptors(data);
+            } catch (error) {
+                setError('No se pudo cargar la lista de escultores.');
+                console.error('Error al cargar escultores:', error);
+            }
+        };
+
+        cargarEscultores();
+    }, []);
+
+    if (error) {
+        return <Typography variant="h6" color="error">{error}</Typography>;
+    }
+
     return (
         <Box sx={{ paddingY: 4, backgroundColor: '#fff' }}>
             <Grid container spacing={3} justifyContent="center">
@@ -20,4 +39,3 @@ const SculptorList = () => {
 };
 
 export default SculptorList;
-

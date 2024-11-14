@@ -1,6 +1,6 @@
-// SculptorCard.jsx
 import React from 'react';
 import { Box, Typography, Avatar } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
 const SculptorCard = ({ name, country, image, flag, id }) => {
@@ -21,6 +21,7 @@ const SculptorCard = ({ name, country, image, flag, id }) => {
                 gap: 1,
                 maxWidth: 150,
                 padding: 2,
+                cursor: 'pointer', // Indica que la tarjeta es clickeable
             }}
         >
             <Avatar

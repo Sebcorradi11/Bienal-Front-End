@@ -19,6 +19,8 @@ const ListaEscultores = () => {
         try {
             const data = await obtenerTodosSculptores();
             console.log("Datos de escultores:", data); // Verifica que los datos sean correctos
+            const data = await obtenerTodosSculptores();
+            console.log("Datos de escultores:", data); // Verifica que los datos sean correctos
             setEscultores(data);
         } catch (error) {
             console.error('Error al cargar los escultores:', error);
@@ -37,6 +39,7 @@ const ListaEscultores = () => {
         const confirmacion = window.confirm('¿Estás seguro de que quieres eliminar este escultor?');
         if (confirmacion) {
             try {
+                await eliminarSculptor(id);
                 await eliminarSculptor(id);
                 setEscultores(escultores.filter((e) => e._id !== id));
                 alert('Escultor eliminado exitosamente');
@@ -70,6 +73,7 @@ const ListaEscultores = () => {
                                 }}
                             >
                                 <Typography variant="body1" fontWeight="bold" gutterBottom>
+                                    {escultor.name} {/* Asegúrate de que el campo coincide con el esquema del backend */}
                                     {escultor.name} {/* Asegúrate de que el campo coincide con el esquema del backend */}
                                 </Typography>
                                 <Box sx={{ display: 'flex', justifyContent: 'space-between', gap: 1 }}>

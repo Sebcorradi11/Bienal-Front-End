@@ -1,220 +1,244 @@
-import React, { useEffect, useState } from 'react';
-import { Box, TextField, Typography, Button, Grid, IconButton } from '@mui/material';
-import { useParams, useNavigate } from 'react-router-dom';
-import { getEsculturaPorId, actualizarEscultura } from '../mock';
+import React, { useState, useEffect } from 'react';
+import {
+  Box, TextField, Typography, Button, Icon
+} from '@mui/material';
+import ImageIcon from '@mui/icons-material/Image';
 import HeaderPublic from '../../../components/HeaderPublic';
 import Footer from '../../../components/Footer';
-import fondoBoton from '../../../assets/fondobutton/Rectangle 32.svg';
+import { useParams, useNavigate } from 'react-router-dom';
 import BackButton from '../../../components/BackButton';
-import AddIcon from '@mui/icons-material/Add';
-import DeleteIcon from '@mui/icons-material/Delete';
+import { getEsculturaPorId, actualizarEscultura } from '../../../api/sculptures.routes';
 
 const ModificarEscultura = () => {
-    const { id } = useParams();
-    const navigate = useNavigate();
-    const [escultura, setEscultura] = useState({
-        nombre: '',
-        tematica: '',
-        fechaCreacion: '',
-        imagenPreEvento: '',
-        imagenDuranteEvento: '',
-        imagenPostEvento: '',
-    });
-    const [nuevasImagenes, setNuevasImagenes] = useState([]);
-    const [imagenesAEliminar, setImagenesAEliminar] = useState([]);
+  const { id } = useParams(); // Obtener el ID de la URL
+  const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    nombre: '',
+    tematica: '',
+    fechaCreacion: '',
+    imagenPre: null,
+    imagenDurante: null,
+    imagenPost: null,
+  });
+  const [imagenVistaPrevia, setImagenVistaPrevia] = useState({
+    imagenPre: null,
+    imagenDurante: null,
+    imagenPost: null,
+  });
+  const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        const cargarEscultura = async () => {
-            try {
-                const data = await getEsculturaPorId(id);
-                setEscultura(data);
-            } catch (error) {
-                console.error('Error al cargar la escultura:', error);
-            }
-        };
-        cargarEscultura();
-    }, [id]);
-
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setEscultura({ ...escultura, [name]: value });
-    };
-
-    const handleAgregarImagen = (e) => {
-        const files = e.target.files;
-        setNuevasImagenes([...nuevasImagenes, ...files]);
-        alert('Imagen cargada correctamente');
-    };
-
-    const handleEliminarImagen = (imagen) => {
-        setImagenesAEliminar([...imagenesAEliminar, imagen]);
-        setEscultura({
-            ...escultura,
-            [imagen]: '', // Remover la referencia de imagen en el estado
+  // Cargar los datos actuales de la escultura
+  useEffect(() => {
+    const fetchEscultura = async () => {
+      try {
+        const data = await getEsculturaPorId(id);
+        setFormData({
+          nombre: data.name,
+          tematica: data.description,
+          fechaCreacion: data.creation_date ? data.creation_date.split('T')[0] : '',
+          imagenPre: null,
+          imagenDurante: null,
+          imagenPost: null,
         });
-    };
-
-    const handleModificar = async () => {
-        const formData = new FormData();
-        formData.append('nombre', escultura.nombre);
-        formData.append('tematica', escultura.tematica);
-        formData.append('fechaCreacion', escultura.fechaCreacion);
-
-        nuevasImagenes.forEach((file) => {
-            formData.append('imagenes', file);
+        // Establecer las URLs de las imágenes actuales para mostrar en la vista previa
+        setImagenVistaPrevia({
+          imagenPre: `${data.imagenPre}?t=${new Date().getTime()}` || null,
+          imagenDurante: `${data.imagenDurante}?t=${new Date().getTime()}` || null,
+          imagenPost: `${data.imagenPost}?t=${new Date().getTime()}` || null,
         });
-
-        formData.append('imagenesAEliminar', JSON.stringify(imagenesAEliminar));
-
-        try {
-            await actualizarEscultura(id, formData);
-            alert('Escultura actualizada exitosamente');
-            navigate(-1);
-        } catch (error) {
-            console.error('Error al actualizar la escultura:', error);
-            alert('Error al actualizar la escultura');
-        }
+        setLoading(false);
+      } catch (error) {
+        console.error("Error al cargar la escultura:", error);
+        alert("Error al cargar la escultura.");
+        setLoading(false);
+      }
     };
+    fetchEscultura();
+  }, [id]);
 
-    return (
-        <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
-            <HeaderPublic />
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleImageUpload = (event, field) => {
+    const file = event.target.files[0];
+    setFormData({ ...formData, [field]: file });
+
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => setImagenVistaPrevia((prev) => ({ ...prev, [field]: reader.result }));
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleDrop = (event, field) => {
+    event.preventDefault();
+    const file = event.dataTransfer.files[0];
+    setFormData({ ...formData, [field]: file });
+
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => setImagenVistaPrevia((prev) => ({ ...prev, [field]: reader.result }));
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const esculturaData = new FormData();
+    if (formData.nombre) esculturaData.append('name', formData.nombre);
+    if (formData.tematica) esculturaData.append('description', formData.tematica);
+    if (formData.fechaCreacion) esculturaData.append('creation_date', formData.fechaCreacion);
+
+    if (formData.imagenPre) esculturaData.append('imagenPre', formData.imagenPre);
+    if (formData.imagenDurante) esculturaData.append('imagenDurante', formData.imagenDurante);
+    if (formData.imagenPost) esculturaData.append('imagenPost', formData.imagenPost);
+
+    try {
+      const response = await actualizarEscultura(id, esculturaData);
+      console.log("Escultura actualizada:", response);
+
+      alert('Escultura actualizada exitosamente.');
+      window.scrollTo(0, 0);
+      // Redirigir al usuario a la página de visualización después de actualizar.
+      navigate(`/ver-escultura/${id}`);
+    } catch (error) {
+      console.error("Error al actualizar la escultura:", error);
+      alert('Error al actualizar la escultura. Inténtalo de nuevo.');
+    }
+  };
+
+  if (loading) return <p>Cargando...</p>;
+
+  return (
+    <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+      <HeaderPublic />
+
+      <Box
+        sx={{
+          flexGrow: 1,
+          padding: { xs: 2, md: 4 },
+          gap: 3,
+          backgroundColor: '#f5f5f5',
+        }}
+      >
+        <Typography variant="h4" textAlign="center" gutterBottom>
+          Modificar Escultura
+        </Typography>
+
+        <Box
+          component="form"
+          onSubmit={handleSubmit}
+          sx={{
+            maxWidth: 600,
+            margin: '0 auto',
+            display: 'grid',
+            gap: 2,
+          }}
+        >
+          <TextField
+            label="Nombre"
+            name="nombre"
+            value={formData.nombre}
+            onChange={handleChange}
+            fullWidth
+          />
+          <TextField
+            label="Descripción de la Temática"
+            name="tematica"
+            value={formData.tematica}
+            onChange={handleChange}
+            fullWidth
+          />
+          <TextField
+            label="Fecha de Creación"
+            name="fechaCreacion"
+            type="date"
+            value={formData.fechaCreacion}
+            onChange={handleChange}
+            fullWidth
+            InputLabelProps={{ shrink: true }}
+          />
+
+          {['imagenPre', 'imagenDurante', 'imagenPost'].map((field, index) => (
             <Box
-                sx={{
-                    flexGrow: 1,
-                    padding: { xs: 2, md: 4 },
-                    backgroundColor: '#f5f5f5',
-                }}
+              key={index}
+              sx={{
+                border: '2px dashed #aaa',
+                borderRadius: '8px',
+                textAlign: 'center',
+                padding: 3,
+                cursor: 'pointer',
+                transition: 'background-color 0.2s ease-in-out',
+                '&:hover': { backgroundColor: '#ddd' },
+              }}
+              onDrop={(e) => handleDrop(e, field)}
+              onDragOver={(e) => e.preventDefault()}
+              component="label"
             >
-                <Grid container spacing={4} justifyContent="center" alignItems="center" sx={{ minHeight: '80vh' }}>
-                    <Grid item xs={12} md={8} lg={6}>
-                        <Typography variant="h4" gutterBottom textAlign="center">
-                            Modificar Escultura - {escultura.nombre}
-                        </Typography>
+              <input type="file" hidden onChange={(e) => handleImageUpload(e, field)} />
+              <Icon sx={{ fontSize: 40, color: '#777' }}>
+                <ImageIcon />
+              </Icon>
+              <Typography variant="body2" sx={{ mt: 1 }}>
+                Arrastra y suelta la imagen aquí o{' '}
+                <strong>selecciona el archivo</strong> que deseas subir
+              </Typography>
 
-                        <TextField
-                            label="Nombre de la Escultura"
-                            name="nombre"
-                            value={escultura.nombre}
-                            onChange={handleChange}
-                            fullWidth
-                            InputLabelProps={{ shrink: true }}
-                            sx={{ marginBottom: 2 }}
-                        />
-                        <TextField
-                            label="Temática"
-                            name="tematica"
-                            value={escultura.tematica}
-                            onChange={handleChange}
-                            fullWidth
-                            sx={{ marginBottom: 2 }}
-                        />
-                        <TextField
-                            label="Fecha de Creación"
-                            type="date"
-                            name="fechaCreacion"
-                            value={escultura.fechaCreacion}
-                            onChange={handleChange}
-                            InputLabelProps={{ shrink: true }}
-                            fullWidth
-                            sx={{ marginBottom: 2 }}
-                        />
-
-                        <Typography variant="body1" gutterBottom>
-                            Imágenes de la Escultura
-                        </Typography>
-
-                        <Grid container spacing={1}>
-                            {['imagenPreEvento', 'imagenDuranteEvento', 'imagenPostEvento'].map((imagenKey) => (
-                                <Grid item key={imagenKey}>
-                                    <Box
-                                        sx={{
-                                            position: 'relative',
-                                            width: 100,
-                                            height: 100,
-                                            overflow: 'hidden',
-                                            borderRadius: '8px',
-                                            marginBottom: 1,
-                                        }}
-                                    >
-                                        {escultura[imagenKey] && (
-                                            <img
-                                                src={escultura[imagenKey]}
-                                                alt={`Imagen ${imagenKey}`}
-                                                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                                            />
-                                        )}
-                                        <IconButton
-                                            onClick={() => handleEliminarImagen(imagenKey)}
-                                            sx={{
-                                                position: 'absolute',
-                                                top: 0,
-                                                right: 0,
-                                                backgroundColor: 'rgba(0, 0, 0, 0.5)',
-                                                color: 'white',
-                                            }}
-                                        >
-                                            <DeleteIcon />
-                                        </IconButton>
-                                    </Box>
-                                </Grid>
-                            ))}
-                            <Grid item>
-                                <Button
-                                    variant="contained"
-                                    component="label"
-                                    sx={{
-                                        height: 100,
-                                        width: 100,
-                                        backgroundImage: `url(${fondoBoton})`,
-                                        backgroundSize: 'cover',
-                                        backgroundPosition: 'center',
-                                        display: 'flex',
-                                        justifyContent: 'center',
-                                        alignItems: 'center',
-                                        color: 'white',
-                                        borderRadius: 8,
-                                        textTransform: 'none',
-                                    }}
-                                >
-                                    <AddIcon />
-                                    <input
-                                        type="file"
-                                        hidden
-                                        multiple
-                                        accept="image/*"
-                                        onChange={handleAgregarImagen}
-                                    />
-                                </Button>
-                            </Grid>
-                        </Grid>
-
-                        <Box sx={{ display: 'flex', justifyContent: 'space-between', gap: 2, flexDirection: { xs: 'column', sm: 'row' } }}>
-                            <Button
-                                variant="contained"
-                                onClick={handleModificar}
-                                sx={{
-                                    width: { xs: '100%', sm: '48%' },
-                                    height: '60px',
-                                    borderRadius: '30px',
-                                    backgroundImage: `url(${fondoBoton})`,
-                                    backgroundSize: 'cover',
-                                    backgroundPosition: 'center',
-                                    color: 'white',
-                                    textTransform: 'none',
-                                    '&:hover': { opacity: 0.9 },
-                                }}
-                            >
-                                Modificar Escultura
-                            </Button>
-                            <BackButton sx={{ width: '48%' }} />
-                        </Box>
-                    </Grid>
-                </Grid>
+              {/* Mostrar la imagen actual si existe */}
+              {imagenVistaPrevia[field] && (
+                <Box
+                  sx={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    marginTop: 2,
+                    flexDirection: 'column',
+                  }}
+                >
+                  <Typography variant="body2" sx={{ mb: 1, fontWeight: 'bold' }}>
+                    Imagen actual:
+                  </Typography>
+                  <img
+                    src={imagenVistaPrevia[field]}
+                    alt="Vista previa"
+                    style={{
+                      maxWidth: '100%',
+                      maxHeight: '300px',
+                      objectFit: 'cover',
+                      borderRadius: '8px',
+                    }}
+                  />
+                </Box>
+              )}
             </Box>
-            <Footer />
+          ))}
+
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              marginTop: 2,
+            }}
+          >
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              sx={{ width: '48%' }}
+            >
+              Actualizar Escultura
+            </Button>
+            <BackButton sx={{ width: '48%' }} />
+          </Box>
         </Box>
-    );
+      </Box>
+
+      <Footer />
+    </Box>
+  );
 };
 
 export default ModificarEscultura;

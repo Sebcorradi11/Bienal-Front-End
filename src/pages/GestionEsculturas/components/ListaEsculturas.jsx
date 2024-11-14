@@ -1,27 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Box, Typography, Grid, IconButton } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import { getEsculturas, eliminarEscultura } from '../../../api/sculptures.routes'; // Importa el servicio real
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { eliminarEscultura } from '../../../api/sculptures.routes';
 
-const ListaEsculturas = () => {
-    const [esculturas, setEsculturas] = useState([]);
+const ListaEsculturas = ({ esculturas, terminoBusqueda = "", onEliminar }) => {
     const navigate = useNavigate();
-
-    useEffect(() => {
-        cargarEsculturas();
-    }, []);
-
-    const cargarEsculturas = async () => {
-        try {
-            const data = await getEsculturas();
-            setEsculturas(data);
-        } catch (error) {
-            console.error('Error al cargar las esculturas:', error);
-        }
-    };
 
     const modificarEscultura = (id) => {
         navigate(`/modificar-escultura/${id}`);
@@ -31,18 +17,31 @@ const ListaEsculturas = () => {
         navigate(`/ver-escultura/${id}`);
     };
 
-    const eliminar = async (id) => {
+    const handleEliminar = async (id) => {
         const confirmacion = window.confirm('¿Estás seguro de que quieres eliminar esta escultura?');
         if (confirmacion) {
             try {
                 await eliminarEscultura(id);
-                setEsculturas(esculturas.filter((escultura) => escultura._id !== id));
+                onEliminar(id); // Informar a GestionarEsculturas para actualizar la lista
                 alert('Escultura eliminada exitosamente');
             } catch (error) {
                 console.error('Error al eliminar la escultura:', error);
                 alert('Error al eliminar la escultura');
             }
         }
+    };
+
+    const resaltarTexto = (texto) => {
+        if (!terminoBusqueda) return texto;
+
+        const partes = texto.split(new RegExp(`(${terminoBusqueda})`, 'gi'));
+        return partes.map((parte, index) => (
+            parte.toLowerCase() === terminoBusqueda.toLowerCase() ? (
+                <span key={index} style={{ color: 'blue', fontWeight: 'bold' }}>{parte}</span>
+            ) : (
+                parte
+            )
+        ));
     };
 
     return (
@@ -68,7 +67,7 @@ const ListaEsculturas = () => {
                                 }}
                             >
                                 <Typography variant="body1" fontWeight="bold" gutterBottom>
-                                    {escultura.name}
+                                    {resaltarTexto(escultura.name)}
                                 </Typography>
                                 <Typography variant="body2" gutterBottom>
                                     Descripción: {escultura.description}
@@ -93,7 +92,7 @@ const ListaEsculturas = () => {
                                         <EditIcon />
                                     </IconButton>
                                     <IconButton
-                                        onClick={() => eliminar(escultura._id)}
+                                        onClick={() => handleEliminar(escultura._id)}
                                         aria-label="Eliminar escultura"
                                         color="error"
                                     >

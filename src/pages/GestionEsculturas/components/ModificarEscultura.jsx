@@ -42,9 +42,9 @@ const ModificarEscultura = () => {
         });
         // Establecer las URLs de las imágenes actuales para mostrar en la vista previa
         setImagenVistaPrevia({
-          imagenPre: data.imagenPre || null,
-          imagenDurante: data.imagenDurante || null,
-          imagenPost: data.imagenPost || null,
+          imagenPre: `${data.imagenPre}?t=${new Date().getTime()}` || null,
+          imagenDurante: `${data.imagenDurante}?t=${new Date().getTime()}` || null,
+          imagenPost: `${data.imagenPost}?t=${new Date().getTime()}` || null,
         });
         setLoading(false);
       } catch (error) {
@@ -102,6 +102,8 @@ const ModificarEscultura = () => {
 
       alert('Escultura actualizada exitosamente.');
       window.scrollTo(0, 0);
+      // Redirigir al usuario a la página de visualización después de actualizar.
+      navigate(`/ver-escultura/${id}`);
     } catch (error) {
       console.error("Error al actualizar la escultura:", error);
       alert('Error al actualizar la escultura. Inténtalo de nuevo.');

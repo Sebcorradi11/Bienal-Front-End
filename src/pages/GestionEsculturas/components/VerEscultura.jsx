@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Box, Typography, Grid } from '@mui/material';
 import { useParams } from 'react-router-dom';
-import { getEsculturaPorId } from '../../../api/sculptures.routes'; // Usa la función real
+import { getEsculturaPorId } from '../../../api/sculptures.routes';
 import HeaderPublic from '../../../components/HeaderPublic';
 import Footer from '../../../components/Footer';
 import BackButton from '../../../components/BackButton';
@@ -73,7 +73,7 @@ const VerEscultura = () => {
 
                         {/* Mostrar imágenes */}
                         <Grid container spacing={2} sx={{ marginBottom: 3 }}>
-                            {['imagenesPre', 'imagenesDurante', 'imagenesPost'].map((key, index) => (
+                            {['imagenPre', 'imagenDurante', 'imagenPost'].map((key, index) => (
                                 <Grid item xs={12} sm={4} key={index}>
                                     <Box
                                         sx={{
@@ -89,7 +89,7 @@ const VerEscultura = () => {
                                         }}
                                     >
                                         <img
-                                            src={escultura[key]?.[0] || 'https://via.placeholder.com/300'} // Muestra la primera imagen del array o un placeholder
+                                            src={`${escultura[key]}?t=${new Date().getTime()}` || 'https://via.placeholder.com/300'} // Muestra la imagen con recarga forzada o un placeholder
                                             alt={`Imagen ${key}`}
                                             style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                                         />

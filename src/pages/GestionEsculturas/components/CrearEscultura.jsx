@@ -5,7 +5,6 @@ import {
 import ImageIcon from '@mui/icons-material/Image';
 import HeaderPublic from '../../../components/HeaderPublic';
 import Footer from '../../../components/Footer';
-import { useNavigate } from 'react-router-dom';
 import BackButton from '../../../components/BackButton';
 import { createEscultura } from '../../../api/sculptures.routes';
 

@@ -41,7 +41,7 @@ export const onlyPublicRoute = [
   {
     path: "/ver-evento-public/:id",
     component: VerEvento1,
-  }
+  },
   {
     path: "/ver-escultura-public/:id",
     component: VerEsculturaPublic,

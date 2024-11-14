@@ -22,7 +22,7 @@ const Predio = () => {
 >
     <Box sx={{ width: { xs: '80%', sm: '70%', md: '45%' }, marginLeft: { xs: '-1rem', sm: '3rem', md: '5rem' } }}>
         <Typography
-            variant="h2"
+            variant="h1"
             sx={{
                 fontSize: { xs: '32px', sm: '48px', md: '64px' },
                 fontWeight: '500',

@@ -17,9 +17,11 @@ const VerEsculturaPublic = () => {
     const [error, setError] = useState(null);
     const navigate = useNavigate();
 
+    // URL base para generar el enlace a compartir
     const frontUrl = import.meta.env.VITE_FRONT_URL;
     const compartirEnlace = `${frontUrl}/ver-escultura-public/${id}`;
 
+    // Funciones para compartir en redes sociales
     const compartirWhatsApp = () => {
         const url = `https://wa.me/?text=${encodeURIComponent(compartirEnlace)}`;
         window.open(url, '_blank');
@@ -71,6 +73,7 @@ const VerEsculturaPublic = () => {
 
     return (
         <Grid container direction="column" sx={{ minHeight: '100vh', backgroundColor: '#fff' }}>
+            {/* Meta Tags dinámicos para redes sociales */}
             <Helmet>
                 <title>{`Bienal 2024 - Escultura: ${escultura.name}`}</title>
                 <meta property="og:title" content={`Bienal 2024 - Escultura: ${escultura.name}`} />

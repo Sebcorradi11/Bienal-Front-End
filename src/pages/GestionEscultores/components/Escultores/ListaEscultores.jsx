@@ -2,10 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { Box, Typography, IconButton, Grid } from '@mui/material';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import EditIcon from '@mui/icons-material/Edit';
-<<<<<<< HEAD
-=======
-import { obtenerTodosSculptores, eliminarSculptor } from '../../../../api/Sculptores/sculptoresApi';
->>>>>>> 6c7da2c2368fdf5471b6170449db0ebfa42d320c
 import DeleteIcon from '@mui/icons-material/Delete';
 import { obtenerTodosSculptores, eliminarSculptor } from '../../../../api/Sculptores/sculptoresApi';
 import { useNavigate } from 'react-router-dom';
@@ -40,12 +36,9 @@ const ListaEscultores = ({ searchQuery }) => {
         if (confirmacion) {
             try {
                 await eliminarSculptor(id);
-<<<<<<< HEAD
-                setEscultores((prevEscultores) => prevEscultores.filter((e) => e._id !== id));
-=======
+
                 await eliminarSculptor(id);
                 setEscultores(escultores.filter((e) => e._id !== id));
->>>>>>> 6c7da2c2368fdf5471b6170449db0ebfa42d320c
                 alert('Escultor eliminado exitosamente');
             } catch (error) {
                 console.error('Error al eliminar el escultor:', error);
@@ -93,12 +86,7 @@ const ListaEscultores = ({ searchQuery }) => {
                                 }}
                             >
                                 <Typography variant="body1" fontWeight="bold" gutterBottom>
-<<<<<<< HEAD
                                     {highlightText(escultor.name, searchQuery)}
-=======
-                                    {escultor.name} {/* Asegúrate de que el campo coincide con el esquema del backend */}
-                                    {escultor.name} {/* Asegúrate de que el campo coincide con el esquema del backend */}
->>>>>>> 6c7da2c2368fdf5471b6170449db0ebfa42d320c
                                 </Typography>
                                 <Box sx={{ display: 'flex', justifyContent: 'space-between', gap: 1 }}>
                                     <IconButton

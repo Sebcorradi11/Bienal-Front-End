@@ -6,18 +6,14 @@ import HeaderPublic from '../../../../components/HeaderPublic';
 import Footer from '../../../../components/Footer';
 import fondoBoton from '../../../../assets/fondobutton/Rectangle 32.svg';
 import BackButton from '../../../../components/BackButton';
-import fondoBoton from '../../../../assets/fondobutton/Rectangle 32.svg';
-import BackButton from '../../../../components/BackButton';
+
 
 const VerEvento = () => {
   const { id } = useParams(); // Obtiene el ID del evento de la URL
   const [evento, setEvento] = useState(null); // Estado para el evento
   const [error, setError] = useState(null); // Estado para manejar errores
   const navigate = useNavigate(); // Hook para navegar
-  const { id } = useParams(); // Obtiene el ID del evento de la URL
-  const [evento, setEvento] = useState(null); // Estado para el evento
-  const [error, setError] = useState(null); // Estado para manejar errores
-  const navigate = useNavigate(); // Hook para navegar
+
 
   const formatearFecha = (fecha) => {
     const opciones = { year: 'numeric', month: '2-digit', day: '2-digit' };
@@ -25,12 +21,7 @@ const VerEvento = () => {
     return new Date(fechaLocal.getUTCFullYear(), fechaLocal.getUTCMonth(), fechaLocal.getUTCDate())
       .toLocaleDateString('es-AR', opciones);
   };
-  const formatearFecha = (fecha) => {
-    const opciones = { year: 'numeric', month: '2-digit', day: '2-digit' };
-    const fechaLocal = new Date(fecha);
-    return new Date(fechaLocal.getUTCFullYear(), fechaLocal.getUTCMonth(), fechaLocal.getUTCDate())
-      .toLocaleDateString('es-AR', opciones);
-  };
+
 
   useEffect(() => {
     const cargarEvento = async () => {
@@ -55,9 +46,6 @@ const VerEvento = () => {
     cargarEvento();
   }, [id]);
 
-  const handleVerEscultores = () => {
-    navigate(`/ver-evento/${id}`); // Navega a la vista de escultores para el evento con su ID
-  };
   const handleVerEscultores = () => {
     navigate(`/ver-evento/${id}`); // Navega a la vista de escultores para el evento con su ID
   };

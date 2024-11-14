@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, Typography, Avatar } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+
 
 const SculptorCard = ({ name, country, image, flag, id }) => {
     const navigate = useNavigate(); // Definir navigate

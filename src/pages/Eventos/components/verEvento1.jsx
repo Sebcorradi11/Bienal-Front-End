@@ -13,6 +13,7 @@ import fondoBoton from '../../../assets/fondobutton/Rectangle 28.svg';
 import { Helmet } from 'react-helmet-async';
 import LoaderSpinner from '../../../components/LoaderSpinner'; // Importar el nuevo componenteimport { ToastContainer, toast } from 'react-toastify';
 import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const VerEvento1 = () => {
   const { id } = useParams();

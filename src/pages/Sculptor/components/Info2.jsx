@@ -55,11 +55,7 @@ const Info2 = () => {
                 </Typography>
             </Box>
 
-            {/* Información adicional */}
-            <Typography variant="body2" sx={{ fontWeight: 'bold' }}>
-                Participan 10 Escultores <br />
-                Material: Metal
-            </Typography>
+            
         </Box>
     );
 };

@@ -13,6 +13,7 @@ import { Helmet } from 'react-helmet-async';
 import LoaderSpinner from '../../../components/LoaderSpinner';
 import rectangleLine from '../../../assets/Rectangle-2.svg';
 import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const VerEsculturaPublic = () => {
     const { id } = useParams();
@@ -116,16 +117,16 @@ const VerEsculturaPublic = () => {
 
                     <Typography variant="h6" sx={{ fontWeight: 'bold', textAlign: 'center', mb: 2 }}>Compartí "{escultura.name}"</Typography>
                     <Grid container spacing={1} justifyContent="center">
-                        <IconButton onClick={() => window.open(`https://wa.me/?text=${encodeURIComponent(compartirEnlace)}`, '_blank')} color="inherit">
+                        <IconButton onClick={compartirWhatsApp} color="inherit">
                             <WhatsAppIcon fontSize="large" />
                         </IconButton>
-                        <IconButton onClick={() => window.open('https://www.instagram.com/', '_blank')} color="inherit">
+                        <IconButton onClick={compartirInstagram} color="inherit">
                             <InstagramIcon fontSize="large" />
                         </IconButton>
-                        <IconButton onClick={() => window.open(`https://twitter.com/share?url=${encodeURIComponent(compartirEnlace)}&text=¡Mira esta escultura en la Bienal!`, '_blank')} color="inherit">
+                        <IconButton onClick={compartirTwitter} color="inherit">
                             <TwitterIcon fontSize="large" />
                         </IconButton>
-                        <IconButton onClick={() => navigator.clipboard.writeText(compartirEnlace)} color="inherit">
+                        <IconButton onClick={copiarVinculo} color="inherit">
                             <LinkIcon fontSize="large" />
                         </IconButton>
                     </Grid>

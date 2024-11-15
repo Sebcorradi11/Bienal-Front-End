@@ -22,6 +22,7 @@ const SculptureCard = ({ id, title, image, authorName }) => {
             <Card
                 onClick={handleClick}
                 sx={{
+                    backgroundColor: '#fff', // Fondo blanco
                     width: 250,
                     height: 350,
                     display: 'flex',
@@ -29,7 +30,7 @@ const SculptureCard = ({ id, title, image, authorName }) => {
                     alignItems: 'center',
                     cursor: 'pointer',
                     borderRadius: '16px',
-                    boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.1)',
+                    boxShadow: '0px 6px 18px rgba(0, 0, 0, 0.15)',
                     transition: 'transform 0.3s ease, box-shadow 0.3s ease',
                     ':hover': {
                         transform: 'scale(1.05)',

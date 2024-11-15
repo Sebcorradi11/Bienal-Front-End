@@ -22,7 +22,7 @@ const ListaEsculturas = () => {
     };
 
     return (
-        <Box sx={{ padding: { xs: 2, md: 3 }, marginTop: 3 }}>
+        <Box sx={{ paddingY: 4, backgroundColor: '#fff'  }}>
             {esculturas.length === 0 ? (
                 <Typography variant="h6" sx={{ textAlign: 'center', marginTop: 4 }}>
                     No hay esculturas disponibles

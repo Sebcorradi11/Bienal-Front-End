@@ -7,6 +7,7 @@ const Buscador= () => {
     const [busqueda, setBusqueda] = useState('');
     const [results, setResults] = useState([]);
     const [loading, setLoading] = useState(false);
+    const baseUrl=import.meta.env.VITE_URL_BASECONFIG;
 
     const handleBuscar = async (term) => {
         if (!term) {
@@ -16,7 +17,7 @@ const Buscador= () => {
         
         setLoading(true);
         try {
-            const response = await axios.post('https://bienal-backend.ddns.net/api/search/searchTerm', { term });
+            const response = await axios.post(`${baseUrl}api/search/searchTerm`, { term });
             setResults(response.data);
         } catch (error) {
             console.error("Error al buscar esculturas o escultores:", error);

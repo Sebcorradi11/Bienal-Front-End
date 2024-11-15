@@ -11,9 +11,9 @@ const VerEscultores = () => {
 
     // Mock de escultores con id y nombre
     const escultores = [
-        { id: '6735bde65f4c55f6227bb3cbM', nombre: 'Luis Bernardi' },
-        { id: '2', nombre: 'Deyverson Silva' },
-        { id: '3', nombre: 'Billy Lee' },
+        { id: '6735924de6a4d6689e7da152', nombre: 'Luis Bernardi' },
+        { id: '6736b3f6c017c913c54802b4', nombre: 'Deyverson Silva' },
+        { id: '6736d81a01d03731e9cf4463', nombre: 'Billy Lee' },
     ];
 
     // Función para manejar la navegación al hacer click en el botón de QR

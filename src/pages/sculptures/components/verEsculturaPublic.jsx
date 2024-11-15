@@ -110,8 +110,11 @@ const VerEsculturaPublic = () => {
             <Grid container justifyContent="space-between" alignItems="center" sx={{ backgroundColor: '#000', color: '#fff', p: { xs: 2, md: 4 }, mt: 6, textAlign: { xs: 'center', md: 'left' }, width: '100%' }}>
                 <Grid item xs={12} md={8}>
                     <Typography variant="h6" component="span" sx={{ fontWeight: 400, fontSize: '1.5rem', display: 'block' }}>
-                        Conocé a los escultores presentados en la Bienal del Chaco 2024.
+                        Conocé a los escultores presentados en la 
                     </Typography>
+                    <Typography variant="h6" component="span" sx={{ fontWeight: 600, fontSize: '2.5rem', display: 'block', mt: 1 }}>
+            Bienal del chaco 2024
+          </Typography>
                 </Grid>
 
                 <Grid item xs={12} md={4} sx={{ textAlign: { xs: 'center', md: 'right' } }}>

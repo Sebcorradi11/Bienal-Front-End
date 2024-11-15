@@ -20,7 +20,7 @@ const VerEscultor = () => {
   const navigate = useNavigate();
 
   const frontUrl = import.meta.env.VITE_FRONT_URL;
-  const compartirEnlace = `${frontUrl}/ver-escultor/${id}`;
+  const compartirEnlace = `${frontUrl}/ver-escultores/public/${id}`;
 
   const compartirWhatsApp = () => {
     const url = `https://wa.me/?text=${encodeURIComponent(compartirEnlace)}`;
@@ -143,18 +143,19 @@ const VerEscultor = () => {
       </Grid>
 
       <Grid container justifyContent="space-between" alignItems="center" sx={{ backgroundColor: '#000', color: '#fff', p: { xs: 2, md: 4 }, mt: 6, textAlign: { xs: 'center', md: 'left' }, width: '100%', borderRadius: '0' }}>
-        <Grid item xs={12} md={8}>
-          <Typography variant="h6" component="span" sx={{ fontWeight: 400, fontSize: '2rem', display: 'block' }}>
-            Conocé las esculturas de los artistas
-          </Typography>
-          <Typography variant="h6" component="span" sx={{ fontWeight: 600, fontSize: '2.5rem', display: 'block', mt: 1 }}>
+    <Grid item xs={12} md={8}>
+        <Typography variant="h6" component="span" sx={{ fontWeight: 400, fontSize: '2rem', display: 'block' }}>
+            Conocé las esculturas de {escultor.name}
+        </Typography>
+        <Typography variant="h6" component="span" sx={{ fontWeight: 600, fontSize: '2.5rem', display: 'block', mt: 1 }}>
             Bienal 2024
-          </Typography>
-        </Grid>
+        </Typography>
+    </Grid>
 
         <Grid item xs={12} md={4} sx={{ textAlign: { xs: 'center', md: 'right' } }}>
           <Button
-            onClick={() => navigate(`esculturas`)}
+            onClick={() => navigate(`/ver-detalles-esculturas-public/${id}`)}
+
             sx={{
               backgroundImage: `url(${fondoBoton})`,
               backgroundSize: 'cover',

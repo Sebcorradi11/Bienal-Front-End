@@ -7,8 +7,9 @@ import Home from '../../pages/home/Home';
 import LoginPage from '../../pages/login/Login';
 import QrPage from '../../pages/Qr/Qrpage';
 import VerEsculturaPublic from '../../pages/sculptures/components/verEsculturaPublic';
-import VerEscultor from '../../pages/sculptor/components/DetalleEscultor';
+import VerEscultor from '../../pages/Sculptor/components/DetalleEscultor';
 import VerEvento1 from '../../pages/Eventos/components/verEvento1';
+import DetalleEsculturas from '../../pages/Sculptor/components/DetalleEsculturas';
 export const onlyPublicRoute = [
   {
     path: "/esculturas",
@@ -50,5 +51,9 @@ export const onlyPublicRoute = [
   {
     path: "/ver-escultores-public/:id",
     component: VerEscultor,
-  }
+  },
+  {
+    path: "/ver-detalles-esculturas-public/:id",
+    component: DetalleEsculturas,
+  },
 ];

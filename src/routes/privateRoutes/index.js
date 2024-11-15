@@ -111,8 +111,8 @@ export const onlyPrivateRoute = [
     component: ModificarEscultura,
   },
   {
-    path: "/ver-escultura/:id",
-    component: VerEscultura,
+    path: "/ver-esculturas/:id",
+    component: VerEsculturas,
   },
   {
     path: "/:Idevento/:Idescultor/qr",

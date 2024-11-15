@@ -14,7 +14,7 @@ import AddIcon from '@mui/icons-material/Add';
 import HeaderPublic from '../../../../components/HeaderPublic';
 import Footer from '../../../../components/Footer';
 import BackButton from '../../../../components/BackButton';
-import { obtenerTodosSculptores } from '../../../../api/sculptores/sculptoresApi'; // Asegúrate de importar correctamente esta función
+import { obtenerTodosSculptores } from '../../../../api/Sculptores/sculptoresApi'; // Asegúrate de importar correctamente esta función
 
 const AgregarEscultores = () => {
     const [escultores, setEscultores] = useState([]); // Lista de escultores disponibles desde el backend

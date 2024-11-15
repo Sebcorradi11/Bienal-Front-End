@@ -114,7 +114,7 @@ const VerEsculturaPublic = () => {
                         style={{ width: '100%', maxWidth: '300px', height: 'auto', borderRadius: '8px', marginBottom: '16px' }}
                     />
 
-                    <Typography variant="h6" sx={{ fontWeight: 'bold', textAlign: 'center', mb: 2 }}>Compartí "{escultura.name}"</Typography>
+                    <Typography variant="h6" sx={{ fontWeight: 'bold', textAlign: 'center', mb: 2 }}>Compartí {escultura.name}</Typography>
                     <Grid container spacing={1} justifyContent="center">
                         <IconButton onClick={() => window.open(`https://wa.me/?text=${encodeURIComponent(compartirEnlace)}`, '_blank')} color="inherit">
                             <WhatsAppIcon fontSize="large" />

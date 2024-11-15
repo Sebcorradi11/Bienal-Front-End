@@ -121,7 +121,7 @@ const VerEvento = () => {
               }}
             >
               <img
-                src={evento.images[0] || 'https://via.placeholder.com/300'}
+                src={evento.image || 'https://via.placeholder.com/300'}
                 alt="Imagen del evento"
                 style={{ width: '100%', height: '100%', objectFit: 'cover' }}
               />

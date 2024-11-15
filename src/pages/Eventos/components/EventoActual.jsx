@@ -50,7 +50,7 @@ const EventoActual = () => {
                 id={actualEvent._id}
                 title={actualEvent.name}
                 date="Hoy"
-                image={actualEvent.images[0]} // Suponiendo que es un array
+                image={actualEvent.image} // Suponiendo que es un array
               />
             </Grid>
           ) : (

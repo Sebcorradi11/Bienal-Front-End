@@ -7,6 +7,9 @@ import fondoBoton from '../../../../assets/fondobutton/Rectangle 32.svg';
 import { useNavigate } from 'react-router-dom';
 import BackButton from '../../../../components/BackButton';
 import { crearSculptor } from '../../../../api/Sculptores/sculptoresApi';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import LoaderSpinner from '../../../../components/LoaderSpinner';
 
 const CrearEscultor = () => {
     const [formData, setFormData] = useState({
@@ -19,6 +22,7 @@ const CrearEscultor = () => {
         works: []
     });
     const [imagen, setImagen] = useState(null);
+    const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -53,6 +57,7 @@ const CrearEscultor = () => {
     };
 
     const handleCrearEscultor = async () => {
+        setLoading(true);
         const data = new FormData();
         data.append('name', formData.name);
         data.append('biography', formData.biography);
@@ -64,7 +69,6 @@ const CrearEscultor = () => {
             data.append('profileImage', formData.profileImage);
         }
 
-        // Asegurarse de que `works` siempre sea un array en el formato adecuado
         const worksArray = Array.isArray(formData.works) ? formData.works : [formData.works];
         worksArray.forEach((work) => {
             data.append('works', work);
@@ -72,7 +76,7 @@ const CrearEscultor = () => {
 
         try {
             const response = await crearSculptor(data);
-            alert('Escultor creado exitosamente.');
+            toast.success('Escultor creado exitosamente.');
             localStorage.removeItem('formData');
             localStorage.removeItem('selectedSculptures');
             setFormData({
@@ -90,18 +94,22 @@ const CrearEscultor = () => {
             navigate(`/ver-escultor/${response._id}`);
         } catch (error) {
             console.error('Error al crear el escultor:', error);
-            alert(`Error al crear el escultor: ${error.response?.data.error || 'Inténtalo de nuevo.'}`);
+            toast.error(`Error al crear el escultor: ${error.response?.data.error || 'Inténtalo de nuevo.'}`);
+        } finally {
+            setLoading(false);
         }
     };
 
     return (
         <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
             <HeaderPublic />
+            <ToastContainer />
             <Box sx={{ flexGrow: 1, padding: { xs: 2, md: 4 }, gap: 3, backgroundColor: '#f5f5f5' }}>
                 <Typography variant="h4" textAlign="center" gutterBottom>
                     Crear Escultor
                 </Typography>
                 <Box component="form" sx={{ maxWidth: 600, margin: '0 auto', display: 'grid', gap: 2 }}>
+                    {loading && <LoaderSpinner loading={loading} />}
                     <TextField label="Nombre" name="name" value={formData.name} onChange={handleChange} fullWidth required />
                     <TextField label="Biografía" name="biography" value={formData.biography} onChange={handleChange} multiline rows={3} fullWidth required />
                     <TextField label="País" name="country" value={formData.country} onChange={handleChange} fullWidth required />

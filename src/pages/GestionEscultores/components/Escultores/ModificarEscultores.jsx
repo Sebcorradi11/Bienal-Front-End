@@ -2,6 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { Box, TextField, Typography, Button, Grid } from '@mui/material';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getEscultorPorId, actualizarSculptor } from '../../../../api/Sculptores/sculptoresApi';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import LoaderSpinner from '../../../../components/LoaderSpinner';
 
 import HeaderPublic from '../../../../components/HeaderPublic';
 import Footer from '../../../../components/Footer';
@@ -21,9 +24,11 @@ const ModificarEscultor = () => {
         profileImage: null,
     });
     const [nuevaImagen, setNuevaImagen] = useState(null);
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         const cargarEscultor = async () => {
+            setLoading(true);
             try {
                 const data = await getEscultorPorId(id);
                 setEscultor({
@@ -36,6 +41,9 @@ const ModificarEscultor = () => {
                 });
             } catch (error) {
                 console.error('Error al cargar el escultor:', error);
+                toast.error('Error al cargar el escultor');
+            } finally {
+                setLoading(false);
             }
         };
         cargarEscultor();
@@ -49,40 +57,45 @@ const ModificarEscultor = () => {
     const handleAgregarImagen = (e) => {
         const file = e.target.files[0];
         setNuevaImagen(file);
-        alert('Imagen cargada correctamente');
+        toast.success('Imagen cargada correctamente');
     };
 
     const handleModificar = async () => {
+        setLoading(true);
         const formData = new FormData();
-        formData.append('name', escultor.name); // Campo de nombre
-        formData.append('lastName', escultor.lastName); // Campo de apellido (agregado aquí)
-        formData.append('country', escultor.country); // Si el país es necesario
+        formData.append('name', escultor.name);
+        formData.append('lastName', escultor.lastName);
         formData.append('biography', escultor.biography);
-        formData.append('contactInfo', JSON.stringify(escultor.contactInfo)); 
-    
+        formData.append('contactInfo', JSON.stringify(escultor.contactInfo));
+
         if (nuevaImagen) {
             formData.append('profileImage', nuevaImagen);
         }
-    
+
         try {
             await actualizarSculptor(id, formData);
-            alert('Escultor actualizado exitosamente');
+            toast.success('Escultor actualizado exitosamente');
             navigate(-1);
         } catch (error) {
             console.error('Error al actualizar el escultor:', error);
-            alert('Error al actualizar el escultor');
+            toast.error('Error al actualizar el escultor');
+        } finally {
+            setLoading(false);
         }
     };
 
     return (
         <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
             <HeaderPublic />
+            <ToastContainer />
             <Box sx={{ flexGrow: 1, p: { xs: 2, md: 4 }, backgroundColor: '#f5f5f5' }}>
                 <Grid container spacing={4} justifyContent="center" alignItems="center" sx={{ minHeight: '80vh' }}>
                     <Grid item xs={12} md={8} lg={6}>
                         <Typography variant="h4" gutterBottom textAlign="center">
                             Modificar Escultor - {escultor.name} {escultor.lastName}
                         </Typography>
+                        
+                        {loading && <LoaderSpinner loading={loading} />} {/* LoaderSpinner */}
 
                         <TextField
                             label="Nombre"
@@ -120,7 +133,6 @@ const ModificarEscultor = () => {
                             fullWidth
                             sx={{ mb: 2 }}
                         />
-                    
 
                         <Box sx={{ mb: 2 }}>
                             <Typography variant="body1" gutterBottom>

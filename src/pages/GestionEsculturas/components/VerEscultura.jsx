@@ -80,8 +80,8 @@ const VerEscultura = () => {
                                             border: '2px dashed #aaa',
                                             borderRadius: '8px',
                                             width: '100%',
-                                            height: '200px',
-                                            overflow: 'hidden',
+                                            height: '300px',           // Altura fija del contenedor
+                                            overflow: 'hidden',        // Oculta cualquier parte de la imagen que se salga del contenedor
                                             display: 'flex',
                                             justifyContent: 'center',
                                             alignItems: 'center',

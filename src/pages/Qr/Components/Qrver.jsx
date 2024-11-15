@@ -9,13 +9,13 @@ const QrVer = () => {
     const [qrCodeImage, setQrCodeImage] = useState(null);
     const [loading, setLoading] = useState(true);
     const [timer, setTimer] = useState(60);
-    const baseUrl=import.meta.env.VITE_URL_BASECONFIG;
+    const qrUrl=import.meta.env.VITE_URL_QR;
 
     // Función para obtener el QR desde el backend
     const fetchQRCode = async () => {
         setLoading(true);
         try {
-            const response = await axios.get(`${baseUrl}api/qr/generate-qr/${Idevento}/${Idescultor}`);
+            const response = await axios.get(`${qrUrl}/generate-qr/${Idevento}/${Idescultor}`);
             setQrCodeImage(response.data.qrCodeImage);
             setTimer(60); // Reinicia el contador
         } catch (error) {

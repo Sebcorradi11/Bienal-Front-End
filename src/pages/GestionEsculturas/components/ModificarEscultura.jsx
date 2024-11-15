@@ -8,9 +8,12 @@ import Footer from '../../../components/Footer';
 import { useParams, useNavigate } from 'react-router-dom';
 import BackButton from '../../../components/BackButton';
 import { getEsculturaPorId, actualizarEscultura } from '../../../api/sculptures.routes';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import LoaderSpinner from '../../../components/LoaderSpinner';
 
 const ModificarEscultura = () => {
-  const { id } = useParams(); // Obtener el ID de la URL
+  const { id } = useParams();
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     nombre: '',
@@ -27,9 +30,9 @@ const ModificarEscultura = () => {
   });
   const [loading, setLoading] = useState(true);
 
-  // Cargar los datos actuales de la escultura
   useEffect(() => {
     const fetchEscultura = async () => {
+      setLoading(true);
       try {
         const data = await getEsculturaPorId(id);
         setFormData({
@@ -40,16 +43,15 @@ const ModificarEscultura = () => {
           imagenDurante: null,
           imagenPost: null,
         });
-        // Establecer las URLs de las imágenes actuales para mostrar en la vista previa
         setImagenVistaPrevia({
           imagenPre: data.imagenPre ? `${data.imagenPre}?t=${new Date().getTime()}` : null,
           imagenDurante: data.imagenDurante ? `${data.imagenDurante}?t=${new Date().getTime()}` : null,
           imagenPost: data.imagenPost ? `${data.imagenPost}?t=${new Date().getTime()}` : null,
         });
-        setLoading(false);
       } catch (error) {
         console.error("Error al cargar la escultura:", error);
-        alert("Error al cargar la escultura.");
+        toast.error("Error al cargar la escultura.");
+      } finally {
         setLoading(false);
       }
     };
@@ -86,6 +88,7 @@ const ModificarEscultura = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
     const esculturaData = new FormData();
     if (formData.nombre) esculturaData.append('name', formData.nombre);
@@ -99,22 +102,23 @@ const ModificarEscultura = () => {
     try {
       const response = await actualizarEscultura(id, esculturaData);
       console.log("Escultura actualizada:", response);
-
-      alert('Escultura actualizada exitosamente.');
-      window.scrollTo(0, 0);
-      // Redirigir al usuario a la página de visualización después de actualizar.
+      toast.success('Escultura actualizada exitosamente.');
       navigate(`/ver-escultura/${id}`);
     } catch (error) {
       console.error("Error al actualizar la escultura:", error);
-      alert('Error al actualizar la escultura. Inténtalo de nuevo.');
+      toast.error('Error al actualizar la escultura. Inténtalo de nuevo.');
+    } finally {
+      setLoading(false);
     }
   };
 
-  if (loading) return <p>Cargando...</p>;
+  if (loading) return <LoaderSpinner loading={loading} />;
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
       <HeaderPublic />
+
+      <ToastContainer />
 
       <Box
         sx={{
@@ -187,7 +191,6 @@ const ModificarEscultura = () => {
                 <strong>selecciona el archivo</strong> que deseas subir
               </Typography>
 
-              {/* Mostrar la imagen actual si existe */}
               {imagenVistaPrevia[field] && (
                 <Box
                   sx={{

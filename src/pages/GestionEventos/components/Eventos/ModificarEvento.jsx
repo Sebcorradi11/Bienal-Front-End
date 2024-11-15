@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Box, TextField, Typography, Button, Grid, IconButton } from '@mui/material';
+import { Box, TextField, Typography, Button, Grid } from '@mui/material';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getEventoPorId, actualizarEvento } from '../../../../api/eventos.routes';
 import HeaderPublic from '../../../../components/HeaderPublic';
@@ -8,6 +8,9 @@ import fondoBoton from '../../../../assets/fondobutton/Rectangle 32.svg';
 import BackButton from '../../../../components/BackButton';
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import LoaderSpinner from '../../../../components/LoaderSpinner';
 
 const ModificarEvento = () => {
   const { id } = useParams();
@@ -19,13 +22,14 @@ const ModificarEvento = () => {
     location: '',
     theme: '',
     description: '',
-    images: [],
+    image: '', // Ahora es solo una imagen
   });
-  const [nuevasImagenes, setNuevasImagenes] = useState([]);
-  const [imagenesAEliminar, setImagenesAEliminar] = useState([]);
+  const [nuevaImagen, setNuevaImagen] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const cargarEvento = async () => {
+      setLoading(true);
       try {
         const data = await getEventoPorId(id);
         setEvento({
@@ -35,6 +39,9 @@ const ModificarEvento = () => {
         });
       } catch (error) {
         console.error('Error al cargar el evento:', error);
+        toast.error('Error al cargar el evento.');
+      } finally {
+        setLoading(false);
       }
     };
     cargarEvento();
@@ -46,20 +53,13 @@ const ModificarEvento = () => {
   };
 
   const handleAgregarImagen = (e) => {
-    const files = e.target.files;
-    setNuevasImagenes([...nuevasImagenes, ...files]);
-    alert('Imagen cargada correctamente');
-  };
-
-  const handleEliminarImagen = (imagen) => {
-    setImagenesAEliminar([...imagenesAEliminar, imagen]);
-    setEvento({
-      ...evento,
-      images: evento.images.filter((img) => img !== imagen),
-    });
+    const file = e.target.files[0];
+    setNuevaImagen(file);
+    toast.success('Imagen Cargada correctamente');
   };
 
   const handleModificar = async () => {
+    setLoading(true);
     const formData = new FormData();
     formData.append('name', evento.name);
     formData.append('date_inicio', evento.date_inicio);
@@ -68,26 +68,29 @@ const ModificarEvento = () => {
     formData.append('theme', evento.theme);
     formData.append('description', evento.description);
 
-    nuevasImagenes.forEach((file) => {
-      formData.append('imagenes', file);
-    });
-
-    formData.append('imagenesAEliminar', JSON.stringify(imagenesAEliminar));
+    if (nuevaImagen) {
+      formData.append('image', nuevaImagen); // Solo una imagen
+    }
 
     try {
       await actualizarEvento(id, formData);
-      alert('Evento actualizado exitosamente');
-      navigate(-1);
+      toast.success('Evento actualizado exitosamente');
+      navigate(`/ver-evento/${id}`);
     } catch (error) {
       console.error('Error al actualizar el evento:', error);
-      alert('Error al actualizar el evento');
+      toast.error('Error al actualizar el evento.');
+    } finally {
+      setLoading(false);
     }
   };
 
+  if (loading) return <LoaderSpinner loading={loading} />;
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
       <HeaderPublic />
+      <ToastContainer />
+      
       <Box
         sx={{
           flexGrow: 1,
@@ -158,73 +161,53 @@ const ModificarEvento = () => {
               sx={{ marginBottom: 2 }}
             />
 
-            {/* Mostrar y gestionar imágenes */}
+            {/* Mostrar y gestionar imagen */}
             <Box sx={{ marginBottom: 2 }}>
               <Typography variant="body1" gutterBottom>
-                Imágenes del Evento
+                Imagen del Evento
               </Typography>
-              <Grid container spacing={1}>
-                {evento.images.map((imagen, index) => (
-                  <Grid item key={index}>
-                    <Box
-                      sx={{
-                        position: 'relative',
-                        width: 100,
-                        height: 100,
-                        overflow: 'hidden',
-                        borderRadius: '8px',
-                        marginBottom: 1,
-                      }}
-                    >
-                      <img
-                        src={imagen}
-                        alt={`Imagen ${index}`}
-                        style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                      />
-                      <IconButton
-                        onClick={() => handleEliminarImagen(imagen)}
-                        sx={{
-                          position: 'absolute',
-                          top: 0,
-                          right: 0,
-                          backgroundColor: 'rgba(0, 0, 0, 0.5)',
-                          color: 'white',
-                        }}
-                      >
-                        <DeleteIcon />
-                      </IconButton>
-                    </Box>
-                  </Grid>
-                ))}
-                <Grid item>
-                  <Button
-                    variant="contained"
-                    component="label"
-                    sx={{
-                      height: 100,
-                      width: 100,
-                      backgroundImage: `url(${fondoBoton})`,
-                      backgroundSize: 'cover',
-                      backgroundPosition: 'center',
-                      display: 'flex',
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      color: 'white',
-                      borderRadius: 8,
-                      textTransform: 'none',
-                    }}
-                  >
-                    <AddIcon />
-                    <input
-                      type="file"
-                      hidden
-                      multiple
-                      accept="image/*"
-                      onChange={handleAgregarImagen}
-                    />
-                  </Button>
-                </Grid>
-              </Grid>
+              {evento.image && (
+                <Box
+                  sx={{
+                    width: 100,
+                    height: 100,
+                    overflow: 'hidden',
+                    borderRadius: '8px',
+                    marginBottom: 1,
+                  }}
+                >
+                  <img
+                    src={evento.image}
+                    alt="Imagen del evento"
+                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                  />
+                </Box>
+              )}
+              <Button
+                variant="contained"
+                component="label"
+                sx={{
+                  height: 100,
+                  width: 100,
+                  backgroundImage: `url(${fondoBoton})`,
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  color: 'white',
+                  borderRadius: 8,
+                  textTransform: 'none',
+                }}
+              >
+                <AddIcon />
+                <input
+                  type="file"
+                  hidden
+                  accept="image/*"
+                  onChange={handleAgregarImagen}
+                />
+              </Button>
             </Box>
 
             {/* Botones de Modificar Evento y Atrás */}

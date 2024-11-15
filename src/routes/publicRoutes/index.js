@@ -1,6 +1,6 @@
 // src/routes/publicRoutes/index.ts
 import SculpturesPage from '../../pages/sculptures/SculpturesPage';
-import SculptorPage from '../../pages/Sculptor/SculptorPage';
+import SculptorPage from '../../pages/sculptor/SculptorPage';
 import EventosPage from '../../pages/Eventos/EventosPage';
 import VotesPage from '../../pages/Votos/VotesPage';
 import Home from '../../pages/home/Home';
@@ -9,6 +9,7 @@ import QrPage from '../../pages/Qr/Qrpage';
 import VerEsculturaPublic from '../../pages/sculptures/components/verEsculturaPublic';
 import VerEscultor from '../../pages/Sculptor/components/DetalleEscultor';
 import VerEvento1 from '../../pages/Eventos/components/verEvento1';
+import DetalleEsculturas from '../../pages/Sculptor/components/DetalleEsculturas';
 export const onlyPublicRoute = [
   {
     path: "/esculturas",
@@ -50,5 +51,9 @@ export const onlyPublicRoute = [
   {
     path: "/ver-escultores-public/:id",
     component: VerEscultor,
-  }
+  },
+  {
+    path: "/ver-detalles-esculturas-public/:id",
+    component: DetalleEsculturas,
+  },
 ];

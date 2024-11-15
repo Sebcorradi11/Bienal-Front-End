@@ -7,6 +7,9 @@ import HeaderPublic from '../../../components/HeaderPublic';
 import Footer from '../../../components/Footer';
 import BackButton from '../../../components/BackButton';
 import { createEscultura } from '../../../api/sculptures.routes';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import LoaderSpinner from '../../../components/LoaderSpinner'; // Importa el LoaderSpinner
 
 const CrearEscultura = () => {
     const [formData, setFormData] = useState({
@@ -18,6 +21,7 @@ const CrearEscultura = () => {
         imagenPost: null,
     });
     const [imagenVistaPrevia, setImagenVistaPrevia] = useState({});
+    const [loading, setLoading] = useState(false); // Estado de carga
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -49,6 +53,7 @@ const CrearEscultura = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true); // Mostrar el loader
 
         const esculturaData = new FormData();
         esculturaData.append('name', formData.nombre);
@@ -63,7 +68,8 @@ const CrearEscultura = () => {
             const response = await createEscultura(esculturaData);
             console.log("Escultura creada:", response);
 
-            alert('Escultura creada exitosamente.');
+            // Toastify mensaje de éxito
+            toast.success('Escultura creada exitosamente.');
 
             setFormData({
                 nombre: '',
@@ -78,13 +84,19 @@ const CrearEscultura = () => {
             window.scrollTo(0, 0);
         } catch (error) {
             console.error("Error al crear la escultura:", error);
-            alert('Error al crear la escultura. Inténtalo de nuevo.');
+            // Toastify mensaje de error
+            toast.error('Error al crear la escultura. Inténtalo de nuevo.');
+        } finally {
+            setLoading(false); // Ocultar el loader
         }
     };
 
     return (
         <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
             <HeaderPublic />
+            
+            <ToastContainer />
+            {loading && <LoaderSpinner loading={loading} />} {/* LoaderSpinner */}
 
             <Box
                 sx={{

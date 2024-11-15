@@ -51,7 +51,7 @@ const EventosFuturos = () => {
                   id={event._id}
                   title={event.name}
                   date={event.date}
-                  image={event.images[0]}
+                  image={event.image}
                 />
               </Grid>
             ))}

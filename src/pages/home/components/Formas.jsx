@@ -9,7 +9,7 @@ import sculptorIcon from '../../../assets/home/Rectangle.svg';
 import sculpturesIcon from '../../../assets/home/Ellipse.svg';
 import eventsIcon from '../../../assets/home/Star.svg';
 import { NavLink, useNavigate } from 'react-router-dom';
-
+import Buscador from '../../../components/Buscador';
 // Creo un box de forma que necesita como parametro el texto de las lineas 1, 2 y 3... Y la imagen.
 const Forma = ({l1, l2, l3, imagen, src}) => {
     const navigate = useNavigate();
@@ -130,24 +130,7 @@ const Formas = () => {
             </Grid>
 
             {/* Buscador debajo */}
-            <Box sx={{ mt: 4, display: 'flex', justifyContent: 'center' }}>
-                <TextField
-                    variant="outlined"
-                    placeholder="Buscar nombre de escultor o Escultura..."
-                    InputProps={{
-                        startAdornment: (
-                            <InputAdornment position="start">
-                                <SearchIcon />
-                            </InputAdornment>
-                        ),
-                        sx: {
-                            width: '325px',
-                            backgroundColor: '#D9D9D9', // Color gris personalizado
-                            borderRadius: '30px',
-                        },
-                    }}
-                />
-            </Box>
+            <Buscador />
         </Box>
     );
 };

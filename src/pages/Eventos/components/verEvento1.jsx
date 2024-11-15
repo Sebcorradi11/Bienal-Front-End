@@ -4,22 +4,23 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { getEventoPorId } from '../../../api/eventos.routes';
 import HeaderPublic from '../../../components/HeaderPublic';
 import Footer from '../../../components/Footer';
-import '../../../pages/Sculptor/SculptorPage';
+import '../../sculptor/SculptorPage';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import LinkIcon from '@mui/icons-material/Link';
 import fondoBoton from '../../../assets/fondobutton/Rectangle 28.svg';
-import { Helmet } from 'react-helmet-async'; // Add this import
-
+import { Helmet } from 'react-helmet-async';
+import LoaderSpinner from '../../../components/LoaderSpinner'; // Importar el nuevo componenteimport { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 
 const VerEvento1 = () => {
   const { id } = useParams();
   const [evento, setEvento] = useState(null);
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true); // Estado de carga
   const navigate = useNavigate();
 
-  // Use the environment variable for the front URL
   const frontUrl = import.meta.env.VITE_FRONT_URL;
   const compartirEnlace = `${frontUrl}/ver-evento-public/${id}`;
 
@@ -39,7 +40,7 @@ const VerEvento1 = () => {
 
   const copiarVinculo = () => {
     navigator.clipboard.writeText(compartirEnlace).then(() => {
-      alert('¡Enlace copiado al portapapeles!');
+      toast.success('Enlace Copiado al portapapeles.');
     }).catch((error) => {
       console.error('Error al copiar el enlace:', error);
     });
@@ -57,29 +58,33 @@ const VerEvento1 = () => {
       try {
         const data = await getEventoPorId(id);
         setEvento(data);
+        setLoading(false); // Finalizar carga al obtener el evento
       } catch (error) {
         setError('No se pudo cargar el evento.');
+        setLoading(false); // Finalizar carga en caso de error
       }
     };
     cargarEvento();
   }, [id]);
 
+  if (loading) {
+    return <LoaderSpinner loading={loading} size={60} color="#000" />;
+  }
+
   if (error) {
     return <Typography variant="h6" color="error">{error}</Typography>;
   }
 
-  if (!evento) {
-    return <Typography variant="h6">Cargando evento...</Typography>;
-  }
-
   return (
     <Box sx={{ width: '100vw', minHeight: '100vh', overflowX: 'hidden', backgroundColor: '#fff', display: 'flex', flexDirection: 'column' }}>
+      <ToastContainer />
+
       <Helmet>
         <title>{`Bienal 2024 - ${evento.theme}`}</title>
         <meta property="og:title" content={`Bienal 2024 - ${evento.theme}`} />
         <meta property="og:description" content={evento.description} />
         <meta property="og:url" content={compartirEnlace} />
-        <meta property="og:image" content={evento.images[0] || 'https://via.placeholder.com/350'} />
+        <meta property="og:image" content={evento.image || 'https://via.placeholder.com/350'} />
         <meta property="og:type" content="website" />
         <meta property="og:locale" content="es_AR" />
         <meta property="og:site_name" content="Bienal 2024" />
@@ -87,7 +92,7 @@ const VerEvento1 = () => {
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={`Bienal 2024 - ${evento.theme}`} />
         <meta name="twitter:description" content={evento.description} />
-        <meta name="twitter:image" content={evento.images[0] || 'https://via.placeholder.com/350'} />
+        <meta name="twitter:image" content={evento.image || 'https://via.placeholder.com/350'} />
         <meta name="twitter:url" content={compartirEnlace} />
       </Helmet>
       <HeaderPublic />
@@ -120,7 +125,7 @@ const VerEvento1 = () => {
           <Grid container direction="column" alignItems="center" sx={{ gap: '16px' }}>
             <Grid item>
               <img
-                src={evento.images[0] || 'https://via.placeholder.com/350'}
+                src={evento.image || 'https://via.placeholder.com/350'}
                 alt="Imagen del evento"
                 style={{ width: '100%', maxWidth: '350px', height: 'auto', borderRadius: '8px' }}
               />
@@ -154,7 +159,7 @@ const VerEvento1 = () => {
           </Grid>
         </Grid>
       </Grid>
-      
+
       <Grid container justifyContent="space-between" alignItems="center" sx={{ backgroundColor: '#000', color: '#fff', p: { xs: 2, md: 4 }, mt: 6, textAlign: { xs: 'center', md: 'left' }, width: '100%', borderRadius: '0' }}>
         <Grid item xs={12} md={8}>
           <Typography variant="h6" component="span" sx={{ fontWeight: 400, fontSize: '2rem', display: 'block' }}>

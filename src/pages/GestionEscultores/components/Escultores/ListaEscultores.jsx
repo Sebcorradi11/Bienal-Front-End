@@ -46,18 +46,18 @@ const ListaEscultores = ({ searchQuery }) => {
         setOpenDialog(true);
     };
 
-    const handleEliminar = async () => {
+    const eliminar = async (id) => {
         setLoading(true);
-        try {
-            await eliminarSculptor(selectedEscultor);
-            setEscultores(escultores.filter((e) => e._id !== selectedEscultor));
-            toast.success('Escultor eliminado exitosamente');
-        } catch (error) {
-            console.error('Error al eliminar el escultor:', error);
-            toast.error('Error al eliminar el escultor');
-        } finally {
-            setLoading(false);
-            setOpenDialog(false);
+        const confirmacion = window.confirm('¿Estás seguro de que quieres eliminar este escultor?');
+        if (confirmacion) {
+            try {
+                await eliminarSculptor(id);
+                setEscultores(escultores.filter((e) => e._id !== id));
+                toast.success('Escultor eliminado exitosamente');
+            } catch (error) {
+                console.error('Error al eliminar el escultor:', error);
+                toast.error('Error al eliminar el escultor');
+            }
         }
     };
 
@@ -134,7 +134,7 @@ const ListaEscultores = ({ searchQuery }) => {
                 </Grid>
             )}
 
-            {/* Popup de confirmación */}
+
             <Dialog open={openDialog} onClose={() => setOpenDialog(false)}>
                 <DialogTitle>Confirmar Eliminación</DialogTitle>
                 <DialogContent>
@@ -146,7 +146,7 @@ const ListaEscultores = ({ searchQuery }) => {
                     <Button onClick={() => setOpenDialog(false)} color="primary">
                         Cancelar
                     </Button>
-                    <Button onClick={handleEliminar} color="error" autoFocus>
+                    <Button onClick={eliminar} color="error" autoFocus>
                         Eliminar
                     </Button>
                 </DialogActions>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Box, TextField, Typography, Button, Grid, IconButton } from '@mui/material';
+import { Box, TextField, Typography, Button, Grid } from '@mui/material';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getEventoPorId, actualizarEvento } from '../../../../api/eventos.routes';
 import HeaderPublic from '../../../../components/HeaderPublic';
@@ -22,10 +22,9 @@ const ModificarEvento = () => {
     location: '',
     theme: '',
     description: '',
-    images: [],
+    image: '', // Ahora es solo una imagen
   });
-  const [nuevasImagenes, setNuevasImagenes] = useState([]);
-  const [imagenesAEliminar, setImagenesAEliminar] = useState([]);
+  const [nuevaImagen, setNuevaImagen] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -54,17 +53,9 @@ const ModificarEvento = () => {
   };
 
   const handleAgregarImagen = (e) => {
-    const files = e.target.files;
-    setNuevasImagenes([...nuevasImagenes, ...files]);
-    toast.success('Imagen cargada correctamente');
-  };
-
-  const handleEliminarImagen = (imagen) => {
-    setImagenesAEliminar([...imagenesAEliminar, imagen]);
-    setEvento({
-      ...evento,
-      images: evento.images.filter((img) => img !== imagen),
-    });
+    const file = e.target.files[0];
+    setNuevaImagen(file);
+    toast.success('Imagen Cargada correctamente');
   };
 
   const handleModificar = async () => {
@@ -77,11 +68,9 @@ const ModificarEvento = () => {
     formData.append('theme', evento.theme);
     formData.append('description', evento.description);
 
-    nuevasImagenes.forEach((file) => {
-      formData.append('imagenes', file);
-    });
-
-    formData.append('imagenesAEliminar', JSON.stringify(imagenesAEliminar));
+    if (nuevaImagen) {
+      formData.append('image', nuevaImagen); // Solo una imagen
+    }
 
     try {
       await actualizarEvento(id, formData);
@@ -172,73 +161,53 @@ const ModificarEvento = () => {
               sx={{ marginBottom: 2 }}
             />
 
-            {/* Mostrar y gestionar imágenes */}
+            {/* Mostrar y gestionar imagen */}
             <Box sx={{ marginBottom: 2 }}>
               <Typography variant="body1" gutterBottom>
-                Imágenes del Evento
+                Imagen del Evento
               </Typography>
-              <Grid container spacing={1}>
-                {evento.images.map((imagen, index) => (
-                  <Grid item key={index}>
-                    <Box
-                      sx={{
-                        position: 'relative',
-                        width: 100,
-                        height: 100,
-                        overflow: 'hidden',
-                        borderRadius: '8px',
-                        marginBottom: 1,
-                      }}
-                    >
-                      <img
-                        src={imagen}
-                        alt={`Imagen ${index}`}
-                        style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                      />
-                      <IconButton
-                        onClick={() => handleEliminarImagen(imagen)}
-                        sx={{
-                          position: 'absolute',
-                          top: 0,
-                          right: 0,
-                          backgroundColor: 'rgba(0, 0, 0, 0.5)',
-                          color: 'white',
-                        }}
-                      >
-                        <DeleteIcon />
-                      </IconButton>
-                    </Box>
-                  </Grid>
-                ))}
-                <Grid item>
-                  <Button
-                    variant="contained"
-                    component="label"
-                    sx={{
-                      height: 100,
-                      width: 100,
-                      backgroundImage: `url(${fondoBoton})`,
-                      backgroundSize: 'cover',
-                      backgroundPosition: 'center',
-                      display: 'flex',
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      color: 'white',
-                      borderRadius: 8,
-                      textTransform: 'none',
-                    }}
-                  >
-                    <AddIcon />
-                    <input
-                      type="file"
-                      hidden
-                      multiple
-                      accept="image/*"
-                      onChange={handleAgregarImagen}
-                    />
-                  </Button>
-                </Grid>
-              </Grid>
+              {evento.image && (
+                <Box
+                  sx={{
+                    width: 100,
+                    height: 100,
+                    overflow: 'hidden',
+                    borderRadius: '8px',
+                    marginBottom: 1,
+                  }}
+                >
+                  <img
+                    src={evento.image}
+                    alt="Imagen del evento"
+                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                  />
+                </Box>
+              )}
+              <Button
+                variant="contained"
+                component="label"
+                sx={{
+                  height: 100,
+                  width: 100,
+                  backgroundImage: `url(${fondoBoton})`,
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  color: 'white',
+                  borderRadius: 8,
+                  textTransform: 'none',
+                }}
+              >
+                <AddIcon />
+                <input
+                  type="file"
+                  hidden
+                  accept="image/*"
+                  onChange={handleAgregarImagen}
+                />
+              </Button>
             </Box>
 
             {/* Botones de Modificar Evento y Atrás */}

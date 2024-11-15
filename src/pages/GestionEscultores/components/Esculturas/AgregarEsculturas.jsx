@@ -9,6 +9,10 @@ import {
     ListItem,
     ListItemText,
     ListItemSecondaryAction,
+    Dialog,
+    DialogTitle,
+    DialogContent,
+    DialogActions,
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
@@ -16,12 +20,16 @@ import HeaderPublic from '../../../../components/HeaderPublic';
 import Footer from '../../../../components/Footer';
 import BackButton from '../../../../components/BackButton';
 import { getEsculturas } from '../../../../api/sculptures.routes';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const AgregarEsculturas = () => {
     const [esculturas, setEsculturas] = useState([]); // Lista de esculturas disponibles desde el backend
     const [esculturasSeleccionadas, setEsculturasSeleccionadas] = useState([]); // Esculturas seleccionadas
     const [searchQuery, setSearchQuery] = useState('');
     const [isFirstSelection, setIsFirstSelection] = useState(true);
+    const [dialogOpen, setDialogOpen] = useState(false);
+    const [dialogEscultura, setDialogEscultura] = useState(null);
 
     // Cargar esculturas guardadas en localStorage al cargar el componente
     useEffect(() => {
@@ -37,6 +45,7 @@ const AgregarEsculturas = () => {
                 setEsculturas(response);
             } catch (error) {
                 console.error('Error al obtener esculturas:', error);
+                toast.error('Error al cargar esculturas.');
             }
         };
         fetchSculptures();
@@ -45,16 +54,15 @@ const AgregarEsculturas = () => {
     // Agregar una escultura a la lista de seleccionadas, verificando si tiene un autor
     const handleAgregarEscultura = (escultura) => {
         if (escultura.sculptor) {
-            // Si la escultura ya tiene un autor, mostramos un mensaje de confirmación
-            const replace = window.confirm('Esta escultura ya tiene un autor, ¿deseas reemplazarlo?');
-            if (!replace) return;
+            setDialogEscultura(escultura);
+            setDialogOpen(true);
+            return;
         }
 
         let updatedSeleccionadas = [...esculturasSeleccionadas];
         if (isFirstSelection) {
-            // Duplica la primera escultura seleccionada
             updatedSeleccionadas = [...updatedSeleccionadas, escultura._id, escultura._id];
-            setIsFirstSelection(false); // Desactiva la duplicación en futuras selecciones
+            setIsFirstSelection(false);
         } else {
             if (!updatedSeleccionadas.includes(escultura._id)) {
                 updatedSeleccionadas = [...updatedSeleccionadas, escultura._id];
@@ -63,16 +71,30 @@ const AgregarEsculturas = () => {
 
         setEsculturasSeleccionadas(updatedSeleccionadas);
         localStorage.setItem('selectedSculptures', JSON.stringify(updatedSeleccionadas));
+        toast.success(`${escultura.name} agregada correctamente.`);
     };
 
-    // Eliminar una escultura de la lista de seleccionadas
+    const handleConfirmAgregar = () => {
+        if (dialogEscultura) {
+            let updatedSeleccionadas = [...esculturasSeleccionadas];
+            if (!updatedSeleccionadas.includes(dialogEscultura._id)) {
+                updatedSeleccionadas = [...updatedSeleccionadas, dialogEscultura._id];
+            }
+
+            setEsculturasSeleccionadas(updatedSeleccionadas);
+            localStorage.setItem('selectedSculptures', JSON.stringify(updatedSeleccionadas));
+            toast.success(`Escultura ${dialogEscultura.name} reemplazada correctamente.`);
+        }
+        setDialogOpen(false);
+    };
+
     const handleEliminarEscultura = (index) => {
         const updatedSeleccionadas = esculturasSeleccionadas.filter((_, i) => i !== index);
         setEsculturasSeleccionadas(updatedSeleccionadas);
         localStorage.setItem('selectedSculptures', JSON.stringify(updatedSeleccionadas));
+        toast.info('Escultura eliminada.');
     };
 
-    // Filtrar esculturas según el nombre de búsqueda
     const filteredEsculturas = esculturas.filter((escultura) =>
         escultura.name.toLowerCase().includes(searchQuery.toLowerCase())
     );
@@ -168,13 +190,32 @@ const AgregarEsculturas = () => {
                     })}
                 </List>
 
-                {/* Botón de Atrás */}
                 <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: 3 }}>
                     <BackButton sx={{ width: '48%' }} />
                 </Box>
             </Box>
 
             <Footer />
+
+            {/* Dialogo para confirmar reemplazo */}
+            <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)}>
+                <DialogTitle>Reemplazar Escultura</DialogTitle>
+                <DialogContent>
+                    <Typography>
+                        La escultura {dialogEscultura?.name} ya tiene un autor. ¿Deseas reemplazarla?
+                    </Typography>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={() => setDialogOpen(false)} color="secondary">
+                        Cancelar
+                    </Button>
+                    <Button onClick={handleConfirmAgregar} color="primary">
+                        Reemplazar
+                    </Button>
+                </DialogActions>
+            </Dialog>
+
+            <ToastContainer position="top-right" />
         </Box>
     );
 };

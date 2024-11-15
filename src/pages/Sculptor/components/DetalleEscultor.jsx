@@ -11,6 +11,8 @@ import LinkIcon from '@mui/icons-material/Link';
 import fondoBoton from '../../../assets/fondobutton/Rectangle 32.svg';
 import { Helmet } from 'react-helmet-async';
 import LoaderSpinner from '../../../components/LoaderSpinner';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const VerEscultor = () => {
   const { id } = useParams();
@@ -38,7 +40,7 @@ const VerEscultor = () => {
 
   const copiarVinculo = () => {
     navigator.clipboard.writeText(compartirEnlace).then(() => {
-      alert('¡Enlace copiado al portapapeles!');
+      toast.success('Enlace copiado al porta papeles');
     }).catch((error) => {
       console.error('Error al copiar el enlace:', error);
     });
@@ -86,7 +88,7 @@ const VerEscultor = () => {
     </Helmet>
       
       <HeaderPublic />
-
+      <ToastContainer />
       <Grid container spacing={6} justifyContent="center" alignItems="flex-start" sx={{ flexGrow: 1, px: { xs: 3, md: 8 }, py: 6, width: '100%' }}>
         <Grid item xs={12} md={6}>
           <Typography variant="h2" component="h1" sx={{ fontWeight: 'bold', fontSize: { xs: '3rem', md: '4rem' }, mb: 2 }}>

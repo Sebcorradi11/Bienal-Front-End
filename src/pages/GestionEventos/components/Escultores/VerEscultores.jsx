@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Box, Typography, List, ListItem, ListItemText, Button } from '@mui/material';
 import HeaderPublic from '../../../../components/HeaderPublic';
 import Footer from '../../../../components/Footer';
 import BackButton from '../../../../components/BackButton';
+import { getEventoPorId } from '../../../../api/eventos.routes';
 
 // Función para truncar texto
 const truncateText = (text, maxLength) => {
@@ -16,23 +17,39 @@ const truncateText = (text, maxLength) => {
 const VerEscultores = () => {
     const { id } = useParams(); // Captura el id del evento desde la URL
     const navigate = useNavigate();
+    const [escultores, setEscultores] = useState([]);
+    const [eventoName, setEventoName] = useState('');
+    const [error, setError] = useState(null);
 
-    // Mock de escultores con id y nombre
-    const escultores = [
-        { id: '6735924de6a4d6689e7da152', nombre: 'Luis Bernardi' },
-        { id: '6736b3f6c017c913c54802b4', nombre: 'Deyverson Silva' },
-        { id: '6736d81a01d03731e9cf4463', nombre: 'Billy Lee' },
-    ];
+    useEffect(() => {
+        const cargarEvento = async () => {
+            try {
+                const data = await getEventoPorId(id);
+                setEscultores(data.sculptors || []); // Asignamos los escultores asociados al evento
+                setEventoName(data.name); // Asignamos el nombre del evento
+            } catch (error) {
+                setError('No se pudieron cargar los escultores.');
+            }
+        };
+        cargarEvento();
+    }, [id]);
 
     // Función para manejar la navegación al hacer click en el botón de QR
     const handleQrClick = (idEscultor) => {
         navigate(`/${id}/${idEscultor}/qr`);
     };
 
+    if (error) {
+        return (
+            <Typography variant="h6" color="error" sx={{ textAlign: 'center', mt: 4 }}>
+                {error}
+            </Typography>
+        );
+    }
+
     return (
         <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
             <HeaderPublic />
-
             <Box
                 sx={{
                     flexGrow: 1,
@@ -43,64 +60,49 @@ const VerEscultores = () => {
                     alignItems: 'center',
                 }}
             >
-                <Typography
-                    variant="h4"
-                    textAlign="center"
-                    gutterBottom
-                    sx={{
-                        fontSize: { xs: '1.5rem', md: '2.4rem' },
-                        fontWeight: 'bold',
-                        mb: 4,
-                        wordBreak: 'break-word', // Rompe el texto largo
-                    }}
-                >
-                    Ver Escultores - Bienal {truncateText(id, 10)} {/* Trunca el id si es muy largo */}
+                <Typography variant="h4" textAlign="center" gutterBottom>
+                    Ver Escultores - {eventoName}
                 </Typography>
 
-                <List sx={{ width: '100%', maxWidth: 600 }}>
-                    {escultores.map((escultor) => (
-                        <ListItem
-                            key={escultor.id}
-                            sx={{
-                                backgroundColor: '#e0e0e0',
-                                marginBottom: 2,
-                                borderRadius: '8px',
-                                padding: { xs: 1, md: 2 },
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'space-between',
-                                flexDirection: { xs: 'column', sm: 'row' },
-                                gap: 1,
-                            }}
-                        >
-                            <ListItemText
-                                primary={escultor.nombre}
+                {escultores.length === 0 ? (
+                    <Typography variant="h6" textAlign="center" color="textSecondary" sx={{ mt: 4 }}>
+                        Este evento no tiene escultores asociados.
+                    </Typography>
+                ) : (
+                    <List sx={{ width: '350px', margin: '0 auto' }}>
+                        {escultores.map((escultor) => (
+                            <ListItem
+                                key={escultor._id}
                                 sx={{
-                                    textAlign: { xs: 'center', sm: 'left' },
-                                    fontSize: { xs: '1rem', md: '1.2rem' },
-                                    fontWeight: 'medium',
-                                }}
-                            />
-                            <Button
-                                variant="contained"
-                                color="primary"
-                                onClick={() => handleQrClick(escultor.id)}
-                                sx={{
-                                    width: { xs: '80%', sm: 'auto' },
-                                    mt: { xs: 1, sm: 0 },
-                                    padding: { xs: '6px 16px', md: '8px 24px' },
+                                    backgroundColor: '#e0e0e0',
+                                    marginBottom: 1,
+                                    borderRadius: '8px',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'space-between',
+                                    padding: '10px 16px',
                                 }}
                             >
-                                QR
-                            </Button>
-                        </ListItem>
-                    ))}
-                </List>
-                <Box sx={{ display: 'flex', justifyContent: 'center', width: '100%', mt: 3 }}>
-                    <BackButton sx={{ width: { xs: '100%', sm: '48%' } }} />
+                                <ListItemText
+                                    primary={truncateText(escultor.name || escultor, 40)}
+                                />
+                                <Button
+                                    variant="contained"
+                                    color="primary"
+                                    onClick={() => handleQrClick(escultor._id)}
+                                    sx={{ marginLeft: 'auto' }}
+                                >
+                                    QR
+                                </Button>
+                            </ListItem>
+                        ))}
+                    </List>
+                )}
+
+                <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: 3 }}>
+                    <BackButton sx={{ width: '48%' }} />
                 </Box>
             </Box>
-
             <Footer />
         </Box>
     );

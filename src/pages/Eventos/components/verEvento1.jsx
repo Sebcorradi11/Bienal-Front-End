@@ -84,7 +84,7 @@ const VerEvento1 = () => {
         <meta property="og:title" content={`Bienal 2024 - ${evento.theme}`} />
         <meta property="og:description" content={evento.description} />
         <meta property="og:url" content={compartirEnlace} />
-        <meta property="og:image" content={evento.images[0] || 'https://via.placeholder.com/350'} />
+        <meta property="og:image" content={evento.image || 'https://via.placeholder.com/350'} />
         <meta property="og:type" content="website" />
         <meta property="og:locale" content="es_AR" />
         <meta property="og:site_name" content="Bienal 2024" />
@@ -92,7 +92,7 @@ const VerEvento1 = () => {
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={`Bienal 2024 - ${evento.theme}`} />
         <meta name="twitter:description" content={evento.description} />
-        <meta name="twitter:image" content={evento.images[0] || 'https://via.placeholder.com/350'} />
+        <meta name="twitter:image" content={evento.image || 'https://via.placeholder.com/350'} />
         <meta name="twitter:url" content={compartirEnlace} />
       </Helmet>
       <HeaderPublic />
@@ -125,7 +125,7 @@ const VerEvento1 = () => {
           <Grid container direction="column" alignItems="center" sx={{ gap: '16px' }}>
             <Grid item>
               <img
-                src={evento.images[0] || 'https://via.placeholder.com/350'}
+                src={evento.image || 'https://via.placeholder.com/350'}
                 alt="Imagen del evento"
                 style={{ width: '100%', maxWidth: '350px', height: 'auto', borderRadius: '8px' }}
               />

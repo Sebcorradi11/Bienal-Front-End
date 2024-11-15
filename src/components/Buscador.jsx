@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { List, ListItem, ListItemText, CircularProgress } from '@mui/material';
-import Buscador from './Buscador';
+import { List, ListItem, ListItemText, CircularProgress, Box, TextField } from '@mui/material';
+import SearchIcon from '@mui/icons-material/Search';
 
-const App = () => {
+const Buscador= () => {
+    const [busqueda, setBusqueda] = useState('');
     const [results, setResults] = useState([]);
     const [loading, setLoading] = useState(false);
 
@@ -24,10 +25,25 @@ const App = () => {
         }
     };
 
+    const handleChange = (e) => {
+        const term = e.target.value;
+        setBusqueda(term);
+        handleBuscar(term);
+    };
+
     return (
         <div>
             <h1>Buscador de Esculturas y Escultores</h1>
-            <Buscador onBuscar={handleBuscar} />
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, padding: 1 }}>
+                <SearchIcon />
+                <TextField 
+                    placeholder="Buscar..." 
+                    variant="outlined" 
+                    fullWidth 
+                    value={busqueda} 
+                    onChange={handleChange} 
+                />
+            </Box>
 
             {loading ? (
                 <CircularProgress style={{ marginTop: '10px' }} />
@@ -44,4 +60,4 @@ const App = () => {
     );
 };
 
-export default App;
+export default Buscador;

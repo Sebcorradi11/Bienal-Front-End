@@ -1,13 +1,36 @@
-import React from 'react';
-import { Box, Typography, Grid, IconButton } from '@mui/material';
+import React, { useState, useEffect } from 'react';
+import { Box, Typography, Grid, IconButton, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { eliminarEscultura } from '../../../api/sculptures.routes';
+import { eliminarEscultura, obtenerEsculturas } from '../../../api/sculptures.routes'; // Asume que hay una función para obtener esculturas
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import LoaderSpinner from '../../../components/LoaderSpinner';
 
-const ListaEsculturas = ({ esculturas, terminoBusqueda = "", onEliminar }) => {
+const ListaEsculturas = ({ terminoBusqueda = "", onEliminar }) => {
+    const [esculturas, setEsculturas] = useState([]);
+    const [openDialog, setOpenDialog] = useState(false);
+    const [selectedEscultura, setSelectedEscultura] = useState(null);
+    const [loading, setLoading] = useState(true); // Cargar esculturas al inicio
     const navigate = useNavigate();
+
+    useEffect(() => {
+        const cargarEsculturas = async () => {
+            setLoading(true); // Mostrar el loader mientras se cargan las esculturas
+            try {
+                const esculturasData = await obtenerEsculturas(); // Llama a la función para obtener esculturas
+                setEsculturas(esculturasData);
+            } catch (error) {
+                console.error('Error al cargar las esculturas:', error);
+                toast.error('Error al cargar las esculturas');
+            } finally {
+                setLoading(false); // Ocultar el loader después de cargar
+            }
+        };
+        cargarEsculturas();
+    }, []);
 
     const modificarEscultura = (id) => {
         navigate(`/modificar-escultura/${id}`);
@@ -17,17 +40,24 @@ const ListaEsculturas = ({ esculturas, terminoBusqueda = "", onEliminar }) => {
         navigate(`/ver-escultura/${id}`);
     };
 
-    const handleEliminar = async (id) => {
-        const confirmacion = window.confirm('¿Estás seguro de que quieres eliminar esta escultura?');
-        if (confirmacion) {
-            try {
-                await eliminarEscultura(id);
-                onEliminar(id); // Informar a GestionarEsculturas para actualizar la lista
-                alert('Escultura eliminada exitosamente');
-            } catch (error) {
-                console.error('Error al eliminar la escultura:', error);
-                alert('Error al eliminar la escultura');
-            }
+    const confirmEliminar = (id) => {
+        setSelectedEscultura(id);
+        setOpenDialog(true);
+    };
+
+    const handleEliminar = async () => {
+        setLoading(true); // Muestra el spinner mientras elimina
+        try {
+            await eliminarEscultura(selectedEscultura);
+            onEliminar(selectedEscultura);
+            toast.success('Escultura eliminada exitosamente');
+            setEsculturas(esculturas.filter((escultura) => escultura._id !== selectedEscultura)); // Actualiza la lista local
+        } catch (error) {
+            console.error('Error al eliminar la escultura:', error);
+            toast.error('Error al eliminar la escultura');
+        } finally {
+            setLoading(false); // Oculta el spinner
+            setOpenDialog(false);
         }
     };
 
@@ -46,7 +76,10 @@ const ListaEsculturas = ({ esculturas, terminoBusqueda = "", onEliminar }) => {
 
     return (
         <Box sx={{ padding: { xs: 2, md: 3 }, marginTop: 3 }}>
-            {esculturas.length === 0 ? (
+            <ToastContainer />
+            {loading && <LoaderSpinner loading={loading} />} {/* Muestra el LoaderSpinner */}
+
+            {!loading && esculturas.length === 0 ? (
                 <Typography variant="h6" sx={{ textAlign: 'center', marginTop: 4 }}>
                     No hay esculturas disponibles
                 </Typography>
@@ -92,7 +125,7 @@ const ListaEsculturas = ({ esculturas, terminoBusqueda = "", onEliminar }) => {
                                         <EditIcon />
                                     </IconButton>
                                     <IconButton
-                                        onClick={() => handleEliminar(escultura._id)}
+                                        onClick={() => confirmEliminar(escultura._id)}
                                         aria-label="Eliminar escultura"
                                         color="error"
                                     >
@@ -104,6 +137,24 @@ const ListaEsculturas = ({ esculturas, terminoBusqueda = "", onEliminar }) => {
                     ))}
                 </Grid>
             )}
+
+            {/* Popup de confirmación */}
+            <Dialog open={openDialog} onClose={() => setOpenDialog(false)}>
+                <DialogTitle>Confirmar Eliminación de Escultura</DialogTitle>
+                <DialogContent>
+                    <DialogContentText>
+                        ¿Estás seguro de que deseas eliminar esta escultura?
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={() => setOpenDialog(false)} color="primary">
+                        Cancelar
+                    </Button>
+                    <Button onClick={handleEliminar} color="error" autoFocus>
+                        Eliminar
+                    </Button>
+                </DialogActions>
+            </Dialog>
         </Box>
     );
 };

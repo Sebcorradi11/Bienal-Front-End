@@ -11,7 +11,7 @@ const VerEscultores = () => {
 
     // Mock de escultores con id y nombre
     const escultores = [
-        { id: '1', nombre: 'Luis Bernardi' },
+        { id: '6735bde65f4c55f6227bb3cbM', nombre: 'Luis Bernardi' },
         { id: '2', nombre: 'Deyverson Silva' },
         { id: '3', nombre: 'Billy Lee' },
     ];

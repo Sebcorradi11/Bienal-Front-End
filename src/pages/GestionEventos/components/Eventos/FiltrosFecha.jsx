@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { TextField, Box, Grid, Button } from '@mui/material';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const FiltrosFecha = ({ onFiltrar }) => {
   const [fechaInicio, setFechaInicio] = useState('');
@@ -9,7 +11,7 @@ const FiltrosFecha = ({ onFiltrar }) => {
     if (fechaInicio && fechaFin) {
       onFiltrar(fechaInicio, fechaFin);
     } else {
-      alert('Por favor, selecciona ambas fechas para filtrar.');
+      toast.error('Por favor, selecciona ambas fechas para filtrar.');
     }
   };
 
@@ -22,6 +24,7 @@ const FiltrosFecha = ({ onFiltrar }) => {
         textAlign: 'center',
       }}
     >
+      <ToastContainer />
       <Grid container spacing={2} justifyContent="center">
         <Grid item xs={12} sm={6} md={4}>
           <TextField

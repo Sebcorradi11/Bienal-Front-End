@@ -10,6 +10,7 @@ import TwitterIcon from '@mui/icons-material/Twitter';
 import LinkIcon from '@mui/icons-material/Link';
 import fondoBoton from '../../../assets/fondobutton/Rectangle 32.svg';
 import { Helmet } from 'react-helmet-async';
+import { ToastContainer, toast } from 'react-toastify';
 
 const VerEsculturaPublic = () => {
     const { id } = useParams();
@@ -38,7 +39,7 @@ const VerEsculturaPublic = () => {
 
     const copiarVinculo = () => {
         navigator.clipboard.writeText(compartirEnlace).then(() => {
-            alert('¡Enlace copiado al portapapeles!');
+            toast.success('Enlace Copiado al portapapeles.');
         }).catch((error) => {
             console.error('Error al copiar el enlace:', error);
         });
@@ -73,6 +74,7 @@ const VerEsculturaPublic = () => {
 
     return (
         <Grid container direction="column" sx={{ minHeight: '100vh', backgroundColor: '#fff' }}>
+            <ToastContainer />
             {/* Meta Tags dinámicos para redes sociales */}
             <Helmet>
                 <title>{`Bienal 2024 - Escultura: ${escultura.name}`}</title>

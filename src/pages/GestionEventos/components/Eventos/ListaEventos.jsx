@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Typography, IconButton, Grid } from '@mui/material';
+import { Box, Typography, IconButton, Grid, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Button } from '@mui/material';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useNavigate } from 'react-router-dom';
 import { getEventos, eliminarEvento, getEventosPorRango } from '../../../../api/eventos.routes';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const ListaEventos = ({ fechaInicio, fechaFin }) => {
   const [eventos, setEventos] = useState([]);
+  const [eventoAEliminar, setEventoAEliminar] = useState(null);
   const navigate = useNavigate();
 
   const formatearFecha = (fecha) => {
@@ -17,7 +20,6 @@ const ListaEventos = ({ fechaInicio, fechaFin }) => {
       .toLocaleDateString('es-AR', opciones);
   };
 
-  // Cargar eventos al inicio y cuando cambien las fechas
   useEffect(() => {
     if (fechaInicio && fechaFin) {
       filtrarEventos(fechaInicio, fechaFin);
@@ -31,6 +33,7 @@ const ListaEventos = ({ fechaInicio, fechaFin }) => {
       const data = await getEventos();
       setEventos(data);
     } catch (error) {
+      toast.error('Error al cargar los eventos');
       console.error('Error al cargar los eventos:', error);
     }
   };
@@ -40,6 +43,7 @@ const ListaEventos = ({ fechaInicio, fechaFin }) => {
       const data = await getEventosPorRango(fechaInicio, fechaFin);
       setEventos(data);
     } catch (error) {
+      toast.error('Error al filtrar los eventos');
       console.error('Error al filtrar los eventos:', error);
     }
   };
@@ -52,23 +56,25 @@ const ListaEventos = ({ fechaInicio, fechaFin }) => {
     navigate(`/ver-evento/${id}`);
   };
 
-  const eliminar = async (id) => {
-    const confirmacion = window.confirm('¿Estás seguro de que quieres eliminar este evento?');
-    if (confirmacion) {
-      try {
-        await eliminarEvento(id);
-        setEventos(eventos.filter((e) => e._id !== id));
-        alert('Evento eliminado exitosamente');
-      } catch (error) {
-        console.error('Error al eliminar el evento:', error);
-        alert('Error al eliminar el evento');
-      }
+  const confirmarEliminacion = (id) => {
+    setEventoAEliminar(id);
+  };
+
+  const eliminar = async () => {
+    try {
+      await eliminarEvento(eventoAEliminar);
+      setEventos(eventos.filter((e) => e._id !== eventoAEliminar));
+      toast.success('Evento eliminado exitosamente');
+    } catch (error) {
+      toast.error('Error al eliminar el evento');
+      console.error('Error al eliminar el evento:', error);
     }
+    setEventoAEliminar(null);
   };
 
   return (
     <Box sx={{ padding: { xs: 2, md: 3 }, marginTop: 3 }}>
-      {/* Mostrar mensaje si no hay eventos */}
+      <ToastContainer />
       {eventos.length === 0 ? (
         <Typography variant="h6" sx={{ textAlign: 'center', marginTop: 4 }}>
           No hay eventos en estas fechas
@@ -96,25 +102,13 @@ const ListaEventos = ({ fechaInicio, fechaFin }) => {
                   {`${formatearFecha(evento.date_inicio)} - ${formatearFecha(evento.date_fin)}`}
                 </Typography>
                 <Box sx={{ display: 'flex', justifyContent: 'space-between', gap: 1 }}>
-                  <IconButton
-                    onClick={() => verEvento(evento._id)}
-                    aria-label="Ver evento"
-                    color="primary"
-                  >
+                  <IconButton onClick={() => verEvento(evento._id)} aria-label="Ver evento" color="primary">
                     <VisibilityIcon />
                   </IconButton>
-                  <IconButton
-                    onClick={() => modificar(evento._id)}
-                    aria-label="Modificar evento"
-                    sx={{ color: '#ff4081' }}
-                  >
+                  <IconButton onClick={() => modificar(evento._id)} aria-label="Modificar evento" sx={{ color: '#ff4081' }}>
                     <EditIcon />
                   </IconButton>
-                  <IconButton
-                    onClick={() => eliminar(evento._id)}
-                    aria-label="Eliminar evento"
-                    color="error"
-                  >
+                  <IconButton onClick={() => confirmarEliminacion(evento._id)} aria-label="Eliminar evento" color="error">
                     <DeleteIcon />
                   </IconButton>
                 </Box>
@@ -123,6 +117,22 @@ const ListaEventos = ({ fechaInicio, fechaFin }) => {
           ))}
         </Grid>
       )}
+      <Dialog open={!!eventoAEliminar} onClose={() => setEventoAEliminar(null)}>
+        <DialogTitle>Confirmación de eliminación</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            ¿Estás seguro de que quieres eliminar este evento?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setEventoAEliminar(null)} color="primary">
+            Cancelar
+          </Button>
+          <Button onClick={eliminar} color="error">
+            Eliminar
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Box>
   );
 };

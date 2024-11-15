@@ -8,6 +8,9 @@ import fondoBoton from '../../../../assets/fondobutton/Rectangle 32.svg';
 import BackButton from '../../../../components/BackButton';
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import LoaderSpinner from '../../../../components/LoaderSpinner';
 
 const ModificarEvento = () => {
   const { id } = useParams();
@@ -23,9 +26,11 @@ const ModificarEvento = () => {
   });
   const [nuevasImagenes, setNuevasImagenes] = useState([]);
   const [imagenesAEliminar, setImagenesAEliminar] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const cargarEvento = async () => {
+      setLoading(true);
       try {
         const data = await getEventoPorId(id);
         setEvento({
@@ -35,6 +40,9 @@ const ModificarEvento = () => {
         });
       } catch (error) {
         console.error('Error al cargar el evento:', error);
+        toast.error('Error al cargar el evento.');
+      } finally {
+        setLoading(false);
       }
     };
     cargarEvento();
@@ -48,7 +56,7 @@ const ModificarEvento = () => {
   const handleAgregarImagen = (e) => {
     const files = e.target.files;
     setNuevasImagenes([...nuevasImagenes, ...files]);
-    alert('Imagen cargada correctamente');
+    toast.success('Imagen cargada correctamente');
   };
 
   const handleEliminarImagen = (imagen) => {
@@ -60,6 +68,7 @@ const ModificarEvento = () => {
   };
 
   const handleModificar = async () => {
+    setLoading(true);
     const formData = new FormData();
     formData.append('name', evento.name);
     formData.append('date_inicio', evento.date_inicio);
@@ -76,18 +85,23 @@ const ModificarEvento = () => {
 
     try {
       await actualizarEvento(id, formData);
-      alert('Evento actualizado exitosamente');
-      navigate(-1);
+      toast.success('Evento actualizado exitosamente');
+      navigate(`/ver-evento/${id}`);
     } catch (error) {
       console.error('Error al actualizar el evento:', error);
-      alert('Error al actualizar el evento');
+      toast.error('Error al actualizar el evento.');
+    } finally {
+      setLoading(false);
     }
   };
 
+  if (loading) return <LoaderSpinner loading={loading} />;
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
       <HeaderPublic />
+      <ToastContainer />
+      
       <Box
         sx={{
           flexGrow: 1,

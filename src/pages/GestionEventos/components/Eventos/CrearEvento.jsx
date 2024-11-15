@@ -8,8 +8,10 @@ import Footer from '../../../../components/Footer';
 import fondoBoton from '../../../../assets/fondobutton/Rectangle 32.svg';
 import { useNavigate } from 'react-router-dom';
 import BackButton from '../../../../components/BackButton';
-import { createEvento } from '../../../../api/eventos.routes'; // Importar la función desde eventos.routes.js
-
+import { createEvento } from '../../../../api/eventos.routes';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import LoaderSpinner from '../../../../components/LoaderSpinner'; // Importa el LoaderSpinner
 
 const CrearEvento = () => {
   const [formData, setFormData] = useState({
@@ -22,19 +24,18 @@ const CrearEvento = () => {
     images: null,
   });
   const [imagen, setImagen] = useState(null);
+  const [loading, setLoading] = useState(false); // Estado de carga
   const navigate = useNavigate();
 
-  // Maneja los cambios en los inputs del formulario
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
   const handleAgregarEscultor = () => {
-    navigate('/agregar-escultores'); // Navega a la vista de agregar escultores
+    navigate('/agregar-escultores');
   };
 
-  // Maneja la carga de imágenes desde el input
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
     setFormData({ ...formData, images: file });
@@ -45,7 +46,6 @@ const CrearEvento = () => {
     }
   };
 
-  // Maneja la carga de imágenes por arrastre
   const handleDrop = (event) => {
     event.preventDefault();
     const file = event.dataTransfer.files[0];
@@ -57,8 +57,8 @@ const CrearEvento = () => {
     }
   };
 
-  // Enviar los datos al backend para crear el evento
   const handleCrearEvento = async () => {
+    setLoading(true); // Mostrar el spinner
     const data = new FormData();
     data.append('name', formData.name);
     data.append('description', formData.description);
@@ -67,16 +67,13 @@ const CrearEvento = () => {
     data.append('location', formData.location);
     data.append('theme', formData.theme);
     if (formData.images) {
-      data.append('images', formData.images); // solo uno, sin forEach
+      data.append('images', formData.images);
     }
     try {
-      // Usar la función createEvento desde eventos.routes.js
       const response = await createEvento(data);
       console.log('Evento creado:', response);
 
-      // Mostrar mensaje de alerta
-      alert('Evento creado exitosamente.');
-      // Reiniciar el formulario después de la creación
+      toast.success('Evento creado exitosamente.');
       setFormData({
         name: '',
         description: '',
@@ -87,21 +84,22 @@ const CrearEvento = () => {
         images: null,
       });
       setImagen(null);
-
-      // Desplazar la página hacia la parte superior
       window.scrollTo(0, 0);
     } catch (error) {
       console.error('Error al crear el evento:', error);
-      alert('Error al crear el evento. Inténtalo de nuevo.');
+      toast.error('Error al crear el evento. Inténtalo de nuevo.');
+    } finally {
+      setLoading(false); // Ocultar el spinner
     }
   };
-
-
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
       <HeaderPublic />
-
+      
+      <ToastContainer />
+      {loading && <LoaderSpinner loading={loading} />} {/* LoaderSpinner */}
+      
       <Box
         sx={{
           flexGrow: 1,
@@ -238,7 +236,6 @@ const CrearEvento = () => {
             <Typography variant="h6">Escultores</Typography>
           </Button>
 
-          {/* Botones Crear Evento y Atrás */}
           <Box
             sx={{
               display: 'flex',

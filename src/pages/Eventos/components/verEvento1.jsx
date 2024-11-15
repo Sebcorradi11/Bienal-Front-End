@@ -11,7 +11,7 @@ import TwitterIcon from '@mui/icons-material/Twitter';
 import LinkIcon from '@mui/icons-material/Link';
 import fondoBoton from '../../../assets/fondobutton/Rectangle 28.svg';
 import { Helmet } from 'react-helmet-async'; // Add this import
-
+import { ToastContainer, toast } from 'react-toastify';
 
 const VerEvento1 = () => {
   const { id } = useParams();
@@ -39,7 +39,7 @@ const VerEvento1 = () => {
 
   const copiarVinculo = () => {
     navigator.clipboard.writeText(compartirEnlace).then(() => {
-      alert('¡Enlace copiado al portapapeles!');
+      toast.success('Enlace Copiado al portapapeles.');
     }).catch((error) => {
       console.error('Error al copiar el enlace:', error);
     });
@@ -74,6 +74,8 @@ const VerEvento1 = () => {
 
   return (
     <Box sx={{ width: '100vw', minHeight: '100vh', overflowX: 'hidden', backgroundColor: '#fff', display: 'flex', flexDirection: 'column' }}>
+      <ToastContainer />
+
       <Helmet>
         <title>{`Bienal 2024 - ${evento.theme}`}</title>
         <meta property="og:title" content={`Bienal 2024 - ${evento.theme}`} />

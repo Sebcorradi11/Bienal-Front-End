@@ -10,6 +10,7 @@ import TwitterIcon from '@mui/icons-material/Twitter';
 import LinkIcon from '@mui/icons-material/Link';
 import fondoBoton from '../../../assets/fondobutton/Rectangle 32.svg';
 import { Helmet } from 'react-helmet-async';
+import { ToastContainer, toast } from 'react-toastify';
 
 const VerEscultor = () => {
   const { id } = useParams();
@@ -36,7 +37,7 @@ const VerEscultor = () => {
 
   const copiarVinculo = () => {
     navigator.clipboard.writeText(compartirEnlace).then(() => {
-      alert('¡Enlace copiado al portapapeles!');
+      toast.success('Enlace Copiado al portapapeles.');
     }).catch((error) => {
       console.error('Error al copiar el enlace:', error);
     });
@@ -64,6 +65,7 @@ const VerEscultor = () => {
 
   return (
     <Grid container direction="column" sx={{ minHeight: '100vh', backgroundColor: '#f8f9fa' }}>
+    <ToastContainer />
     <Helmet>
         <title>{`Bienal 2024 - ${escultor.name}`}</title>
         <meta property="og:title" content={`Bienal 2024 - ${escultor.name}`} />

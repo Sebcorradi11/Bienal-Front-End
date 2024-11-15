@@ -10,6 +10,7 @@ import VerEsculturaPublic from '../../pages/sculptures/components/verEsculturaPu
 import VerEscultor from '../../pages/Sculptor/components/DetalleEscultor';
 import VerEvento1 from '../../pages/Eventos/components/verEvento1';
 import DetalleEsculturas from '../../pages/Sculptor/components/DetalleEsculturas';
+import DetalleEscultoresEvento from '../../pages/Eventos/components/EscultoresEvento';
 export const onlyPublicRoute = [
   {
     path: "/esculturas",
@@ -55,5 +56,9 @@ export const onlyPublicRoute = [
   {
     path: "/ver-detalles-esculturas-public/:id",
     component: DetalleEsculturas,
+  },
+  {
+    path: "/eventos/:id/escultores",
+    component: DetalleEscultoresEvento,
   },
 ];

@@ -1,4 +1,3 @@
-// src/pages/Sculpture/components/Info2.jsx
 import React from 'react';
 import { Box, Typography } from '@mui/material';
 import titleRectangle from '../../../assets/eventos/Rectangle-2.svg';
@@ -6,7 +5,7 @@ import textRectangle from '../../../assets/eventos/Rectangle-3.svg';
 
 const Info2 = () => {
     return (
-        <Box sx={{ backgroundColor: '#fff', color: 'black', padding: '20px' }}>
+        <Box sx={{ backgroundColor: '#fff', color: 'black', padding: '20px' }}> {/* Fondo blanco */}
             {/* Título principal y fecha pegada */}
             <Box sx={{ marginBottom: '10px', marginTop: '-5px' }}>
                 <Typography
@@ -55,12 +54,6 @@ const Info2 = () => {
                     y en público, esculpiendo piezas que tienen por destino las veredas de Resistencia.
                 </Typography>
             </Box>
-
-            {/* Información adicional */}
-            <Typography variant="body2" sx={{ fontWeight: 'bold' }}>
-                Participan 10 Escultores <br />
-                Material: Metal
-            </Typography>
         </Box>
     );
 };

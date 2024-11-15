@@ -22,7 +22,7 @@ const VerEscultor = () => {
   const navigate = useNavigate();
 
   const frontUrl = import.meta.env.VITE_FRONT_URL;
-  const compartirEnlace = `${frontUrl}/ver-escultores/public/${id}`;
+  const compartirEnlace = `${frontUrl}/ver-escultores-public/${id}`;
 
   const compartirWhatsApp = () => {
     const url = `https://wa.me/?text=${encodeURIComponent(compartirEnlace)}`;

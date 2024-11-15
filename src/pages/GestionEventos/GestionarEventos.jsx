@@ -1,27 +1,29 @@
 import React, { useState } from 'react';
 import HeaderPublic from '../../components/HeaderPublic';
 import Footer from '../../components/Footer';
-import { Box, Container, Button, useMediaQuery, useTheme } from '@mui/material';
+import { Box, Container, useMediaQuery, useTheme } from '@mui/material';
 import BackButton from '../../components/BackButton';
 import ButtonNavigate from '../../components/ButtonNavigate';
 import BuscadorEvento from '../../components/Buscador';
 import ListaEventos from './components/Eventos/ListaEventos';
 import FiltrosFecha from './components/Eventos/FiltrosFecha';
-import { useNavigate } from 'react-router-dom';
 
 const GestionarEventos = () => {
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
-  const navigate = useNavigate();
 
   const [fechaInicio, setFechaInicio] = useState('');
   const [fechaFin, setFechaFin] = useState('');
+  const [busqueda, setBusqueda] = useState(''); // Estado para el término de búsqueda
 
   const handleFiltrar = (inicio, fin) => {
     setFechaInicio(inicio);
     setFechaFin(fin);
   };
 
+  const handleBuscar = (termino) => {
+    setBusqueda(termino); // Actualizar el estado con el término de búsqueda
+  };
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
@@ -38,54 +40,16 @@ const GestionarEventos = () => {
             justifyContent: 'space-between',
           }}
         >
-          {/* Crear Evento a la izquierda */}
-          <Box
-            sx={{
-              flex: 1,
-              display: 'flex',
-              justifyContent: isSmallScreen ? 'center' : 'flex-start',
-              width: isSmallScreen ? '100%' : 'auto',
-            }}
-          >
-            <ButtonNavigate name="Crear Eventos" route="/crear-evento" />
-          </Box>
+          <ButtonNavigate name="Crear Eventos" route="/crear-evento" />
 
-          {/* Filtro de Fechas en el medio */}
-          <Box
-            sx={{
-              flex: 1,
-              display: 'flex',
-              justifyContent: 'center',
-              width: isSmallScreen ? '100%' : 'auto',
-            }}
-          >
-            <FiltrosFecha onFiltrar={handleFiltrar} />
-          </Box>
+          <FiltrosFecha onFiltrar={handleFiltrar} />
 
-          {/* Buscador a la derecha */}
-          <Box
-            sx={{
-              flex: 1,
-              display: 'flex',
-              justifyContent: isSmallScreen ? 'center' : 'flex-end',
-              width: isSmallScreen ? '100%' : 'auto',
-            }}
-          >
-            <BuscadorEvento />
-          </Box>
+          <BuscadorEvento onBuscar={handleBuscar} />
         </Box>
 
-        {/* Lista de eventos con fechas filtradas */}
-        <ListaEventos fechaInicio={fechaInicio} fechaFin={fechaFin} />
+        <ListaEventos fechaInicio={fechaInicio} fechaFin={fechaFin} busqueda={busqueda} />
 
-        <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'center',
-            mt: 4,
-            mb: 2,
-          }}
-        >
+        <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4, mb: 2 }}>
           <BackButton sx={{ width: '48%' }} />
         </Box>
       </Container>

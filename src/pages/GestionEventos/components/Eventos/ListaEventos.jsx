@@ -6,8 +6,9 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { useNavigate } from 'react-router-dom';
 import { getEventos, eliminarEvento, getEventosPorRango } from '../../../../api/eventos.routes';
 
-const ListaEventos = ({ fechaInicio, fechaFin }) => {
+const ListaEventos = ({ fechaInicio, fechaFin, busqueda }) => {
   const [eventos, setEventos] = useState([]);
+  const [eventosFiltrados, setEventosFiltrados] = useState([]);
   const navigate = useNavigate();
 
   const formatearFecha = (fecha) => {
@@ -20,25 +21,39 @@ const ListaEventos = ({ fechaInicio, fechaFin }) => {
   // Cargar eventos al inicio y cuando cambien las fechas
   useEffect(() => {
     if (fechaInicio && fechaFin) {
-      filtrarEventos(fechaInicio, fechaFin);
+      filtrarEventosPorFecha(fechaInicio, fechaFin);
     } else {
       cargarEventos();
     }
   }, [fechaInicio, fechaFin]);
 
+  // Actualizar los eventos filtrados cuando cambia la búsqueda
+  useEffect(() => {
+    if (busqueda) {
+      const filtrados = eventos.filter((evento) =>
+        evento.name.toLowerCase().includes(busqueda.toLowerCase())
+      );
+      setEventosFiltrados(filtrados);
+    } else {
+      setEventosFiltrados(eventos);
+    }
+  }, [busqueda, eventos]);
+
   const cargarEventos = async () => {
     try {
       const data = await getEventos();
       setEventos(data);
+      setEventosFiltrados(data); // Actualizar eventos filtrados
     } catch (error) {
       console.error('Error al cargar los eventos:', error);
     }
   };
 
-  const filtrarEventos = async (fechaInicio, fechaFin) => {
+  const filtrarEventosPorFecha = async (fechaInicio, fechaFin) => {
     try {
       const data = await getEventosPorRango(fechaInicio, fechaFin);
       setEventos(data);
+      setEventosFiltrados(data); // Actualizar eventos filtrados
     } catch (error) {
       console.error('Error al filtrar los eventos:', error);
     }
@@ -58,6 +73,7 @@ const ListaEventos = ({ fechaInicio, fechaFin }) => {
       try {
         await eliminarEvento(id);
         setEventos(eventos.filter((e) => e._id !== id));
+        setEventosFiltrados(eventosFiltrados.filter((e) => e._id !== id));
         alert('Evento eliminado exitosamente');
       } catch (error) {
         console.error('Error al eliminar el evento:', error);
@@ -66,16 +82,29 @@ const ListaEventos = ({ fechaInicio, fechaFin }) => {
     }
   };
 
+  const resaltarTexto = (texto, busqueda) => {
+    if (!busqueda) return texto;
+    const partes = texto.split(new RegExp(`(${busqueda})`, 'gi'));
+    return partes.map((parte, index) =>
+      parte.toLowerCase() === busqueda.toLowerCase() ? (
+        <span key={index} style={{ color: 'blue', fontWeight: 'bold' }}>
+          {parte}
+        </span>
+      ) : (
+        parte
+      )
+    );
+  };
+
   return (
     <Box sx={{ padding: { xs: 2, md: 3 }, marginTop: 3 }}>
-      {/* Mostrar mensaje si no hay eventos */}
-      {eventos.length === 0 ? (
+      {eventosFiltrados.length === 0 ? (
         <Typography variant="h6" sx={{ textAlign: 'center', marginTop: 4 }}>
-          No hay eventos en estas fechas
+          No hay eventos que coincidan con la búsqueda
         </Typography>
       ) : (
         <Grid container spacing={2}>
-          {eventos.map((evento) => (
+          {eventosFiltrados.map((evento) => (
             <Grid item xs={12} sm={6} md={4} key={evento._id}>
               <Box
                 sx={{
@@ -90,7 +119,7 @@ const ListaEventos = ({ fechaInicio, fechaFin }) => {
                 }}
               >
                 <Typography variant="body1" fontWeight="bold" gutterBottom>
-                  {`${evento.name}`}
+                  {resaltarTexto(evento.name, busqueda)}
                 </Typography>
                 <Typography variant="body1" fontWeight="bold" gutterBottom>
                   {`${formatearFecha(evento.date_inicio)} - ${formatearFecha(evento.date_fin)}`}

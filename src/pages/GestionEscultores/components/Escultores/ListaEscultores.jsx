@@ -36,8 +36,6 @@ const ListaEscultores = ({ searchQuery }) => {
         if (confirmacion) {
             try {
                 await eliminarSculptor(id);
-
-                await eliminarSculptor(id);
                 setEscultores(escultores.filter((e) => e._id !== id));
                 alert('Escultor eliminado exitosamente');
             } catch (error) {

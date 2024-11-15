@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { eliminarEscultura, obtenerEsculturas } from '../../../api/sculptures.routes'; // Asume que hay una función para obtener esculturas
+import { eliminarEscultura, getEsculturas } from '../../../api/sculptures.routes'; // Asume que hay una función para obtener esculturas
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import LoaderSpinner from '../../../components/LoaderSpinner';
@@ -20,7 +20,7 @@ const ListaEsculturas = ({ terminoBusqueda = "", onEliminar }) => {
         const cargarEsculturas = async () => {
             setLoading(true); // Mostrar el loader mientras se cargan las esculturas
             try {
-                const esculturasData = await obtenerEsculturas(); // Llama a la función para obtener esculturas
+                const esculturasData = await getEsculturas(); // Llama a la función para obtener esculturas
                 setEsculturas(esculturasData);
             } catch (error) {
                 console.error('Error al cargar las esculturas:', error);

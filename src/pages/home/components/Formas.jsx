@@ -9,7 +9,7 @@ import sculptorIcon from '../../../assets/home/Rectangle.svg';
 import sculpturesIcon from '../../../assets/home/Ellipse.svg';
 import eventsIcon from '../../../assets/home/Star.svg';
 import { NavLink, useNavigate } from 'react-router-dom';
-import Buscador from '../../../components/Buscador';
+import BuscadorHome from '../../../components/BuscadorHome';
 // Creo un box de forma que necesita como parametro el texto de las lineas 1, 2 y 3... Y la imagen.
 const Forma = ({l1, l2, l3, imagen, src}) => {
     const navigate = useNavigate();
@@ -130,7 +130,7 @@ const Formas = () => {
             </Grid>
 
             {/* Buscador debajo */}
-            <Buscador />
+            <BuscadorHome />
         </Box>
     );
 };

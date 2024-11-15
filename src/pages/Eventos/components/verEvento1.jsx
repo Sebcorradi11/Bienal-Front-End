@@ -10,16 +10,17 @@ import InstagramIcon from '@mui/icons-material/Instagram';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import LinkIcon from '@mui/icons-material/Link';
 import fondoBoton from '../../../assets/fondobutton/Rectangle 28.svg';
-import { Helmet } from 'react-helmet-async'; // Add this import
+import { Helmet } from 'react-helmet-async';
+import LoaderSpinner from '../../../components/LoaderSpinner'; // Importar el nuevo componenteimport { ToastContainer, toast } from 'react-toastify';
 import { ToastContainer, toast } from 'react-toastify';
 
 const VerEvento1 = () => {
   const { id } = useParams();
   const [evento, setEvento] = useState(null);
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true); // Estado de carga
   const navigate = useNavigate();
 
-  // Use the environment variable for the front URL
   const frontUrl = import.meta.env.VITE_FRONT_URL;
   const compartirEnlace = `${frontUrl}/ver-evento-public/${id}`;
 
@@ -57,19 +58,21 @@ const VerEvento1 = () => {
       try {
         const data = await getEventoPorId(id);
         setEvento(data);
+        setLoading(false); // Finalizar carga al obtener el evento
       } catch (error) {
         setError('No se pudo cargar el evento.');
+        setLoading(false); // Finalizar carga en caso de error
       }
     };
     cargarEvento();
   }, [id]);
 
-  if (error) {
-    return <Typography variant="h6" color="error">{error}</Typography>;
+  if (loading) {
+    return <LoaderSpinner loading={loading} size={60} color="#000" />;
   }
 
-  if (!evento) {
-    return <Typography variant="h6">Cargando evento...</Typography>;
+  if (error) {
+    return <Typography variant="h6" color="error">{error}</Typography>;
   }
 
   return (
@@ -156,7 +159,7 @@ const VerEvento1 = () => {
           </Grid>
         </Grid>
       </Grid>
-      
+
       <Grid container justifyContent="space-between" alignItems="center" sx={{ backgroundColor: '#000', color: '#fff', p: { xs: 2, md: 4 }, mt: 6, textAlign: { xs: 'center', md: 'left' }, width: '100%', borderRadius: '0' }}>
         <Grid item xs={12} md={8}>
           <Typography variant="h6" component="span" sx={{ fontWeight: 400, fontSize: '2rem', display: 'block' }}>

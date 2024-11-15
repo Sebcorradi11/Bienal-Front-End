@@ -10,16 +10,17 @@ import TwitterIcon from '@mui/icons-material/Twitter';
 import LinkIcon from '@mui/icons-material/Link';
 import fondoBoton from '../../../assets/fondobutton/Rectangle 32.svg';
 import { Helmet } from 'react-helmet-async';
-import { ToastContainer, toast } from 'react-toastify';
+import LoaderSpinner from '../../../components/LoaderSpinner';
 
 const VerEscultor = () => {
   const { id } = useParams();
   const [escultor, setEscultor] = useState(null);
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true); // Estado de carga
   const navigate = useNavigate();
 
   const frontUrl = import.meta.env.VITE_FRONT_URL;
-  const compartirEnlace = `${frontUrl}/ver-escultor/${id}`;
+  const compartirEnlace = `${frontUrl}/ver-escultores/public/${id}`;
 
   const compartirWhatsApp = () => {
     const url = `https://wa.me/?text=${encodeURIComponent(compartirEnlace)}`;
@@ -37,7 +38,7 @@ const VerEscultor = () => {
 
   const copiarVinculo = () => {
     navigator.clipboard.writeText(compartirEnlace).then(() => {
-      toast.success('Enlace Copiado al portapapeles.');
+      alert('¡Enlace copiado al portapapeles!');
     }).catch((error) => {
       console.error('Error al copiar el enlace:', error);
     });
@@ -48,24 +49,25 @@ const VerEscultor = () => {
       try {
         const data = await getEscultorPorId(id);
         setEscultor(data);
+        setLoading(false); // Finalizar carga al obtener el escultor
       } catch (error) {
         setError('No se pudo cargar el escultor.');
+        setLoading(false); // Finalizar carga en caso de error
       }
     };
     cargarEscultor();
   }, [id]);
 
+  if (loading) {
+    return <LoaderSpinner loading={loading} size={60} color="#000" />;
+  }
+
   if (error) {
     return <Typography variant="h6" color="error">{error}</Typography>;
   }
 
-  if (!escultor) {
-    return <Typography variant="h6">Cargando escultor...</Typography>;
-  }
-
   return (
     <Grid container direction="column" sx={{ minHeight: '100vh', backgroundColor: '#f8f9fa' }}>
-    <ToastContainer />
     <Helmet>
         <title>{`Bienal 2024 - ${escultor.name}`}</title>
         <meta property="og:title" content={`Bienal 2024 - ${escultor.name}`} />
@@ -141,18 +143,19 @@ const VerEscultor = () => {
       </Grid>
 
       <Grid container justifyContent="space-between" alignItems="center" sx={{ backgroundColor: '#000', color: '#fff', p: { xs: 2, md: 4 }, mt: 6, textAlign: { xs: 'center', md: 'left' }, width: '100%', borderRadius: '0' }}>
-        <Grid item xs={12} md={8}>
-          <Typography variant="h6" component="span" sx={{ fontWeight: 400, fontSize: '2rem', display: 'block' }}>
-            Conocé las esculturas de los artistas
-          </Typography>
-          <Typography variant="h6" component="span" sx={{ fontWeight: 600, fontSize: '2.5rem', display: 'block', mt: 1 }}>
+    <Grid item xs={12} md={8}>
+        <Typography variant="h6" component="span" sx={{ fontWeight: 400, fontSize: '2rem', display: 'block' }}>
+            Conocé las esculturas de {escultor.name}
+        </Typography>
+        <Typography variant="h6" component="span" sx={{ fontWeight: 600, fontSize: '2.5rem', display: 'block', mt: 1 }}>
             Bienal 2024
-          </Typography>
-        </Grid>
+        </Typography>
+    </Grid>
 
         <Grid item xs={12} md={4} sx={{ textAlign: { xs: 'center', md: 'right' } }}>
           <Button
-            onClick={() => navigate(`esculturas`)}
+            onClick={() => navigate(`/ver-detalles-esculturas-public/${id}`)}
+
             sx={{
               backgroundImage: `url(${fondoBoton})`,
               backgroundSize: 'cover',

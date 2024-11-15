@@ -1,3 +1,4 @@
+// src/pages/Sculpture/components/Info2.jsx
 import React from 'react';
 import { Box, Typography } from '@mui/material';
 import titleRectangle from '../../../assets/eventos/Rectangle-2.svg';

@@ -103,6 +103,7 @@ const VerEscultor = () => {
                                 textTransform: 'none',
                                 mb: 2,
                                 '&:hover': { opacity: 0.9 },
+                                margin: 1,
                             }}
                             onClick={handleVerEsculturas}
                         >

@@ -21,8 +21,6 @@ const ListaEsculturas = () => {
         }
     };
 
- 
-
     return (
         <Box sx={{ padding: { xs: 2, md: 3 }, marginTop: 3 }}>
             {esculturas.length === 0 ? (
@@ -35,8 +33,7 @@ const ListaEsculturas = () => {
                         <Grid item key={escultura._id}>
                             <SculptureCard
                                 title={escultura.name}
-                                image={escultura.imageUrl || '/placeholder-image.jpg'}
-                                authorName={escultura.author || 'Autor desconocido'}
+                                image={escultura.imagenPre || '/placeholder-image.jpg'}
                                 id={escultura._id}
                             />
                         </Grid>

@@ -10,8 +10,8 @@ const VerResultados = () => {
     const { id } = useParams();
     const navigate = useNavigate();
     const [escultores, setEscultores] = useState([]);
-    const [loading, setLoading] = useState(true); // Estado de carga
-    const [hasData, setHasData] = useState(false); // Estado para verificar si hay datos
+    const [loading, setLoading] = useState(true);
+    const [hasData, setHasData] = useState(false);
 
     useEffect(() => {
         const fetchResults = async () => {
@@ -20,18 +20,17 @@ const VerResultados = () => {
                 const data = await response.json();
 
                 if (data && data.length > 0) {
-                    // Si hay datos, ordenar de mayor a menor puntaje
                     const escultoresOrdenados = data.sort((a, b) => b.promedioPuntaje - a.promedioPuntaje);
                     setEscultores(escultoresOrdenados);
                     setHasData(true);
                 } else {
-                    setHasData(false); // Sin datos
+                    setHasData(false);
                 }
             } catch (error) {
                 console.error('Error fetching results:', error);
                 setHasData(false);
             } finally {
-                setLoading(false); // Finalizar carga
+                setLoading(false);
             }
         };
 
@@ -52,7 +51,17 @@ const VerResultados = () => {
                     alignItems: 'center',
                 }}
             >
-                <Typography variant="h4" textAlign="center" gutterBottom>
+                <Typography
+                    variant="h4"
+                    textAlign="center"
+                    gutterBottom
+                    sx={{
+                        fontSize: { xs: '1.5rem', md: '2.4rem' },
+                        fontWeight: 'bold',
+                        mb: 4,
+                        wordBreak: 'break-word',
+                    }}
+                >
                     Resultados de Escultores - Bienal {id}
                 </Typography>
 
@@ -68,22 +77,49 @@ const VerResultados = () => {
                                         backgroundColor: '#e0e0e0',
                                         marginBottom: 1,
                                         borderRadius: '8px',
+                                        padding: { xs: 1, md: 2 },
+                                        display: 'flex',
+                                        flexDirection: { xs: 'column', sm: 'row' },
+                                        alignItems: 'center',
+                                        justifyContent: 'space-between',
+                                        gap: 1,
                                     }}
                                 >
                                     <ListItemText
                                         primary={escultor.escultorNombre}
                                         secondary={`Puntaje promedio: ${escultor.promedioPuntaje.toFixed(2)}`}
+                                        primaryTypographyProps={{
+                                            fontSize: { xs: '1rem', sm: '1.2rem' },
+                                            fontWeight: 'medium',
+                                        }}
+                                        secondaryTypographyProps={{
+                                            fontSize: { xs: '0.9rem', sm: '1rem' },
+                                            color: 'text.secondary',
+                                        }}
+                                        sx={{
+                                            textAlign: { xs: 'center', sm: 'left' },
+                                        }}
                                     />
                                 </ListItem>
                             ))}
                         </List>
                     ) : (
-                        <Typography variant="body1" color="textSecondary" textAlign="center">
+                        <Typography
+                            variant="body1"
+                            color="textSecondary"
+                            textAlign="center"
+                            sx={{
+                                fontSize: { xs: '1rem', md: '1.2rem' },
+                                mt: 4,
+                            }}
+                        >
                             No hay resultados disponibles para este evento.
                         </Typography>
                     )
                 )}
-                <BackButton sx={{ width: '48%', marginTop: 2 }} />
+                <Box sx={{ width: '100%', maxWidth: 600, mt: 3, display: 'flex', justifyContent: 'center' }}>
+                    <BackButton sx={{ width: { xs: '100%', sm: '48%' } }} />
+                </Box>
             </Box>
 
             <Footer />

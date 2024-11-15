@@ -52,6 +52,9 @@ const VerEvento1 = () => {
     return new Date(fechaLocal.getUTCFullYear(), fechaLocal.getUTCMonth(), fechaLocal.getUTCDate())
       .toLocaleDateString('es-AR', opciones);
   };
+  const handleVerEscultores = () => {
+    navigate(`/eventos/${id}/escultores`); // Navega a la lista de escultores para este evento
+  };
 
   useEffect(() => {
     const cargarEvento = async () => {
@@ -163,7 +166,7 @@ const VerEvento1 = () => {
       <Grid container justifyContent="space-between" alignItems="center" sx={{ backgroundColor: '#000', color: '#fff', p: { xs: 2, md: 4 }, mt: 6, textAlign: { xs: 'center', md: 'left' }, width: '100%', borderRadius: '0' }}>
         <Grid item xs={12} md={8}>
           <Typography variant="h6" component="span" sx={{ fontWeight: 400, fontSize: '2rem', display: 'block' }}>
-            Conocé a los artistas participantes de la
+            Conocé a los escultores asignados a este evento
           </Typography>
           <Typography variant="h6" component="span" sx={{ fontWeight: 600, fontSize: '2.5rem', display: 'block', mt: 1 }}>
             Bienal 2024
@@ -172,7 +175,7 @@ const VerEvento1 = () => {
 
         <Grid item xs={12} md={4} sx={{ textAlign: { xs: 'center', md: 'right' } }}>
           <Button
-            onClick={() => navigate('/Escultores')}
+            onClick={handleVerEscultores}
             sx={{
               backgroundImage: `url(${fondoBoton})`,
               backgroundSize: 'cover',

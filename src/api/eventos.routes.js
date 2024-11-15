@@ -102,5 +102,17 @@ const getEventosPasados = async () => {
   }
 };
 
+const obtenerEscultoresPorEvento = async (id) => {
+  try {
+    const response = await eventosApi.get(`/${id}`); // Ruta que trae los escultores del evento
+    return response.data;
+  } catch (error) {
+    console.error('Error obteniendo los escultores del evento:', error);
+    throw error;
+  }
+};
+
+
+
 export { createEvento, getEventos,getEventoPorId, getEventoActual, getEventosFuturos, getEventosPasados,
-   eliminarEvento, getEventosPorRango, actualizarEvento };
+   eliminarEvento, getEventosPorRango, actualizarEvento, obtenerEscultoresPorEvento};

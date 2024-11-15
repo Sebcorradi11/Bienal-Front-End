@@ -1,29 +1,47 @@
 import React, { useState } from 'react';
-import { Box, TextField } from '@mui/material';
-import SearchIcon from '@mui/icons-material/Search';
+import axios from 'axios';
+import { List, ListItem, ListItemText, CircularProgress } from '@mui/material';
+import Buscador from './Buscador';
 
-const Buscador = ({ onBuscar }) => {
-    const [busqueda, setBusqueda] = useState('');
+const App = () => {
+    const [results, setResults] = useState([]);
+    const [loading, setLoading] = useState(false);
 
-    const handleChange = (e) => {
-        setBusqueda(e.target.value);
-        if (onBuscar) {
-            onBuscar(e.target.value);
+    const handleBuscar = async (term) => {
+        if (!term) {
+            setResults([]);
+            return;
+        }
+        
+        setLoading(true);
+        try {
+            const response = await axios.post('http://localhost:5009/api/search/searchTerm', { term });
+            setResults(response.data);
+        } catch (error) {
+            console.error("Error al buscar esculturas o escultores:", error);
+        } finally {
+            setLoading(false);
         }
     };
 
     return (
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, padding: 1 }}>
-            <SearchIcon />
-            <TextField 
-                placeholder="Buscar..." 
-                variant="outlined" 
-                fullWidth 
-                value={busqueda} 
-                onChange={handleChange} 
-            />
-        </Box>
+        <div>
+            <h1>Buscador de Esculturas y Escultores</h1>
+            <Buscador onBuscar={handleBuscar} />
+
+            {loading ? (
+                <CircularProgress style={{ marginTop: '10px' }} />
+            ) : (
+                <List>
+                    {results.map((result, index) => (
+                        <ListItem key={index}>
+                            <ListItemText primary={result.name} secondary={result.description} />
+                        </ListItem>
+                    ))}
+                </List>
+            )}
+        </div>
     );
 };
 
-export default Buscador;
+export default App;

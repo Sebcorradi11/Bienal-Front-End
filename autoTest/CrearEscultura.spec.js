@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 
 test('test', async ({ page }) => {
   // Navegar a la página de login
-  await page.goto('https://bienal-front-end-viuu.vercel.app/login');
+  await page.goto('https://bienal-front-end-viuu.vercel.app/');
   
   // Iniciar autenticación con GitHub
   const page1Promise = page.waitForEvent('popup');

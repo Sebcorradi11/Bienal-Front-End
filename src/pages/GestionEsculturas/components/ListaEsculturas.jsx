@@ -4,33 +4,48 @@ import { useNavigate } from 'react-router-dom';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { eliminarEscultura, getEsculturas } from '../../../api/sculptures.routes'; // Asume que hay una función para obtener esculturas
+import { eliminarEscultura, getEsculturas } from '../../../api/sculptures.routes';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import LoaderSpinner from '../../../components/LoaderSpinner';
 
-const ListaEsculturas = ({ terminoBusqueda = "", onEliminar }) => {
+const ListaEsculturas = ({ terminoBusqueda = "" }) => {
     const [esculturas, setEsculturas] = useState([]);
+    const [filteredEsculturas, setFilteredEsculturas] = useState([]);
     const [openDialog, setOpenDialog] = useState(false);
     const [selectedEscultura, setSelectedEscultura] = useState(null);
-    const [loading, setLoading] = useState(true); // Cargar esculturas al inicio
+    const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
 
     useEffect(() => {
-        const cargarEsculturas = async () => {
-            setLoading(true); // Mostrar el loader mientras se cargan las esculturas
-            try {
-                const esculturasData = await getEsculturas(); // Llama a la función para obtener esculturas
-                setEsculturas(esculturasData);
-            } catch (error) {
-                console.error('Error al cargar las esculturas:', error);
-                toast.error('Error al cargar las esculturas');
-            } finally {
-                setLoading(false); // Ocultar el loader después de cargar
-            }
-        };
         cargarEsculturas();
     }, []);
+
+    useEffect(() => {
+        // Actualiza las esculturas filtradas cada vez que cambia el término de búsqueda
+        if (terminoBusqueda) {
+            const filtradas = esculturas.filter((escultura) =>
+                escultura.name.toLowerCase().includes(terminoBusqueda.toLowerCase())
+            );
+            setFilteredEsculturas(filtradas);
+        } else {
+            setFilteredEsculturas(esculturas);
+        }
+    }, [terminoBusqueda, esculturas]);
+
+    const cargarEsculturas = async () => {
+        setLoading(true);
+        try {
+            const esculturasData = await getEsculturas();
+            setEsculturas(esculturasData);
+            setFilteredEsculturas(esculturasData); // Inicializa las filtradas con todas las esculturas
+        } catch (error) {
+            console.error('Error al cargar las esculturas:', error);
+            toast.error('Error al cargar las esculturas');
+        } finally {
+            setLoading(false);
+        }
+    };
 
     const modificarEscultura = (id) => {
         navigate(`/modificar-escultura/${id}`);
@@ -40,24 +55,25 @@ const ListaEsculturas = ({ terminoBusqueda = "", onEliminar }) => {
         navigate(`/ver-escultura/${id}`);
     };
 
-    const confirmEliminar = (id) => {
+    const confirmarEliminar = (id) => {
         setSelectedEscultura(id);
         setOpenDialog(true);
     };
 
     const handleEliminar = async () => {
-        setLoading(true); // Muestra el spinner mientras elimina
+        setOpenDialog(false);
+        setLoading(true);
         try {
             await eliminarEscultura(selectedEscultura);
-            onEliminar(selectedEscultura);
+            const actualizadas = esculturas.filter((escultura) => escultura._id !== selectedEscultura);
+            setEsculturas(actualizadas);
+            setFilteredEsculturas(actualizadas); // Actualiza las filtradas también
             toast.success('Escultura eliminada exitosamente');
-            setEsculturas(esculturas.filter((escultura) => escultura._id !== selectedEscultura)); // Actualiza la lista local
         } catch (error) {
             console.error('Error al eliminar la escultura:', error);
             toast.error('Error al eliminar la escultura');
         } finally {
-            setLoading(false); // Oculta el spinner
-            setOpenDialog(false);
+            setLoading(false);
         }
     };
 
@@ -77,15 +93,15 @@ const ListaEsculturas = ({ terminoBusqueda = "", onEliminar }) => {
     return (
         <Box sx={{ padding: { xs: 2, md: 3 }, marginTop: 3 }}>
             <ToastContainer />
-            {loading && <LoaderSpinner loading={loading} />} {/* Muestra el LoaderSpinner */}
+            {loading && <LoaderSpinner loading={loading} />}
 
-            {!loading && esculturas.length === 0 ? (
+            {!loading && filteredEsculturas.length === 0 ? (
                 <Typography variant="h6" sx={{ textAlign: 'center', marginTop: 4 }}>
                     No hay esculturas disponibles
                 </Typography>
             ) : (
                 <Grid container spacing={2}>
-                    {esculturas.map((escultura) => (
+                    {filteredEsculturas.map((escultura) => (
                         <Grid item xs={12} sm={6} md={4} key={escultura._id}>
                             <Box
                                 sx={{
@@ -96,7 +112,7 @@ const ListaEsculturas = ({ terminoBusqueda = "", onEliminar }) => {
                                     padding: 2,
                                     borderRadius: '8px',
                                     boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
-                                    minHeight: '120px',
+                                    minHeight: '150px',
                                 }}
                             >
                                 <Typography variant="body1" fontWeight="bold" gutterBottom>
@@ -125,7 +141,7 @@ const ListaEsculturas = ({ terminoBusqueda = "", onEliminar }) => {
                                         <EditIcon />
                                     </IconButton>
                                     <IconButton
-                                        onClick={() => confirmEliminar(escultura._id)}
+                                        onClick={() => confirmarEliminar(escultura._id)}
                                         aria-label="Eliminar escultura"
                                         color="error"
                                     >
@@ -143,7 +159,7 @@ const ListaEsculturas = ({ terminoBusqueda = "", onEliminar }) => {
                 <DialogTitle>Confirmar Eliminación de Escultura</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-                        ¿Estás seguro de que deseas eliminar esta escultura?
+                        ¿Estás seguro de que deseas eliminar esta escultura? Esta acción no se puede deshacer.
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>

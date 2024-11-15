@@ -12,8 +12,8 @@ import LoaderSpinner from '../../../../components/LoaderSpinner';
 const ListaEscultores = ({ searchQuery }) => {
     const [escultores, setEscultores] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [openDialog, setOpenDialog] = useState(false);
-    const [selectedEscultor, setSelectedEscultor] = useState(null);
+    const [selectedEscultor, setSelectedEscultor] = useState(null); // Escultor seleccionado para eliminar
+    const [dialogOpen, setDialogOpen] = useState(false); // Estado del popup
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -41,23 +41,22 @@ const ListaEscultores = ({ searchQuery }) => {
         navigate(`/ver-escultor/${id}`);
     };
 
-    const confirmEliminar = (id) => {
+    const confirmarEliminar = (id) => {
         setSelectedEscultor(id);
-        setOpenDialog(true);
+        setDialogOpen(true);
     };
 
-    const eliminar = async (id) => {
-        setLoading(true);
-        const confirmacion = window.confirm('¿Estás seguro de que quieres eliminar este escultor?');
-        if (confirmacion) {
-            try {
-                await eliminarSculptor(id);
-                setEscultores(escultores.filter((e) => e._id !== id));
-                toast.success('Escultor eliminado exitosamente');
-            } catch (error) {
-                console.error('Error al eliminar el escultor:', error);
-                toast.error('Error al eliminar el escultor');
-            }
+    const eliminar = async () => {
+        setDialogOpen(false);
+        try {
+            await eliminarSculptor(selectedEscultor);
+            setEscultores(escultores.filter((e) => e._id !== selectedEscultor));
+            toast.success('Escultor eliminado exitosamente');
+        } catch (error) {
+            console.error('Error al eliminar el escultor:', error);
+            toast.error('Error al eliminar el escultor');
+        } finally {
+            setSelectedEscultor(null);
         }
     };
 
@@ -121,7 +120,7 @@ const ListaEscultores = ({ searchQuery }) => {
                                         <EditIcon />
                                     </IconButton>
                                     <IconButton
-                                        onClick={() => confirmEliminar(escultor._id)}
+                                        onClick={() => confirmarEliminar(escultor._id)}
                                         aria-label="Eliminar escultor"
                                         color="error"
                                     >
@@ -134,19 +133,19 @@ const ListaEscultores = ({ searchQuery }) => {
                 </Grid>
             )}
 
-
-            <Dialog open={openDialog} onClose={() => setOpenDialog(false)}>
+            {/* Popup de confirmación */}
+            <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)}>
                 <DialogTitle>Confirmar Eliminación</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-                        ¿Estás seguro de que deseas eliminar este escultor?
+                        ¿Estás seguro de que deseas eliminar este escultor? Esta acción no se puede deshacer.
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={() => setOpenDialog(false)} color="primary">
+                    <Button onClick={() => setDialogOpen(false)} color="primary">
                         Cancelar
                     </Button>
-                    <Button onClick={eliminar} color="error" autoFocus>
+                    <Button onClick={eliminar} color="error">
                         Eliminar
                     </Button>
                 </DialogActions>
